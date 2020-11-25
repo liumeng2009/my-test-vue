@@ -58,6 +58,7 @@ const permission = {
   mutations: {
     SET_ROUTERS: (state, routers) => {
       state.addRouters = routers
+      console.log('routers', routers)
       state.routers = constantRouterMap.concat(routers)
     }
   },

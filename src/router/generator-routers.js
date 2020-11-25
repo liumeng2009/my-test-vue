@@ -79,6 +79,7 @@ const rootRouter = {
  * @returns {Promise<Router>}
  */
 export const generatorDynamicRouter = (token) => {
+  console.log('generator dyamic router');
   return new Promise((resolve, reject) => {
     loginService.getCurrentUserNav(token).then(res => {
       console.log('res', res)

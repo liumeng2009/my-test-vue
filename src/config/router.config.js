@@ -30,6 +30,18 @@ export const asyncRouterMap = [
             component: () => import('@/views/dashboard/Analysis'),
             meta: { title: 'menu.dashboard.analysis', keepAlive: false, permission: [ 'dashboard' ] }
           },
+          {
+            path: 'map',
+            name: 'Map',
+            component: () => import('@/views/dashboard/Map'),
+            meta: { title: '地图', keepAlive: false, permission: [ 'map' ] }
+          },
+          {
+            path: 'echart',
+            name: 'Echart',
+            component: () => import('@/views/dashboard/Echart'),
+            meta: { title: 'echart', keepAlive: false }
+          },
           // 外部链接
           {
             path: 'https://www.baidu.com/',
