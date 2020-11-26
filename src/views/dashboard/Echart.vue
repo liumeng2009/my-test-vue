@@ -1,11 +1,11 @@
 <template>
-    <div>
-        <h1>导入echart模块</h1>
-        <a-button type="primary" @click="changeData">改变数据</a-button>
-        <div id="myChart" style="height:400px">
+  <div>
+    <h1>导入echart模块</h1>
+    <a-button type="primary" @click="changeData">改变数据</a-button>
+    <div id="myChart" style="height:400px">
 
-        </div>
     </div>
+  </div>
 </template>
 
 <script>

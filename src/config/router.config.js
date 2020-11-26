@@ -42,6 +42,12 @@ export const asyncRouterMap = [
             component: () => import('@/views/dashboard/Echart'),
             meta: { title: 'echart', keepAlive: false }
           },
+          {
+            path: 'Screen',
+            name: 'Screen',
+            component: () => import('@/views/dashboard/Screen'),
+            meta: { title: 'screen', keepAlive: false }
+          },
           // 外部链接
           {
             path: 'https://www.baidu.com/',

@@ -27,6 +27,10 @@ import ArticleListContent from '@/components/ArticleListContent'
 
 import Dialog from '@/components/Dialog'
 
+// project components
+import Statistic from '@/components/ProjectComponent/Statistic'
+import StatisticItem from '@/components/ProjectComponent/Statistic/item'
+
 export {
   AvatarList,
   Bar,
@@ -52,5 +56,8 @@ export {
   StandardFormRow,
   ArticleListContent,
 
-  Dialog
+  Dialog,
+
+  Statistic,
+  StatisticItem
 }
