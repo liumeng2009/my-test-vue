@@ -31,6 +31,8 @@ import Dialog from '@/components/Dialog'
 import Statistic from '@/components/ProjectComponent/Statistic'
 import StatisticItem from '@/components/ProjectComponent/Statistic/item'
 
+import MaqueList from '@/components/ProjectComponent/MaqueList'
+
 export {
   AvatarList,
   Bar,
@@ -59,5 +61,6 @@ export {
   Dialog,
 
   Statistic,
-  StatisticItem
+  StatisticItem,
+  MaqueList
 }
