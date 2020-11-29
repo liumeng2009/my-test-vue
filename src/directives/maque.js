@@ -4,12 +4,10 @@ export default {
         let moveY = 0
         let timer = null
         const oMaqueArea = el.querySelector('.maque-move-area')
-
         if (containerHeight >= count * 30) {
             // 说明容器足够放得下内容，不需要滚动
             return
         }
-
         oMaqueArea.style.transition = `top .5s linear`
         const oMaqueAreaClone = oMaqueArea.innerHTML
         oMaqueArea.innerHTML += oMaqueAreaClone
@@ -24,10 +22,11 @@ export default {
                 setTimeout(() => {
                     oMaqueArea.style.transition = 'top .5s linear'
                     oMaqueArea.style.top = '-30px'
-                }, 0)
+                }, 100)
                 moveY = -30
             }
         }, speed * 1000)
+
         oMaqueArea.addEventListener('mouseover', () => {
             clearInterval(timer)
         }, false)
@@ -37,20 +36,18 @@ export default {
                 oMaqueArea.style.top = `${moveY}px`
                 if (moveY < -30 * count) {
                     // 归零的时候，不能有动画
-                    console.log('归零')
                     oMaqueArea.style.transition = ''
                     oMaqueArea.style.top = '0px'
-                    // oMaqueArea.style.transition = 'top .5s'
                     setTimeout(() => {
                         oMaqueArea.style.transition = 'top .5s linear'
                         oMaqueArea.style.top = '-30px'
-                    }, 0)
+                    }, 100)
                     moveY = -30
                 }
             }, speed * 1000)
         }, false)
     },
     inserted (el) {
-        // console.log(el)
+
     }
 }

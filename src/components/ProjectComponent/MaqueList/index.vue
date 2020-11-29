@@ -1,35 +1,26 @@
 <template>
-  <a-card
-    class="tab-panel-wrapper"
-    size="small"
-    :tab-list="tabList"
-    :active-tab-key="activeKey"
-    @tabChange="handleTabChange($event)"
-  >
-    <div v-if="activeKey === 'report'" class="maque-container">
-      <a-row class="maque-header">
-        <a-col span="4">时间</a-col>
-        <a-col span="4">类型</a-col>
-        <a-col span="10">主题</a-col>
-        <a-col span="6">地点</a-col>
-      </a-row>
-      <div
-        class="maque-content"
-        :style="{height: maqueContainrHeight + 'px'}"
-        v-maque="{ speed: 2, count: dataSource.length, containerHeight: maqueContainrHeight }">
-        <div class="maque-move-area" :style="{top:0, height: ( 30 * dataSource.length ) + 'px'}">
-          <a-row class="maque-item" v-for="(item, key) in dataSource" :key="key">
-            <a-col span="4">{{ item.date }}</a-col>
-            <a-col span="4">{{ item.type }}</a-col>
-            <a-col span="10">{{ item.content }}</a-col>
-            <a-col span="6">{{ item.area }}</a-col>
-          </a-row>
-        </div>
+  <div class="maque-container">
+    <!--
+    <a-row class="maque-header">
+      <a-col span="4">时间</a-col>
+      <a-col span="4">类型</a-col>
+      <a-col span="10">主题</a-col>
+      <a-col span="6">地点</a-col>
+    </a-row> -->
+    <div
+      class="maque-content"
+      :style="{height: maqueContainrHeight + 'px'}"
+      v-maque="{ speed: 5, count: dataSource.length, containerHeight: maqueContainrHeight }">
+      <div class="maque-move-area" :style="{top:0, height: ( 30 * dataSource.length ) + 'px'}">
+        <a-row class="maque-item" v-for="(item, key) in dataSource" :key="key">
+          <a-col span="6">{{ item.date }}</a-col>
+          <a-col span="6">{{ item.type }}</a-col>
+          <a-col span="6">{{ item.content }}</a-col>
+          <a-col span="6">{{ item.area }}</a-col>
+        </a-row>
       </div>
-
     </div>
-    <div v-if="activeKey === 'discovery'" class="maque-container">discovery</div>
-  </a-card>
+  </div>
 </template>
 
 <script>
@@ -42,18 +33,7 @@ export default {
   },
   data () {
     return {
-      tabList: [
-        {
-          key: 'report',
-          tab: '事件上报'
-        },
-        {
-          key: 'discovery',
-          tab: '线索发现'
-        }
-      ],
-      activeKey: 'report',
-      maqueContainrHeight: 30 * 5
+      maqueContainrHeight: 30 * 8
     }
   },
   props: {
@@ -97,6 +77,7 @@ export default {
 
       .maque-move-area{
         position:absolute;
+        width: 100%;
         top: 0;
         left: 0;
 
@@ -107,6 +88,10 @@ export default {
             white-space: nowrap;
             overflow: hidden;
             padding-left: 4px;
+            text-align: center;
+          }
+          .ant-col:nth-of-type(4) {
+            text-align: right;
           }
         }
       }
