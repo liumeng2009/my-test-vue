@@ -54,7 +54,7 @@ export default {
       oStyle.width = size === 'default' ? '100px' : '70px'
       oStyle.padding = size === 'default' ? '16px' : '8px'
       if (totalPosition === 'top') {
-        oStyle.top = 0
+        oStyle.top = size === 'default' ? '25px' : '10px'
       } else {
         oStyle.justifyContent = 'flex-end'
       }

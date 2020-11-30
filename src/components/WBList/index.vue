@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="wb-list-container">
     <WbItem v-for="(item, index) in data" :key="index" :data="item" />
   </div>
 </template>
@@ -20,5 +20,6 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less">
+
 </style>

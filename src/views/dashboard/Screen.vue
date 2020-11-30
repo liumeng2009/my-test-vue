@@ -33,7 +33,7 @@
               :force-fit="true"
               ref="myChart"
               :height="300"
-              :padding="[20, 150, 20, 20]"
+              :padding="[50, 150, 50, 70]"
               :data="pieData"
               :scale="pieScale">
               <!-- <v-tooltip :showTitle="true" dataKey="item*percent" /> -->
@@ -58,9 +58,9 @@
           <Chart-Container :totalData="totalData" :showTotalBackground="false" :chartHeight="237">
             <v-chart :forceFit="true" :height="237" :data="dataHot" :scale="scaleHot" :padding="[50, 150, 50, 100]">
               <v-tooltip />
-              <v-axis dataKey="name" />
+              <v-axis dataKey="name" :label="{autoRotate: false}" />
               <v-axis dataKey="value" />
-              <v-interval position="name*value" :label="labelHotInterval" :opcaity="1" :size="20"></v-interval>
+              <v-interval position="name*value" :label="labelHotInterval"></v-interval>
             </v-chart>
           </Chart-Container>
         </a-card>

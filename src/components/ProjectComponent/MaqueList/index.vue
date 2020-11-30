@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { Maque } from '@/directives'
+import { Maque } from '@/core/directives'
 
 export default {
   name: 'MaqueList',

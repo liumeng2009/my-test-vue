@@ -1,13 +1,12 @@
 <template>
   <div>
-    {{ transData }}
-    <a-list bordered :data-source="data">
+    <a-list bordered :data-source="listData">
       <a-list-item slot="renderItem" slot-scope="item, index">
         <a-row style="width: 100%">
           <a-col span="4">{{ index + 1 }}</a-col>
           <a-col span="19" class="hot-list-item">
-            {{ item }}
-            <RiseFilling class="item-icon" style="width: 24px; height: 24px" />
+            {{ item | cutLongStr(11) }}
+            <RiseFilling class="item-icon" fill="red" style="width: 24px; height: 24px" />
           </a-col>
         </a-row>
       </a-list-item>
@@ -17,25 +16,20 @@
 
 <script>
 import { RiseFilling } from '@/core/icons'
+import { cutLongStr } from '@/filters'
 export default {
   name: 'HotList',
   components: {
     RiseFilling
   },
+  filters: {
+    cutLongStr
+  },
   props: {
-    transData: {
-      type: String,
-      default: ''
-    },
-    data: {
+    listData: {
       type: Array,
       default: () => []
     }
-  },
-  mounted() {
-      setTimeout(() => {
-          console.log(this.$props.data)
-      }, 1000)
   }
 }
 </script>
@@ -43,11 +37,7 @@ export default {
 <style lang="less" scoped>
 .hot-list-item {
   white-space: nowrap;
-  position: relative;
-
-  .item-icon {
-    position: absolute;
-    right: 0;
-  }
+  overflow: hidden;
+  display: flex;
 }
 </style>

@@ -11,14 +11,14 @@
     <a-col span="6" class="right-column">
       <a-card title="线索统计">
         <Center-card>
-          <span style="line-height: 50px">今日新增:<span>27986</span></span>
+          <span style="line-height: 30px">今日新增:<span>27986</span></span>
         </Center-card>
       </a-card>
       <a-card title="各平台分布" :bodyStyle="{ padding: 0 }">
         <v-chart
           :force-fit="true"
           ref="myChart"
-          :height="300"
+          :height="150"
           :padding="[20, 20, 20, 20]"
           :data="pieData"
           :scale="pieScale"
@@ -31,14 +31,20 @@
           <v-coord type="theta" :radius="0.75" :innerRadius="0.6" />
         </v-chart>
       </a-card>
-      <a-card title="今日热词">
-        <v-chart :autoFit="true" :width="300" :height="200" :data="hotData" :scale="scale">
-          <v-coord type="rect" direction="TL"></v-coord>
+      <a-card title="今日热词" :bodyStyle="{padding: 0}">
+        <v-chart
+          :autoFit="true"
+          :width="300"
+          :padding="[20, 20, 20, 20]"
+          :height="150"
+          :data="hotData"
+          :scale="scale"
+        >
           <v-point position="x*y" color="category" shape="cloud" tooltip="value*category" />
         </v-chart>
       </a-card>
       <a-card title="热词排行">
-        <HotList :data="hotListData" :transData="'hello'" />
+        <HotList :listData="hotListData" :transData="'hello'" />
       </a-card>
     </a-col>
   </a-row>
@@ -131,16 +137,16 @@ const scale = [// eslint-disable-line no-unused-vars
 
 registerShape('point', 'cloud', {
   draw(cfg, container) {
+    console.log(cfg)
     return container.addShape('text', {
       attrs: {
         fillOpacity: cfg.opacity,
-        fontSize: cfg.origin._origin.size,
+        fontSize: cfg.origin._origin.size / 2,
         rotate: cfg.origin._origin.rotate,
         text: cfg.origin._origin.text,
         textAlign: 'center',
         fontFamily: cfg.origin._origin.font,
         fill: cfg.color,
-        textBaseline: 'Alphabetic',
         ...cfg.style,
         x: cfg.x,
         y: cfg.y
@@ -152,42 +158,42 @@ registerShape('point', 'cloud', {
 const hotWordData = [// eslint-disable-line no-unused-vars
   {
     x: 'China',
-    value: 1383220000,
+    value: 138,
     category: 'asia'
   },
   {
     x: 'India',
-    value: 1316000000,
+    value: 131,
     category: 'asia'
   },
   {
     x: 'United States',
-    value: 324982000,
+    value: 32,
     category: 'america'
   },
   {
     x: 'Indonesia',
-    value: 263510000,
+    value: 26,
     category: 'asia'
   },
   {
     x: 'Brazil',
-    value: 207505000,
+    value: 20,
     category: 'america'
   },
   {
     x: 'Pakistan',
-    value: 196459000,
+    value: 19,
     category: 'asia'
   },
   {
     x: 'Nigeria',
-    value: 191836000,
+    value: 19,
     category: 'africa'
   },
   {
     x: 'Bangladesh',
-    value: 162459000,
+    value: 16,
     category: 'asia'
   }
 ]
@@ -199,34 +205,34 @@ const max = range[1]
 dv2.transform({
     type: 'tag-cloud',
     fields: ['x', 'value'],
-    size: [640, 400],
+    size: [600, 600],
     font: 'Verdana',
-    padding: 0,
+    padding: 5,
     timeInterval: 5000, // max execute time
+    color: 'red',
     rotate () {
-        let random = ~~(Math.random() * 4) % 4
-        if (random === 2) {
-            random = 0
-        }
-        return random * 90// 0, 90, 270
+      let random = ~~(Math.random() * 4) % 4
+      if (random === 2) {
+          random = 0
+      }
+      return 0// 0, 90, 270
     },
-    fontSize(d) {
-        if (d.value) {
+    fontSize (d) {
+      if (d.value) {
         return ((d.value - min) / (max - min)) * (80 - 24) + 24
-        }
-        return 0
+      }
+      return 0
     }
 })
 const hotData = dv2.rows
+console.log(hotData)
 
-const hotListdata = [
-  /*
-  'Racing car sprays burning fuel into crowd.',
-  'Japanese princess to wed commoner.',
-  'Australian walks 100km after outback crash.',
-  'Man charged over missing wedding girl.',
-  'Los Angeles battles huge wildfires.' */
-  { name: 'lm', age: 33 }
+const hotListData = [
+  '关键热词',
+  '关键热词很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长',
+  '关键热词',
+  '关键热词关键热词关键热词',
+  '关键热词'
 ]
 
 export default {
@@ -236,7 +242,7 @@ export default {
     CenterCard,
     HotList
   },
-  data() {
+  data () {
     return {
       wbList,
       currentPage: 0,
@@ -256,7 +262,7 @@ export default {
       ],
       hotData,
       scale,
-      hotListdata
+      hotListData
     }
   }
 }
