@@ -34,6 +34,11 @@ import StatisticItem from '@/components/ProjectComponent/Statistic/item'
 
 import MaqueList from '@/components/ProjectComponent/MaqueList'
 
+import WbList from '@/components/WBList'
+
+import CenterCard from '@/components/Card'
+import HotList from '@/components/List'
+
 export {
   AvatarList,
   Bar,
@@ -65,5 +70,9 @@ export {
 
   Statistic,
   StatisticItem,
-  MaqueList
+  MaqueList,
+  WbList,
+
+  CenterCard,
+  HotList
 }

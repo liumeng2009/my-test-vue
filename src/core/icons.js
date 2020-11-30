@@ -7,5 +7,8 @@
  * 所有图标均从这里加载，方便管理
  */
 import bxAnaalyse from '@/assets/icons/bx-analyse.svg?inline' // path to your '*.svg?inline' file.
+import discovery from '@/assets/icons/discovery.svg?inline'
+import Twitter from '@/assets/icons/Twitter.svg?inline'
+import RiseFilling from '@/assets/icons/rise-filling.svg?inline'
 
-export { bxAnaalyse }
+export { bxAnaalyse, discovery, Twitter, RiseFilling }

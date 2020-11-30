@@ -1,6 +1,6 @@
 // eslint-disable-next-line
 import { UserLayout, BasicLayout } from '@/layouts'
-import { bxAnaalyse } from '@/core/icons'
+import { bxAnaalyse, discovery } from '@/core/icons'
 
 const RouteView = {
   name: 'RouteView',
@@ -8,33 +8,56 @@ const RouteView = {
 }
 
 export const asyncRouterMap = [
-
   {
     path: '/',
     name: 'index',
     component: BasicLayout,
     meta: { title: 'menu.home' },
-    redirect: '/dashboard/screen',
+    redirect: '/dashboard',
     children: [
       // dashboard
       {
         path: '/dashboard',
         name: 'dashboard',
-        redirect: '/dashboard/workplace',
+        component: () => import('@/views/dashboard/Screen'),
+        meta: { title: '监控大厅', icon: bxAnaalyse }
+      },
+      {
+        path: '/infoDiscover',
+        name: 'infoDiscover',
+        redirect: '/infoDiscover/clueDiscover',
         component: RouteView,
-        meta: { title: 'menu.dashboard', keepAlive: true, icon: bxAnaalyse, permission: [ 'dashboard' ] },
+        meta: { title: '情报发现', keepAlive: true, icon: discovery },
         children: [
           {
-            path: 'map',
-            name: 'Map',
-            component: () => import('@/views/dashboard/Map'),
-            meta: { title: '地图', keepAlive: false, permission: [ 'map' ] }
+            path: 'clueDiscover',
+            name: 'ClueDiscover',
+            component: () => import('@/views/infoDiscover/ClueDiscover'),
+            meta: { title: '线索发现', keepAlive: false }
           },
           {
-            path: 'Screen',
-            name: 'Screen',
-            component: () => import('@/views/dashboard/Screen'),
-            meta: { title: '工作台', keepAlive: false }
+            path: 'clueSearch',
+            name: 'ClueSearch',
+            component: () => import('@/views/infoDiscover/ClueSearch'),
+            meta: { title: '线索查询', keepAlive: false }
+          },
+          {
+            path: 'eventReport',
+            name: 'EventReport',
+            component: () => import('@/views/infoDiscover/EventReport'),
+            meta: { title: '事件上报', keepAlive: false }
+          },
+          {
+            path: 'eventSearch',
+            name: 'EventSearch',
+            component: () => import('@/views/infoDiscover/EventSearch'),
+            meta: { title: '事件查询', keepAlive: false }
+          },
+          {
+            path: 'eventFollow',
+            name: 'EventFollow',
+            component: () => import('@/views/infoDiscover/EventFollow'),
+            meta: { title: '事件跟踪', keepAlive: false }
           }
         ]
       }

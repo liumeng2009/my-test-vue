@@ -10,7 +10,7 @@
     <div
       class="maque-content"
       :style="{height: maqueContainrHeight + 'px'}"
-      v-maque="{ speed: 5, count: dataSource.length, containerHeight: maqueContainrHeight }">
+      v-maque="{ speed: 2, count: dataSource.length, containerHeight: maqueContainrHeight }">
       <div class="maque-move-area" :style="{top:0, height: ( 30 * dataSource.length ) + 'px'}">
         <a-row class="maque-item" v-for="(item, key) in dataSource" :key="key">
           <a-col span="6">{{ item.date }}</a-col>

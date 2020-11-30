@@ -13,7 +13,8 @@
       广告代码 真实项目中请移除
       production remove this Ads
     -->
-    <ads v-if="isProPreviewSite && !collapsed"/>
+    <!--
+    <ads v-if="isProPreviewSite && !collapsed"/> -->
     <!-- Ads end -->
 
     <!-- 1.0.0+ 版本 pro-layout 提供 API，
@@ -25,7 +26,8 @@
         <h1>{{ title }}</h1>
       </div>
     </template>
-    <setting-drawer :settings="settings" @change="handleSettingChange" />
+    <!--
+    <setting-drawer :settings="settings" @change="handleSettingChange" /> -->
     <template v-slot:rightContentRender>
       <right-content :top-menu="settings.layout === 'topmenu'" :is-mobile="isMobile" :theme="settings.theme" />
     </template>

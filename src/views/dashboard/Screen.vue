@@ -48,9 +48,23 @@
       </div>
     </div>
     <div class="center">
-      <a-card title="预警地区分布" :bodyStyle="{ padding: 0 }" :bordered="false">
-        <div id="map"></div>
-      </a-card>
+      <div class="wrapper">
+        <a-card title="预警地区分布" :bodyStyle="{ padding: 0 }" :bordered="false">
+          <div id="map"></div>
+        </a-card>
+      </div>
+      <div class="wrapper">
+        <a-card title="线索发现分布" :bodyStyle="{padding: 0}" :bordered="false">
+          <Chart-Container :totalData="totalData" :showTotalBackground="false" :chartHeight="237">
+            <v-chart :forceFit="true" :height="237" :data="dataHot" :scale="scaleHot" :padding="[50, 150, 50, 100]">
+              <v-tooltip />
+              <v-axis dataKey="name" />
+              <v-axis dataKey="value" />
+              <v-interval position="name*value" :label="labelHotInterval" :opcaity="1" :size="20"></v-interval>
+            </v-chart>
+          </Chart-Container>
+        </a-card>
+      </div>
     </div>
     <div class="right">
       <div class="wrapper">
@@ -89,7 +103,7 @@
           <a-col span="12">
             <a-card title="月度预警变化" :bodyStyle="{padding: 0}" :bordered="false">
               <Chart-Container :totalData="totalData" :showTotalBackground="false" :size="'small'" :chartHeight="100" :totalPosition="'bottom'">
-                <v-chart :forceFit="true" :height="100" :padding="[60, 90, 8, 20]" :data="dataSimpleLine" :scale="scaleSimpleLine">
+                <v-chart :forceFit="true" :height="100" :padding="[60, 90, 8, 20]" :data="dataSimpleLine">
                   <v-axis dataKey="year" :label="false" />
                   <v-axis dataKey="value" :label="false" :line="{stroke: '#e8e8e8'}" />
                   <v-interval position="year*value" :label="labelInterval" :opcaity="1" :size="10"></v-interval>
@@ -107,10 +121,17 @@
           <a-col span="12">
             <a-card title="当日预警变化" :bodyStyle="{padding: 0}" :bordered="false">
               <Chart-Container :totalData="totalData" :showTotalBackground="false" :size="'small'" :chartHeight="100" :totalPosition="'bottom'">
-                <v-chart :forceFit="true" :height="100" :padding="[60, 90, 8, 20]" :data="dataSimpleLine" :scale="scaleSimpleLine">
+                <v-chart :forceFit="true" :height="100" :padding="[60, 90, 8, 20]" :data="dataSimpleLineFall">
                   <v-axis dataKey="year" :label="false" />
                   <v-axis dataKey="value" :label="false" :line="{stroke: '#e8e8e8'}" />
                   <v-interval position="year*value" :label="labelInterval" :opcaity="1" :size="10"></v-interval>
+                  <v-series
+                    :gemo="seriesOpts2.gemo"
+                    :position="seriesOpts2.position"
+                    :size="seriesOpts2.size"
+                    :color="seriesOpts2.color"
+                    :shape="seriesOpts2.shape"
+                    :label="seriesOpts2.label" />
                 </v-chart>
               </Chart-Container>
             </a-card>
@@ -149,10 +170,10 @@ import { Statistic, StatisticItem, MaqueList, MiniSmoothArea, MiniBar, ChartCont
 import { Scene } from '@antv/l7'
 import { Mapbox } from '@antv/l7-maps'
 import { registerShape } from 'viser-vue'
-import TopFilling from '@/assets/icons/top-filling.png'
-// import RiseFilling from '@/assets/icons/rise-filling.png'
-import LogoSvg from '@/assets/logo.svg'
+import TopFilling from '@/assets/icons/top-filling.svg'
+import RiseFilling from '@/assets/icons/rise-filling.svg'
 import RiseSvg from '@/assets/icons/rise.svg'
+import FallSvg from '@/assets/icons/fall.svg'
 
 registerShape('point', 'image', {
   drawShape: function(cfg, container) {
@@ -177,7 +198,7 @@ const seriesOpts = {
       case 0:
         return
       case 1:
-        return ['image', LogoSvg]
+        return ['image', RiseFilling]
       case 2:
         return ['image', TopFilling]
       default:
@@ -190,10 +211,9 @@ const seriesOpts = {
 registerShape('interval', 'image', {
   drawShape: function(cfg, container) {
     cfg.points = this.parsePoints(cfg.points)
-    console.log(cfg)
     return container.addShape('image', {
       attrs: {
-        x: cfg.points[0].x + 40,
+        x: cfg.points[0].x + 55,
         y: cfg.points[0].y - 12 * cfg.size - 50,
         width: 12 * cfg.size,
         height: 12 * cfg.size,
@@ -206,15 +226,14 @@ const seriesOpts2 = {
   gemo: 'interval',
   position: 'name*value',
   size: '2',
-  color: 'red',
   shape: ['type', function(type) {
     switch (type) {
       case 0:
         return
-      case 'up':
+      case 'rise':
         return ['image', RiseSvg]
-      case 2:
-        return ['image', TopFilling]
+      case 'fall':
+        return ['image', FallSvg]
       default:
         break
     }
@@ -405,14 +424,14 @@ const fieldMap = [
 ]
 
 const dataSimpleLine = [
-  { year: '前月', value: 8, type: 'up' },
-  { year: '本月', value: 12, type: 'up' }
+  { year: '前月', value: 8, type: 'rise' },
+  { year: '本月', value: 12 }
 ]
-const scaleSimpleLine = [{// eslint-disable-line no-unused-vars
-  dataKey: 'year'
-}, {
-  dataKey: 'value'
-}]
+const dataSimpleLineFall = [
+  { year: '前月', value: 12, type: 'fall' },
+  { year: '本月', value: 8 }
+]
+
 const labelInterval = ['value', {// eslint-disable-line no-unused-vars
   useHtml: true,
   htmlTemplate: function htmlTemplate(text, item) {
@@ -537,7 +556,7 @@ export default {
       title,
       linePadding,
       dataSimpleLine,
-      scaleSimpleLine,
+      dataSimpleLineFall,
       labelInterval,
       dataHot,
       scaleHot,
