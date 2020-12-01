@@ -36,8 +36,11 @@ import MaqueList from '@/components/ProjectComponent/MaqueList'
 
 import WbList from '@/components/WBList'
 
-import CenterCard from '@/components/Card'
 import HotList from '@/components/List'
+import SecList from '@/components/List/ListSec'
+
+import AccountCard from '@/components/AccountCard'
+import ReasonCard from '@/components/ReasonCard'
 
 export {
   AvatarList,
@@ -73,6 +76,9 @@ export {
   MaqueList,
   WbList,
 
-  CenterCard,
-  HotList
+  HotList,
+  SecList,
+
+  AccountCard,
+  ReasonCard
 }

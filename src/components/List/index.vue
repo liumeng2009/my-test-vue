@@ -6,7 +6,7 @@
           <a-col span="4">{{ index + 1 }}</a-col>
           <a-col span="19" class="hot-list-item">
             {{ item | cutLongStr(11) }}
-            <RiseFilling class="item-icon" fill="red" style="width: 24px; height: 24px" />
+            <RiseFilling class="item-icon" fill="red" style="width: 16px; height: 16px" />
           </a-col>
         </a-row>
       </a-list-item>
@@ -39,5 +39,6 @@ export default {
   white-space: nowrap;
   overflow: hidden;
   display: flex;
+  align-items: center;
 }
 </style>

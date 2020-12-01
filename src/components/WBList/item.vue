@@ -18,7 +18,7 @@
         {{ data.content }}
       </div>
       <div class="bottom">
-        <a-button type="primary" size="small">详情</a-button>
+        <a-button type="primary" size="small" @click="toDetail()">详情</a-button>
       </div>
     </div>
   </div>
@@ -44,23 +44,26 @@ export default {
     }
   },
   mounted () {
-      this.btnColor = this.getBtnColor()
-      console.log(this.btnColor)
+    this.btnColor = this.getBtnColor()
   },
   methods: {
-      getBtnColor () {
-          const { important } = this.$props.data
-          switch (important) {
-              case '0':
-                  return 'blue'
-              case '1':
-                  return 'orange'
-              case '2':
-                  return 'red'
-              default:
-                  return ''
-          }
-      }
+    getBtnColor () {
+        const { important } = this.$props.data
+        switch (important) {
+            case '0':
+                return 'blue'
+            case '1':
+                return 'orange'
+            case '2':
+                return 'red'
+            default:
+                return ''
+        }
+    },
+    toDetail () {
+      console.log('detail', this.$props.data)
+      this.$router.push({ path: '/infoDiscover/clueDiscoverDetail', query: { id: this.$props.data.id } })
+    }
   }
 }
 </script>
@@ -103,8 +106,12 @@ export default {
 
       .source {
         font-size: 12px;
+        display: flex;
+        align-items: center;
+
         & > span{
-            position: relative;
+            display: flex;
+            flex-direction: row-reverse;
             padding-left: 24px;
             margin-right: 8px;
         }

@@ -1,58 +1,57 @@
 <template>
-  <a-row :gutter="16">
-    <a-col span="18">
-      <a-card title="线索发现">
-        <WbList :data="wbList" />
-        <div class="pagination-wrapper">
-          <a-pagination v-model="currentPage" :total="50" show-less-items />
-        </div>
-      </a-card>
-    </a-col>
-    <a-col span="6" class="right-column">
-      <a-card title="线索统计">
-        <Center-card>
-          <span style="line-height: 30px">今日新增:<span>27986</span></span>
-        </Center-card>
-      </a-card>
-      <a-card title="各平台分布" :bodyStyle="{ padding: 0 }">
-        <v-chart
-          :force-fit="true"
-          ref="myChart"
-          :height="150"
-          :padding="[20, 20, 20, 20]"
-          :data="pieData"
-          :scale="pieScale"
-        >
-          <!-- <v-tooltip :showTitle="true" dataKey="item*percent" /> -->
-          <v-axis />
-          <!-- position="right" :offsetX="-140" -->
-          <!-- <v-legend dataKey="item"/> -->
-          <v-pie position="percent" color="item" :vStyle="pieStyle" :label="labelConfig" />
-          <v-coord type="theta" :radius="0.75" :innerRadius="0.6" />
-        </v-chart>
-      </a-card>
-      <a-card title="今日热词" :bodyStyle="{padding: 0}">
-        <v-chart
-          :autoFit="true"
-          :width="300"
-          :padding="[20, 20, 20, 20]"
-          :height="150"
-          :data="hotData"
-          :scale="scale"
-        >
-          <v-point position="x*y" color="category" shape="cloud" tooltip="value*category" />
-        </v-chart>
-      </a-card>
-      <a-card title="热词排行">
-        <HotList :listData="hotListData" :transData="'hello'" />
-      </a-card>
-    </a-col>
-  </a-row>
+  <page-header-wrapper :title="false">
+    <a-row :gutter="16">
+      <a-col span="18">
+        <a-card title="线索发现">
+          <WbList :data="wbList" />
+        </a-card>
+      </a-col>
+      <a-col span="6" class="right-column">
+        <a-card title="线索统计">
+          <div class="center-card">
+            <span style="line-height: 30px">今日新增:<span>27986</span></span>
+          </div>
+        </a-card>
+        <a-card title="各平台分布" :bodyStyle="{ padding: 0 }">
+          <v-chart
+            :force-fit="true"
+            ref="myChart"
+            :height="150"
+            :padding="[20, 20, 20, 20]"
+            :data="pieData"
+            :scale="pieScale"
+          >
+            <!-- <v-tooltip :showTitle="true" dataKey="item*percent" /> -->
+            <v-axis />
+            <!-- position="right" :offsetX="-140" -->
+            <!-- <v-legend dataKey="item"/> -->
+            <v-pie position="percent" color="item" :vStyle="pieStyle" :label="labelConfig" />
+            <v-coord type="theta" :radius="0.75" :innerRadius="0.6" />
+          </v-chart>
+        </a-card>
+        <a-card title="今日热词" :bodyStyle="{padding: 0}">
+          <v-chart
+            :autoFit="true"
+            :width="rightWidth"
+            :padding="[20, 20, 20, 20]"
+            :height="150"
+            :data="hotData"
+            :scale="scale"
+          >
+            <v-point position="x*y" color="category" shape="cloud" tooltip="value*category" />
+          </v-chart>
+        </a-card>
+        <a-card title="热词排行">
+          <HotList :listData="hotListData" :transData="'hello'" />
+        </a-card>
+      </a-col>
+    </a-row>
+  </page-header-wrapper>
 </template>
 
 <script>
 import { registerShape } from 'viser-vue'
-import { WbList, CenterCard, HotList } from '@/components'
+import { WbList, HotList } from '@/components'
 
 const DataSet = require('@antv/data-set')
 const sourceData = [
@@ -137,7 +136,6 @@ const scale = [// eslint-disable-line no-unused-vars
 
 registerShape('point', 'cloud', {
   draw(cfg, container) {
-    console.log(cfg)
     return container.addShape('text', {
       attrs: {
         fillOpacity: cfg.opacity,
@@ -230,8 +228,6 @@ console.log(hotData)
 const hotListData = [
   '关键热词',
   '关键热词很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长',
-  '关键热词',
-  '关键热词关键热词关键热词',
   '关键热词'
 ]
 
@@ -239,13 +235,11 @@ export default {
   name: 'ClueDiscover',
   components: {
     WbList,
-    CenterCard,
     HotList
   },
   data () {
     return {
       wbList,
-      currentPage: 0,
       pieStyle: {
         stroke: '#fff',
         lineWidth: 1
@@ -262,8 +256,16 @@ export default {
       ],
       hotData,
       scale,
-      hotListData
+      hotListData,
+      rightWidth: 0
     }
+  },
+  mounted () {
+    console.log(document.body.clientWidth)
+    console.log(document.documentElement.clientWidth)
+    const _width = document.body.clientWidth || document.documentElement.clientWidth
+    console.log('rightWidth', _width - 48 - 8)
+    this.rightWidth = (_width - 48) / 4 - 8
   }
 }
 </script>
@@ -278,8 +280,11 @@ export default {
     margin-bottom: 0px;
   }
 }
-.pagination-wrapper {
+.center-card {
+  width: 100%;
+  height: 100%;
   display: flex;
-  flex-flow: row-reverse;
+  justify-content: center;
+  align-items: center;
 }
 </style>
