@@ -1,10 +1,17 @@
 <template>
-  <h1>线索查询</h1>
+  <div>
+    <h1>线索查询</h1>
+    <ThreeDBar />
+  </div>
 </template>
 
 <script>
+import { ThreeDBar } from '@/components'
 export default {
-    name: 'ClueSearch'
+    name: 'ClueSearch',
+    components: {
+      ThreeDBar
+    }
 }
 </script>
 

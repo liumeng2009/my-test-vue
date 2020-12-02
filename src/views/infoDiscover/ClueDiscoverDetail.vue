@@ -46,6 +46,9 @@
         </a-card>
       </a-col>
       <a-col :span="span_2" v-if="showRight">
+        <a-card title="3D柱图" style="margin-bottom: 16px">
+          <ThreeDBar />
+        </a-card>
         <a-card title="账号简介" style="margin-bottom: 16px">
           {{ detail.authorInfo && detail.authorInfo.description }}
         </a-card>
@@ -65,13 +68,15 @@
 
 <script>
 import { AddIcon } from '@/core/directives'
-import { SecList, AccountCard, ReasonCard } from '@/components'
+import { SecList, AccountCard, ReasonCard, ThreeDBar } from '@/components'
+
 export default {
   name: 'ClueDiscoverDetail',
   components: {
     SecList,
     AccountCard,
-    ReasonCard
+    ReasonCard,
+    ThreeDBar
   },
   directives: {
     AddIcon

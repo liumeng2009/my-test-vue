@@ -11,6 +11,8 @@ import RankList from '@/components/Charts/RankList'
 import TransferBar from '@/components/Charts/TransferBar'
 import TagCloud from '@/components/Charts/TagCloud'
 import ChartContainer from '@/components/Charts/ChartContainer'
+import ThreeDBar from '@/components/Charts/ThreeDBar'
+import CityMap from '@/components/Map/CityMap'
 
 // pro components
 import AvatarList from '@/components/AvatarList'
@@ -54,6 +56,8 @@ export {
   Radar,
   TagCloud,
   ChartContainer,
+  ThreeDBar,
+  CityMap,
 
   RankList,
   TransferBar,
