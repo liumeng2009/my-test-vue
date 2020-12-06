@@ -47,7 +47,6 @@ import {
   notification,
   Pagination
 } from 'ant-design-vue'
-import Viser from 'viser-vue'
 
 // ext library
 import VueCropper from 'vue-cropper'
@@ -108,7 +107,6 @@ Vue.prototype.$success = Modal.success
 Vue.prototype.$error = Modal.error
 Vue.prototype.$warning = Modal.warning
 
-Vue.use(Viser)
 Vue.use(Dialog) // this.$dialog func
 Vue.use(MultiTab)
 Vue.use(PageLoading)

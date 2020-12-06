@@ -17,11 +17,6 @@
 import { numToStr } from '@/filters'
 export default {
   name: 'ChartContainer',
-  data () {
-      return {
-        chartWidth: 0
-      }
-  },
   props: {
     totalData: {
       type: Array,
@@ -47,19 +42,16 @@ export default {
   directives: {
       numToStr
   },
+  mounted () {
+    const { size } = this.$props
+    this.chartWidth = this.$el.clientWidth - (size === 'default' ? 100 : 70)
+  },
   computed: {
     totalStyle () {
       const oStyle = {}
-      const { size, totalPosition } = this.$props
-      oStyle.width = size === 'default' ? '100px' : '70px'
-      oStyle.padding = size === 'default' ? '16px' : '8px'
-      if (totalPosition === 'top') {
-        oStyle.top = size === 'default' ? '25px' : '10px'
-      } else {
-        oStyle.justifyContent = 'flex-end'
-      }
+      const { size } = this.$props
       if (size === 'small') {
-          oStyle.transform = 'scale(.9, .9)'
+          oStyle.transform = 'scale(.8, .8)'
       }
       return oStyle
     },
@@ -74,28 +66,26 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import '~ant-design-vue/es/style/themes/default.less';
 .chart-container {
-  position: relative;
   width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
 
   .chart-view {
-    position: absolute;
-    width: 100%;
+    width: 75%;
     height: 100%;
   }
 
   .chart-total {
-    position: absolute;
+    width: 25%;
     height: 100%;
+    padding-left: 16px;
     box-sizing: border-box;
-    padding: 16px;
-    right: 0px;
-    top: 0px;
-    z-index: 2;
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    justify-content: center;
 
     .chart-total-item {
         margin-bottom: 16px;
@@ -114,19 +104,6 @@ export default {
     .chart-total-item:last-child {
         margin-bottom: 0px;
     }
-  }
-
-  .chart-total-container {
-    position: absolute;
-    width: 100px;
-    height: 100%;
-    right: 0px;
-    top: 0px;
-    background: @primary-color;
-    opacity: 0.6;
-    z-index: 1;
-    border-top-right-radius: 20px;
-    border-bottom-left-radius: 20px;
   }
 }
 </style>

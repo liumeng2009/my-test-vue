@@ -1,5 +1,7 @@
 // chart
+import Pie from '@/components/Charts/Pie'
 import Bar from '@/components/Charts/Bar'
+import LineChart from '@/components/Charts/Line'
 import ChartCard from '@/components/Charts/ChartCard'
 import Liquid from '@/components/Charts/Liquid'
 import MiniArea from '@/components/Charts/MiniArea'
@@ -9,7 +11,6 @@ import MiniProgress from '@/components/Charts/MiniProgress'
 import Radar from '@/components/Charts/Radar'
 import RankList from '@/components/Charts/RankList'
 import TransferBar from '@/components/Charts/TransferBar'
-import TagCloud from '@/components/Charts/TagCloud'
 import ChartContainer from '@/components/Charts/ChartContainer'
 import ThreeDBar from '@/components/Charts/ThreeDBar'
 import CityMap from '@/components/Map/CityMap'
@@ -46,7 +47,10 @@ import ReasonCard from '@/components/ReasonCard'
 
 export {
   AvatarList,
+
+  Pie,
   Bar,
+  LineChart,
   ChartCard,
   Liquid,
   MiniArea,
@@ -54,7 +58,6 @@ export {
   MiniBar,
   MiniProgress,
   Radar,
-  TagCloud,
   ChartContainer,
   ThreeDBar,
   CityMap,

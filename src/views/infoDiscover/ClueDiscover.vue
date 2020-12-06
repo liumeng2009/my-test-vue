@@ -13,33 +13,10 @@
           </div>
         </a-card>
         <a-card title="各平台分布" :bodyStyle="{ padding: 0 }">
-          <v-chart
-            :force-fit="true"
-            ref="myChart"
-            :height="150"
-            :padding="[20, 20, 20, 20]"
-            :data="pieData"
-            :scale="pieScale"
-          >
-            <!-- <v-tooltip :showTitle="true" dataKey="item*percent" /> -->
-            <v-axis />
-            <!-- position="right" :offsetX="-140" -->
-            <!-- <v-legend dataKey="item"/> -->
-            <v-pie position="percent" color="item" :vStyle="pieStyle" :label="labelConfig" />
-            <v-coord type="theta" :radius="0.75" :innerRadius="0.6" />
-          </v-chart>
+
         </a-card>
         <a-card title="今日热词" :bodyStyle="{padding: 0}">
-          <v-chart
-            :autoFit="true"
-            :width="rightWidth"
-            :padding="[20, 20, 20, 20]"
-            :height="150"
-            :data="hotData"
-            :scale="scale"
-          >
-            <v-point position="x*y" color="category" shape="cloud" tooltip="value*category" />
-          </v-chart>
+
         </a-card>
         <a-card title="热词排行">
           <HotList :listData="hotListData" :transData="'hello'" />
@@ -50,10 +27,9 @@
 </template>
 
 <script>
-import { registerShape } from 'viser-vue'
 import { WbList, HotList } from '@/components'
 
-const DataSet = require('@antv/data-set')
+/*
 const sourceData = [
   { item: '家用电器', count: 32.2 },
   { item: '食用酒水', count: 21 },
@@ -61,24 +37,7 @@ const sourceData = [
   { item: '服饰箱包', count: 13 },
   { item: '母婴产品', count: 9 },
   { item: '其他', count: 7.8 }
-]
-
-const pieScale = [
-  {
-    dataKey: 'percent',
-    min: 0,
-    formatter: '.0%'
-  }
-]
-
-const dv = new DataSet.View().source(sourceData)
-dv.transform({
-  type: 'percent',
-  field: 'count',
-  dimension: 'item',
-  as: 'percent'
-})
-const pieData = dv.rows
+] */
 
 const wbList = [
   {
@@ -134,25 +93,6 @@ const scale = [// eslint-disable-line no-unused-vars
   { dataKey: 'y', nice: false }
 ]
 
-registerShape('point', 'cloud', {
-  draw(cfg, container) {
-    return container.addShape('text', {
-      attrs: {
-        fillOpacity: cfg.opacity,
-        fontSize: cfg.origin._origin.size / 2,
-        rotate: cfg.origin._origin.rotate,
-        text: cfg.origin._origin.text,
-        textAlign: 'center',
-        fontFamily: cfg.origin._origin.font,
-        fill: cfg.color,
-        ...cfg.style,
-        x: cfg.x,
-        y: cfg.y
-      }
-    })
-  }
-})
-
 const hotWordData = [// eslint-disable-line no-unused-vars
   {
     x: 'China',
@@ -196,35 +136,6 @@ const hotWordData = [// eslint-disable-line no-unused-vars
   }
 ]
 
-const dv2 = new DataSet.View().source(hotWordData)
-const range = dv2.range('value')
-const min = range[0]
-const max = range[1]
-dv2.transform({
-    type: 'tag-cloud',
-    fields: ['x', 'value'],
-    size: [600, 600],
-    font: 'Verdana',
-    padding: 5,
-    timeInterval: 5000, // max execute time
-    color: 'red',
-    rotate () {
-      let random = ~~(Math.random() * 4) % 4
-      if (random === 2) {
-          random = 0
-      }
-      return 0// 0, 90, 270
-    },
-    fontSize (d) {
-      if (d.value) {
-        return ((d.value - min) / (max - min)) * (80 - 24) + 24
-      }
-      return 0
-    }
-})
-const hotData = dv2.rows
-console.log(hotData)
-
 const hotListData = [
   '关键热词',
   '关键热词很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长',
@@ -240,32 +151,10 @@ export default {
   data () {
     return {
       wbList,
-      pieStyle: {
-        stroke: '#fff',
-        lineWidth: 1
-      },
-      pieData,
-      pieScale,
-      labelConfig: [
-        'percent',
-        {
-          formatter: (val, item) => {
-            return item.point.item + ': ' + val
-          }
-        }
-      ],
-      hotData,
       scale,
       hotListData,
       rightWidth: 0
     }
-  },
-  mounted () {
-    console.log(document.body.clientWidth)
-    console.log(document.documentElement.clientWidth)
-    const _width = document.body.clientWidth || document.documentElement.clientWidth
-    console.log('rightWidth', _width - 48 - 8)
-    this.rightWidth = (_width - 48) / 4 - 8
   }
 }
 </script>
