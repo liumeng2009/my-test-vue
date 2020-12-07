@@ -32,10 +32,6 @@ import ArticleListContent from '@/components/ArticleListContent'
 
 import Dialog from '@/components/Dialog'
 
-// project components
-import Statistic from '@/components/ProjectComponent/Statistic'
-import StatisticItem from '@/components/ProjectComponent/Statistic/item'
-
 import MaqueList from '@/components/ProjectComponent/MaqueList'
 
 import WbList from '@/components/WBList'
@@ -81,8 +77,6 @@ export {
 
   Dialog,
 
-  Statistic,
-  StatisticItem,
   MaqueList,
   WbList,
   WbItem,

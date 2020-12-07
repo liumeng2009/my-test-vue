@@ -3,13 +3,18 @@
     <a-row :gutter="16">
       <a-col span="18">
         <a-card title="线索发现">
-          <WbList :data="wbList" />
+          <div class="wb-list-container">
+            <WbItem v-for="(item, index) in wbData" :key="index" :data="item" />
+          </div>
+          <div class="pagination-wrapper" v-if="wbData.length > 0">
+            <a-pagination v-model="currentPage" :total="50" show-less-items />
+          </div>
         </a-card>
       </a-col>
       <a-col span="6" class="right-column">
         <a-card title="线索统计">
           <div class="center-card">
-            <span style="line-height: 30px">今日新增:<span>27986</span></span>
+            <span style="line-height: 30px">今日新增:<span>{{ addedToday }}</span></span>
           </div>
         </a-card>
         <a-card title="各平台分布" :bodyStyle="{ padding: 0 }">
@@ -27,18 +32,10 @@
 </template>
 
 <script>
-import { WbList, HotList, Pie, CloudWord } from '@/components'
+import { WbItem, HotList, Pie, CloudWord } from '@/components'
 
-const pie = [
-  { item: '家用电器', count: 32.2 },
-  { item: '食用酒水', count: 21 },
-  { item: '个护健康', count: 17 },
-  { item: '服饰箱包', count: 13 },
-  { item: '母婴产品', count: 9 },
-  { item: '其他', count: 7.8 }
-]
-
-const wbList = [
+// 左边大列表
+const wb = [
   {
     id: '0',
     avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
@@ -86,56 +83,54 @@ const wbList = [
   }
 ]
 
-// 热词
-const scale = [// eslint-disable-line no-unused-vars
-  { dataKey: 'x', nice: false },
-  { dataKey: 'y', nice: false }
+// 饼图
+const pie = [
+  { name: '家用电器', value: 32.2 },
+  { name: '食用酒水', value: 21 },
+  { name: '个护健康', value: 17 },
+  { name: '服饰箱包', value: 13 },
+  { name: '母婴产品', value: 9 },
+  { name: '其他', value: 7.8 }
 ]
 
-const hotWordData = [// eslint-disable-line no-unused-vars
+// 热词
+const hotWord = [
   {
     name: 'China',
-    value: 138,
-    category: 'asia'
+    value: 138
   },
   {
     name: 'India',
-    value: 131,
-    category: 'asia'
+    value: 131
   },
   {
     name: 'United States',
-    value: 32,
-    category: 'america'
+    value: 32
   },
   {
     name: 'Indonesia',
-    value: 26,
-    category: 'asia'
+    value: 26
   },
   {
     name: 'Brazil',
-    value: 20,
-    category: 'america'
+    value: 20
   },
   {
     name: 'Pakistan',
-    value: 19,
-    category: 'asia'
+    value: 19
   },
   {
     name: 'Nigeria',
-    value: 19,
-    category: 'africa'
+    value: 19
   },
   {
     name: 'Bangladesh',
-    value: 16,
-    category: 'asia'
+    value: 16
   }
 ]
 
-const hotListData = [
+// 热词排行
+const hotList = [
   '关键热词',
   '关键热词很长很长很长很长很长很长很长很长很长很长很长很长很长很长很长',
   '关键热词'
@@ -144,25 +139,38 @@ const hotListData = [
 export default {
   name: 'ClueDiscover',
   components: {
-    WbList,
+    WbItem,
     HotList,
     Pie,
     CloudWord
   },
   data () {
     return {
-      pieData: pie,
-      wbList,
-      scale,
-      hotListData,
-      rightWidth: 0,
-      hotWordData: hotWordData
+      wbData: [],
+      pieData: [],
+      hotWordData: [],
+      hotListData: [],
+      addedToday: 0,
+      currentPage: 0
     }
+  },
+  mounted () {
+    // 获取数据
+    setTimeout(() => {
+      this.wbData = wb
+      this.pieData = pie
+      this.hotWordData = hotWord
+      this.hotListData = hotList
+      this.addedToday = 27986
+    }, 2000)
   }
 }
 </script>
 
 <style lang="less" scoped>
+.wb-list-container{
+  min-height: 600px;
+}
 .right-column {
   & > .ant-card {
     margin-bottom: 16px;

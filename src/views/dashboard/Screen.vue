@@ -86,7 +86,7 @@
           <a-col span="12">
             <a-card title="当日预警变化" :bodyStyle="{padding: 0}" :bordered="false">
               <Chart-Container :totalData="totalData" :showTotalBackground="false" :size="'small'" :chartHeight="100" >
-                <Bar :dataSource="dataSimpleLineFall" :trend="true" :trendType="'fall'"  />
+                <Bar :dataSource="dataSimpleLineFall" :trend="true" :trendType="'fall'"/>
               </Chart-Container>
             </a-card>
           </a-col>
@@ -106,7 +106,7 @@
 </template>
 
 <script>
-import { Statistic, StatisticItem, MaqueList, MiniSmoothArea, MiniBar, ChartContainer, Pie, Bar, LineChart, HotBar } from '@/components'
+import { MaqueList, MiniSmoothArea, MiniBar, ChartContainer, Pie, Bar, LineChart, HotBar } from '@/components'
 
 const dataMaque = [
   {
@@ -219,8 +219,6 @@ const dataHot = [// eslint-disable-line no-unused-vars
 export default {
   name: 'Screen',
   components: {
-    Statistic,
-    StatisticItem,
     MaqueList,
     MiniSmoothArea,
     MiniBar,

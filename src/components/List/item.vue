@@ -76,9 +76,19 @@ export default {
   min-height: 100px;
   box-sizing: content-box;
   border-bottom: #ccc 1px dashed;
+  display: flex;
+  align-items: center;
+
+  &:nth-of-type(1){
+    padding-top: 0px;
+  }
+
+  &:last-child{
+    border-bottom:none;
+  }
 
   .item-avatar {
-    width: 100px;
+    width: 10%;
     height: 100%;
     float: left;
     display: flex;
@@ -92,7 +102,7 @@ export default {
   }
 
   .item-content {
-    overflow: hidden;
+    width: 90%;
 
     .top {
       width: 100%;
@@ -129,10 +139,6 @@ export default {
       line-height: 25px;
       margin-bottom: 4px;
   }
-}
-
-.wb-item-wrapper:last-child {
-    border-bottom: none;
 }
 
 </style>

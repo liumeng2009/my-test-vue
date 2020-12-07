@@ -56,6 +56,13 @@ export default {
             default: () => []
         }
     },
+    watch: {
+        dataSource(newVal, oldVal) {
+            const myChart = echarts.init(this.$refs.cloudContainer)
+            option.series[0].data = newVal
+            myChart.setOption(option, true)
+        }
+    },
     computed: {
         oStyle () {
             const result = {}

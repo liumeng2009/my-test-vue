@@ -46,19 +46,14 @@ export default {
             default: () => []
         }
     },
-    mounted () {
-        const myChart = echarts.init(this.$refs.pieChart)
-        setTimeout(() => {
-            option.series[0].data = [// eslint-disable-line no-unused-vars
-                { name: '家用电器', value: 32.2 },
-                { name: '食用酒水', value: 21 },
-                { name: '个护健康', value: 17 },
-                { name: '服饰箱包', value: 13 },
-                { name: '母婴产品', value: 9 },
-                { name: '其他', value: 7.8 }
-            ]
+    watch: {
+        dataSource (newVal, oldVal) {
+            console.log(newVal)
+            const myChart = echarts.init(this.$refs.pieChart)
+            option.series[0].data = newVal
+            console.log(option)
             myChart.setOption(option, true)
-        }, 2000)
+        }
     },
     computed: {
         oStyle () {

@@ -5,7 +5,7 @@
         <a-card>
           <a-tabs :default-active-key="activeLeftKey" @change="handleLeftTabChange">
             <a-tab-pane v-for="item in tabLeftList" :key="item.key" :tab="item.tab">
-              <h1>{{item.tab}}</h1>
+              <h1>{{ item.tab }}</h1>
             </a-tab-pane>
           </a-tabs>
         </a-card>
