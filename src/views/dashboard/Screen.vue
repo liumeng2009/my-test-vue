@@ -79,14 +79,14 @@
           <a-col span="12">
             <a-card title="月度预警变化" :bodyStyle="{padding: 0}" :bordered="false">
               <Chart-Container :totalData="totalData" :showTotalBackground="false" :size="'small'" :chartHeight="100">
-                <Bar :dataSource="dataSimpleLine" />
+                <Bar :dataSource="dataSimpleLine" :trend="true" :trendType="'rise'" />
               </Chart-Container>
             </a-card>
           </a-col>
           <a-col span="12">
             <a-card title="当日预警变化" :bodyStyle="{padding: 0}" :bordered="false">
               <Chart-Container :totalData="totalData" :showTotalBackground="false" :size="'small'" :chartHeight="100" >
-                <Bar :dataSource="dataSimpleLineFall" />
+                <Bar :dataSource="dataSimpleLineFall" :trend="true" :trendType="'fall'"  />
               </Chart-Container>
             </a-card>
           </a-col>
@@ -96,7 +96,7 @@
         <div class="card-container">
           <a-tabs type="card" :tab-list="tabHotList" :default-active-key="activeHotKey" @change="handleHotTabChange($event)">
             <a-tab-pane v-for="item in tabHotList" :key="item.key" :tab="item.tab">
-
+              <HotBar :dataSource="dataHot" :height="203" />
             </a-tab-pane>
           </a-tabs>
         </div>
@@ -106,7 +106,7 @@
 </template>
 
 <script>
-import { Statistic, StatisticItem, MaqueList, MiniSmoothArea, MiniBar, ChartContainer, Pie, Bar, LineChart } from '@/components'
+import { Statistic, StatisticItem, MaqueList, MiniSmoothArea, MiniBar, ChartContainer, Pie, Bar, LineChart, HotBar } from '@/components'
 
 const dataMaque = [
   {
@@ -227,7 +227,8 @@ export default {
     ChartContainer,
     Pie,
     Bar,
-    LineChart
+    LineChart,
+    HotBar
   },
   data() {
     return {
@@ -266,7 +267,7 @@ export default {
           tab: '当日热点排行'
         },
         {
-          key: 'dayWeek',
+          key: 'weekHot',
           tab: '本周热点排行'
         }
       ],
@@ -307,6 +308,7 @@ export default {
     },
     handleHotTabChange (e) {
       this.activeHotKey = e
+      console.log(e)
     },
     handleLineTabChange (e) {
       this.activeLineKey = e

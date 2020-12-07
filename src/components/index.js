@@ -1,7 +1,9 @@
 // chart
 import Pie from '@/components/Charts/Pie'
 import Bar from '@/components/Charts/Bar'
+import HotBar from '@/components/Charts/HotBar'
 import LineChart from '@/components/Charts/Line'
+import CloudWord from '@/components/Charts/CloudWord'
 import ChartCard from '@/components/Charts/ChartCard'
 import Liquid from '@/components/Charts/Liquid'
 import MiniArea from '@/components/Charts/MiniArea'
@@ -12,7 +14,6 @@ import Radar from '@/components/Charts/Radar'
 import RankList from '@/components/Charts/RankList'
 import TransferBar from '@/components/Charts/TransferBar'
 import ChartContainer from '@/components/Charts/ChartContainer'
-import ThreeDBar from '@/components/Charts/ThreeDBar'
 import CityMap from '@/components/Map/CityMap'
 
 // pro components
@@ -38,19 +39,22 @@ import StatisticItem from '@/components/ProjectComponent/Statistic/item'
 import MaqueList from '@/components/ProjectComponent/MaqueList'
 
 import WbList from '@/components/WBList'
+import WbItem from '@/components/List/item'
 
 import HotList from '@/components/List'
 import SecList from '@/components/List/ListSec'
 
 import AccountCard from '@/components/AccountCard'
-import ReasonCard from '@/components/ReasonCard'
+import FoundReason from '@/components/FoundReason'
 
 export {
   AvatarList,
 
   Pie,
   Bar,
+  HotBar,
   LineChart,
+  CloudWord,
   ChartCard,
   Liquid,
   MiniArea,
@@ -59,7 +63,6 @@ export {
   MiniProgress,
   Radar,
   ChartContainer,
-  ThreeDBar,
   CityMap,
 
   RankList,
@@ -82,10 +85,11 @@ export {
   StatisticItem,
   MaqueList,
   WbList,
+  WbItem,
 
   HotList,
   SecList,
 
   AccountCard,
-  ReasonCard
+  FoundReason
 }

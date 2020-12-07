@@ -46,9 +46,6 @@
         </a-card>
       </a-col>
       <a-col :span="span_2" v-if="showRight">
-        <a-card title="3D柱图" style="margin-bottom: 16px">
-          <ThreeDBar />
-        </a-card>
         <a-card title="账号简介" style="margin-bottom: 16px">
           {{ detail.authorInfo && detail.authorInfo.description }}
         </a-card>
@@ -58,8 +55,16 @@
         <a-card title="账号简介" style="margin-bottom: 16px">
           <AccountCard :data="detail.account" />
         </a-card>
-        <a-card title="发现原因">
-          <ReasonCard />
+        <a-card title="发现原因" :bodyStyle="{padding: 16 + 'px'}">
+          <FoundReason
+            :tactics="'策略一'"
+            :keyWords="['共振', '上街', 'liyiping1911']"
+            :accountName="'Cyrano7700'"
+            :support="841"
+            :comment="859"
+            :share="51"
+            :at="12"
+          />
         </a-card>
       </a-col>
     </a-row>
@@ -68,15 +73,14 @@
 
 <script>
 import { AddIcon } from '@/core/directives'
-import { SecList, AccountCard, ReasonCard, ThreeDBar } from '@/components'
+import { SecList, AccountCard, FoundReason } from '@/components'
 
 export default {
   name: 'ClueDiscoverDetail',
   components: {
     SecList,
     AccountCard,
-    ReasonCard,
-    ThreeDBar
+    FoundReason
   },
   directives: {
     AddIcon

@@ -35,20 +35,20 @@ export const asyncRouterMap = [
             meta: { title: '线索发现' }
           },
           {
-            path: '/infoDiscover/clueDiscoverDetail',
+            path: '/infoDiscover/clueDiscover/detail',
             name: 'ClueDiscoverDetail',
             hidden: true,
             component: () => import('@/views/infoDiscover/ClueDiscoverDetail'),
             meta: { title: '线索发现详情' }
           },
           {
-            path: 'clueSearch',
+            path: '/infoDiscover/clueSearch',
             name: 'ClueSearch',
             component: () => import('@/views/infoDiscover/ClueSearch'),
             meta: { title: '线索查询', keepAlive: false }
           },
           {
-            path: 'eventReport',
+            path: '/infoDiscover/eventReport',
             name: 'EventReport',
             component: () => import('@/views/infoDiscover/EventReport'),
             meta: { title: '事件上报', keepAlive: false }

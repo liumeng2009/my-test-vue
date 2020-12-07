@@ -13,10 +13,10 @@
           </div>
         </a-card>
         <a-card title="各平台分布" :bodyStyle="{ padding: 0 }">
-
+          <Pie :dataSource="pieData" :height="200" />
         </a-card>
         <a-card title="今日热词" :bodyStyle="{padding: 0}">
-
+          <CloudWord :height="200" :dataSource="hotWordData" />
         </a-card>
         <a-card title="热词排行">
           <HotList :listData="hotListData" :transData="'hello'" />
@@ -27,17 +27,16 @@
 </template>
 
 <script>
-import { WbList, HotList } from '@/components'
+import { WbList, HotList, Pie, CloudWord } from '@/components'
 
-/*
-const sourceData = [
+const pie = [
   { item: '家用电器', count: 32.2 },
   { item: '食用酒水', count: 21 },
   { item: '个护健康', count: 17 },
   { item: '服饰箱包', count: 13 },
   { item: '母婴产品', count: 9 },
   { item: '其他', count: 7.8 }
-] */
+]
 
 const wbList = [
   {
@@ -95,42 +94,42 @@ const scale = [// eslint-disable-line no-unused-vars
 
 const hotWordData = [// eslint-disable-line no-unused-vars
   {
-    x: 'China',
+    name: 'China',
     value: 138,
     category: 'asia'
   },
   {
-    x: 'India',
+    name: 'India',
     value: 131,
     category: 'asia'
   },
   {
-    x: 'United States',
+    name: 'United States',
     value: 32,
     category: 'america'
   },
   {
-    x: 'Indonesia',
+    name: 'Indonesia',
     value: 26,
     category: 'asia'
   },
   {
-    x: 'Brazil',
+    name: 'Brazil',
     value: 20,
     category: 'america'
   },
   {
-    x: 'Pakistan',
+    name: 'Pakistan',
     value: 19,
     category: 'asia'
   },
   {
-    x: 'Nigeria',
+    name: 'Nigeria',
     value: 19,
     category: 'africa'
   },
   {
-    x: 'Bangladesh',
+    name: 'Bangladesh',
     value: 16,
     category: 'asia'
   }
@@ -146,14 +145,18 @@ export default {
   name: 'ClueDiscover',
   components: {
     WbList,
-    HotList
+    HotList,
+    Pie,
+    CloudWord
   },
   data () {
     return {
+      pieData: pie,
       wbList,
       scale,
       hotListData,
-      rightWidth: 0
+      rightWidth: 0,
+      hotWordData: hotWordData
     }
   }
 }

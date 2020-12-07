@@ -24,6 +24,7 @@
 </template>
 
 <script>
+// 好友关系列表
 import { ChangeColor } from '@/core/directives'
 export default {
   name: 'SecList',

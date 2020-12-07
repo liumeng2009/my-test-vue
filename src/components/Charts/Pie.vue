@@ -1,5 +1,5 @@
 <template>
-  <div class="pie-container" ref="pieChart">
+  <div class="pie-container" ref="pieChart" :style="oStyle">
 
   </div>
 </template>
@@ -59,6 +59,16 @@ export default {
             ]
             myChart.setOption(option, true)
         }, 2000)
+    },
+    computed: {
+        oStyle () {
+            const result = {}
+            console.log(this.$props.height)
+            if (this.$props.height) {
+                result.height = this.$props.height + 'px'
+            }
+            return result
+        }
     }
 }
 </script>
