@@ -20,8 +20,6 @@ import './permission' // permission control
 import './utils/filter' // global filter
 import './global.less' // global style
 
-import { numToStr } from './filters'
-
 Vue.config.productionTip = false
 
 // mount axios to `Vue.$http` and `this.$http`
@@ -30,8 +28,6 @@ Vue.use(VueAxios)
 Vue.component('pro-layout', ProLayout)
 Vue.component('page-container', PageHeaderWrapper)
 Vue.component('page-header-wrapper', PageHeaderWrapper)
-
-Vue.filter('numToStr', numToStr)
 
 window.umi_plugin_ant_themeVar = themePluginConfig.theme
 

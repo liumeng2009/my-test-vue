@@ -157,7 +157,7 @@ const list = [
 ]
 
 export default {
-    name: 'EventReport',
+    name: 'EventActionDetail',
     components: {
       PieCircle,
       LineChart,
@@ -230,17 +230,5 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.tab-bar-num{
-  position: absolute;
-  display: block;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: red;
-  color: #fff;
-  top: 0px;
-  right: 8px;
-  line-height: 18px;
-  text-align: center;
-}
+
 </style>

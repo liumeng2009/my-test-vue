@@ -17,14 +17,10 @@
 <script>
 // 热词排行列表
 import { RiseFilling } from '@/core/icons'
-import { cutLongStr } from '@/filters'
 export default {
   name: 'HotList',
   components: {
     RiseFilling
-  },
-  filters: {
-    cutLongStr
   },
   props: {
     listData: {

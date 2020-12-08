@@ -65,3 +65,8 @@ export function removeLoadingAnimate (id = '', timeout = 1500) {
     document.body.removeChild(document.getElementById(id))
   }, timeout)
 }
+
+export function formatNumber(num) {
+  const reg = /(?=(\B)(\d{3})+$)/g
+  return num.toString().replace(reg, ',')
+}

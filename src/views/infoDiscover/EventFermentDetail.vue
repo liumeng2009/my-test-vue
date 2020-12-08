@@ -2,38 +2,46 @@
   <page-header-wrapper :title="false">
     <a-row :gutter="16">
       <a-col :span="18">
-        <a-card>
-          <a-tabs :default-active-key="activeLeftKey" @change="handleLeftTabChange">
-            <a-tab-pane :key="'fajiao'" style="min-height: 600px">
-              <template v-slot:tab>
-                事件发酵
-                <span class="tab-bar-num">6</span>
-              </template>
-              <div class="list-container">
-                <ReportFermentItem v-for="(item, index) in reportListData" :key="index" :dataSource="item" />
-              </div>
-              <div class="pagination-wrapper" v-if="reportListData.length > 0">
-                <a-pagination v-model="currentPageFajiao" :total="50" show-less-items />
-              </div>
-            </a-tab-pane>
-            <a-tab-pane :key="'xingdong'" style="min-height: 600px">
-              <template v-slot:tab>
-                事件行动
-                <span class="tab-bar-num">8</span>
-              </template>
-              <div class="list-container">
-                <ReportActionItem v-for="(item, index) in reportListData2" :key="index" :dataSource="item" />
-              </div>
-              <div class="pagination-wrapper" v-if="reportListData.length > 0">
-                <a-pagination v-model="currentPageFajiao" :total="50" show-less-items />
-              </div>
-            </a-tab-pane>
-          </a-tabs>
+        <a-card title="发酵事件详情">
+            <div class="detail-wrapper">
+                <div class="top">
+                    <span><a-icon type="heat-map" />美国</span>
+                    <span><a-icon type="profile" />境内群体事件</span>
+                </div>
+                <div class="title">
+                    <div class="left">
+                        <span>发酵主题：</span>
+                        平度老兵，上街抗议，声称维权
+                    </div>
+                    <div class="right">
+                        阶段报告：
+                        <a>平度劳宾</a>
+                        <a-icon type="download" />
+                    </div>
+                </div>
+                <div class="createdAt">
+                    2020-4-10 15:54:41
+                </div>
+                <div class="progress">
+                    <a-progress :percent="55" status="active" />
+                </div>
+                <div class="list-head">
+                    <span>20</span>条相关言论
+                </div>
+                <div class="list-container">
+
+                </div>
+            </div>
         </a-card>
       </a-col>
       <a-col :span="6">
-        <a-card title="事件统计" :bodyStyle="{padding: 0}" style="margin-bottom: 16px">
-          <PieCircle :dataSource="pieCircleData" :height="200" :width="300" />
+        <a-card title="预警原因" style="margin-bottom: 16px">
+            <div style="display:flex;align-items: center;justify-content: space-between">
+                <a-icon type="check" />
+                符合
+                <span>事件发酵</span>
+                模型
+            </div>
         </a-card>
         <div class="card-container" style="margin-bottom: 16px">
           <a-tabs
@@ -157,7 +165,7 @@ const list = [
 ]
 
 export default {
-    name: 'EventReport',
+    name: 'EventFermentDetail',
     components: {
       PieCircle,
       LineChart,
@@ -230,17 +238,5 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.tab-bar-num{
-  position: absolute;
-  display: block;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: red;
-  color: #fff;
-  top: 0px;
-  right: 8px;
-  line-height: 18px;
-  text-align: center;
-}
+
 </style>

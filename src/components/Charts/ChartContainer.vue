@@ -5,7 +5,7 @@
     </div>
     <div class="chart-total" :style="totalStyle">
       <div class="chart-total-item" v-for="(item, index) in totalData" :key="index">
-        <span class="chart-total-value" :style="{fontSize: fontValue}">{{ item.value | numToStr }}</span>
+        <span class="chart-total-value" :style="{fontSize: fontValue}">{{ item.value | NumberFormat }}</span>
         <span class="chart-total-title" :style="{fontSize: fontTitle}">{{ item.title }}</span>
       </div>
     </div>
@@ -14,7 +14,6 @@
 </template>
 
 <script>
-import { numToStr } from '@/filters'
 export default {
   name: 'ChartContainer',
   props: {
@@ -38,9 +37,6 @@ export default {
         type: String,
         default: 'top'
     }
-  },
-  directives: {
-      numToStr
   },
   mounted () {
     const { size } = this.$props

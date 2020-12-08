@@ -54,6 +54,20 @@ export const asyncRouterMap = [
             meta: { title: '事件上报', keepAlive: false }
           },
           {
+            path: '/infoDiscover/eventReport/detail?type=ferment',
+            name: 'EventFermentDetail',
+            hidden: true,
+            component: () => import('@/views/infoDiscover/EventFermentDetail'),
+            meta: { title: '事件发酵详情', keepAlive: false }
+          },
+          {
+            path: '/infoDiscover/eventReport/detail?type=action',
+            name: 'EventFermentDetail',
+            hidden: true,
+            component: () => import('@/views/infoDiscover/EventActionDetail'),
+            meta: { title: '事件行动详情', keepAlive: false }
+          },
+          {
             path: 'eventSearch',
             name: 'EventSearch',
             component: () => import('@/views/infoDiscover/EventSearch'),

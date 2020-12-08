@@ -1,5 +1,6 @@
 // chart
 import Pie from '@/components/Charts/Pie'
+import PieCircle from '@/components/Charts/PieCircle'
 import Bar from '@/components/Charts/Bar'
 import HotBar from '@/components/Charts/HotBar'
 import LineChart from '@/components/Charts/Line'
@@ -36,9 +37,12 @@ import MaqueList from '@/components/ProjectComponent/MaqueList'
 
 import WbList from '@/components/WBList'
 import WbItem from '@/components/List/item'
+import ReportFermentItem from '@/components/List/ReportFermentItem'
+import ReportActionItem from '@/components/List/ReportActionItem'
 
 import HotList from '@/components/List'
 import SecList from '@/components/List/ListSec'
+import ThirdList from '@/components/List/ListThird'
 
 import AccountCard from '@/components/AccountCard'
 import FoundReason from '@/components/FoundReason'
@@ -47,6 +51,7 @@ export {
   AvatarList,
 
   Pie,
+  PieCircle,
   Bar,
   HotBar,
   LineChart,
@@ -80,9 +85,12 @@ export {
   MaqueList,
   WbList,
   WbItem,
+  ReportFermentItem,
+  ReportActionItem,
 
   HotList,
   SecList,
+  ThirdList,
 
   AccountCard,
   FoundReason

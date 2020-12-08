@@ -1,6 +1,6 @@
 <template>
-  <div class="pie-container" ref="pieChart" :style="oStyle">
-
+  <div class="container" >
+    <div ref="pie" :style="oStyle"></div>
   </div>
 </template>
 
@@ -20,7 +20,7 @@ const option = {
             center: ['50%', '50%'],
             // roseType: 'radius',
             label: {
-                formatter: '{b} {c}'
+                formatter: '{b} : {c}'
             },
             animationType: 'scale',
             animationEasing: 'elasticOut',
@@ -46,13 +46,13 @@ export default {
             default: () => []
         }
     },
+    mounted () {
+        const data = this.$props.dataSource
+        this.draw(data)
+    },
     watch: {
         dataSource (newVal, oldVal) {
-            console.log(newVal)
-            const myChart = echarts.init(this.$refs.pieChart)
-            option.series[0].data = newVal
-            console.log(option)
-            myChart.setOption(option, true)
+            this.draw(newVal)
         }
     },
     computed: {
@@ -62,17 +62,32 @@ export default {
             if (this.$props.height) {
                 result.height = this.$props.height + 'px'
             }
+            if (this.$props.width) {
+                result.width = this.$props.width + 'px'
+            }
             return result
+        }
+    },
+    methods: {
+        draw (data) {
+            const _chart = echarts.init(this.$refs.pie)
+            if (data instanceof Array && data.length > 0) {
+                option.series[0].data = data
+                _chart.setOption(option)
+            }
         }
     }
 }
 </script>
 
 <style lang="less" scoped>
-    .pie-container{
+    .container{
         width: 100%;
         height: 100%;
         padding: 16px;
         box-sizing: border-box;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 </style>
