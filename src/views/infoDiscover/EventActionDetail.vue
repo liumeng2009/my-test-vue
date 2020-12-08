@@ -2,56 +2,56 @@
   <page-header-wrapper :title="false">
     <a-row :gutter="16">
       <a-col :span="18">
-        <a-card>
-          <a-tabs :default-active-key="activeLeftKey" @change="handleLeftTabChange">
-            <a-tab-pane :key="'fajiao'" style="min-height: 600px">
-              <template v-slot:tab>
-                事件发酵
-                <span class="tab-bar-num">6</span>
-              </template>
-              <div class="list-container">
-                <ReportFermentItem v-for="(item, index) in reportListData" :key="index" :dataSource="item" />
+        <a-card title="发酵事件详情">
+          <div class="detail-wrapper">
+            <div class="top">
+              <span v-add-icon>Twitter</span>
+              <span><a-icon type="heat-map" />美国</span>
+            </div>
+            <div class="title">
+              <div class="left">
+                <span>发酵主题：</span>
+                平度老兵，上街抗议，声称维权
               </div>
-              <div class="pagination-wrapper" v-if="reportListData.length > 0">
-                <a-pagination v-model="currentPageFajiao" :total="50" show-less-items />
+              <div class="right">
+                阶段报告：
+                <a>平度劳宾</a>
+                <a-icon type="download" />
               </div>
-            </a-tab-pane>
-            <a-tab-pane :key="'xingdong'" style="min-height: 600px">
-              <template v-slot:tab>
-                事件行动
-                <span class="tab-bar-num">8</span>
-              </template>
-              <div class="list-container">
-                <ReportActionItem v-for="(item, index) in reportListData2" :key="index" :dataSource="item" />
-              </div>
-              <div class="pagination-wrapper" v-if="reportListData.length > 0">
-                <a-pagination v-model="currentPageFajiao" :total="50" show-less-items />
-              </div>
-            </a-tab-pane>
-          </a-tabs>
+            </div>
+            <div class="createdAt">2020-4-10 15:54:41</div>
+            <div class="progress">
+              <a-progress :percent="55" status="active" />
+            </div>
+            <div class="user">
+              <img src="https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png" alt="">
+              <span>邹承凤</span>
+              <span>(cyrano7700)</span>
+            </div>
+            <div class="content">
+              全民共振
+            </div>
+            <div class="img-area">
+              <img src="https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png" alt="">
+              <span>图片或者视频标题</span>
+            </div>
+          </div>
+          <div class="btn-area">
+            <a-button>返回</a-button>
+          </div>
         </a-card>
       </a-col>
       <a-col :span="6">
-        <a-card title="事件统计" :bodyStyle="{padding: 0}" style="margin-bottom: 16px">
-          <PieCircle :dataSource="pieCircleData" :height="200" :width="300" />
+        <a-card title="预警原因" style="margin-bottom: 16px">
+          <div style="display: flex; align-items: center; justify-content: center">
+            <a-icon type="check" />
+            符合
+            <span style="font-size: 16px;font-weight:bolder">事件行动</span>
+            模型
+          </div>
         </a-card>
-        <div class="card-container" style="margin-bottom: 16px">
-          <a-tabs
-            type="card"
-            class="tab-panel-wrapper"
-            :default-active-key="activeRightKey"
-            @change="handleRightTabChange($event)"
-          >
-            <a-tab-pane :key="'month'" :tab="'上报事件趋势'">
-              <LineChart :dataSource="lineData" :height="200" />
-            </a-tab-pane>
-            <a-tab-pane :key="'social'" :tab="'各平台分布统计'">
-              <Pie :dataSource="pieData" :height="200" :width="300" />
-            </a-tab-pane>
-          </a-tabs>
-        </div>
-        <a-card title="核查进程">
-          <ThirdList :dataSource="listData" />
+        <a-card title="重点人物研判" style="margin-bottom: 16px">
+          <FourList :dataSource="listManData" />
         </a-card>
       </a-col>
     </a-row>
@@ -59,176 +59,151 @@
 </template>
 
 <script>
-import { PieCircle, LineChart, Pie, ThirdList, ReportFermentItem, ReportActionItem } from '@/components'
+import { FourList } from '@/components'
+import { AddIcon } from '@/core/directives'
 
-const reportList = [
+const listMan = [
   {
-    title: '平度老兵',
-    content: '大家一定要小心',
-    progress: 82,
-    type: '境内群体事件 社会福利漏洞',
-    createdAt: '2020-10-11',
-    location: '平度',
-    tags: '平度老兵、上街抗议'
+    avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
+    nickname: '山东',
+    username: 'admin',
+    gongxian: 40,
+    progress: 1
   },
   {
-    title: '平度老兵',
-    content: '大家一定要小心',
-    progress: 82,
-    type: '境内群体事件 社会福利漏洞',
-    createdAt: '2020-10-11',
-    location: '平度',
-    tags: '平度老兵、上街抗议'
+    avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
+    nickname: '山东',
+    username: 'admin',
+    gongxian: 40,
+    progress: 1
   },
   {
-    title: '平度老兵',
-    content: '大家一定要小心',
-    progress: 82,
-    type: '境内群体事件 社会福利漏洞',
-    createdAt: '2020-10-11',
-    location: '平度',
-    tags: '平度老兵、上街抗议'
+    avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
+    nickname: '山东',
+    username: 'admin',
+    gongxian: 40,
+    progress: 1
+  },
+  {
+    avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
+    nickname: '山东',
+    username: 'admin',
+    gongxian: 40,
+    progress: 1
   }
-]
-const reportList2 = [
-  {
-    avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
-    nickname: '吴文行',
-    username: 'wenxingwu',
-    title: '平度老兵',
-    source: 'Twitter',
-    content: '大家一定要小心',
-    progress: 82,
-    type: '境内群体事件 社会福利漏洞',
-    createdAt: '2020-10-11',
-    location: '平度',
-    tags: '平度老兵、上街抗议'
-  },
-  {
-    avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
-    nickname: '吴文行',
-    username: 'wenxingwu',
-    title: '平度老兵',
-    source: 'Twitter',
-    content: '大家一定要小心',
-    progress: 82,
-    type: '境内群体事件 社会福利漏洞',
-    createdAt: '2020-10-11',
-    location: '平度',
-    tags: '平度老兵、上街抗议'
-  },
-  {
-    avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
-    nickname: '吴文行',
-    username: 'wenxingwu',
-    title: '平度老兵',
-    source: 'Twitter',
-    content: '大家一定要小心',
-    progress: 82,
-    type: '境内群体事件 社会福利漏洞',
-    createdAt: '2020-10-11',
-    location: '平度',
-    tags: '平度老兵、上街抗议'
-  }
-]
-const pieCircle = [// eslint-disable-line
-  { name: 'xingdong', value: 15 },
-  { name: 'fajiao', value: 23 }
-]
-
-const line = [// eslint-disable-line
-  { name: '6月', xingdong: 23, fajiao: 12, all: 35 },
-  { name: '7月', xingdong: 13, fajiao: 52, all: 65 },
-  { name: '8月', xingdong: 63, fajiao: 22, all: 85 }
-]
-
-const pie = [// eslint-disable-line
-  { name: 'Twitter', value: 15 },
-  { name: 'Facebook', value: 23 },
-  { name: 'Youtube', value: 15 },
-  { name: 'Other', value: 23 }
-]
-
-const list = [
-  { title: '维权游行', progress: 82 },
-  { title: '维权游行', progress: 12 },
-  { title: '维权游行', progress: 100 },
-  { title: '维权游行', progress: 56 }
 ]
 
 export default {
-    name: 'EventActionDetail',
-    components: {
-      PieCircle,
-      LineChart,
-      Pie,
-      ThirdList,
-      ReportFermentItem,
-      ReportActionItem
-    },
-    data () {
-      return {
-        // 左列表tab
-        tabLeftList: [
-          {
-            key: 'fajiao',
-            tab: '事件发酵'
-          },
-          {
-            key: 'action',
-            tab: '重大行动'
-          }
-        ],
-        activeLeftKey: 'fajiao',
-
-        // 右2 tab
-        tabRightList: [
-          {
-            key: 'month',
-            tab: '上报事件趋势'
-          },
-          {
-            key: 'social',
-            tab: '各平台分布统计'
-          }
-        ],
-        activeRightKey: 'month',
-
-        // 右上 饼图数据
-        pieCircleData: [],
-        // tab卡片 线图和饼图
-        lineData: [],
-        pieData: [],
-        // 右下角列表
-        listData: [],
-        // 左边大列表
-        reportListData: [],
-        reportListData2: [],
-        currentPageFajiao: 0,
-        currentPageXingdong: 0
-      }
-    },
-    mounted () {
-      setTimeout(() => {
-        this.pieCircleData = pieCircle
-        this.lineData = line
-        this.pieData = pie
-        this.listData = list
-        this.reportListData = reportList
-        this.reportListData2 = reportList2
-      }, 500)
-    },
-    methods: {
-      handleLeftTabChange(e) {
-        this.activeLeftKey = e
-      },
-      handleRightTabChange(e) {
-        this.activeRightKey = e
-      }
+  name: 'EventActionDetail',
+  directives: {
+    AddIcon
+  },
+  components: {
+    FourList
+  },
+  data() {
+    return {
+      // 右边俩小列表
+      listManData: []
     }
+  },
+  mounted() {
+    setTimeout(() => {
+      this.listManData = listMan
+    }, 500)
+  }
 }
 </script>
 
 <style lang="less" scoped>
+.detail-wrapper{
 
+  .top{
+    padding: 0px 0px 8px 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom:#ccc 1px dashed;
+    margin-bottom: 16px;
+
+    & > span > i {
+      margin-right: 4px;
+    }
+
+    & > span:nth-of-type(1){
+      margin-right: 8px;
+      display: flex;
+      flex-direction: row-reverse;
+      align-items: center;
+    }
+  }
+
+  .title{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 0px;
+
+    .left{
+      font-weight: bolder;
+    }
+
+    .right{
+      i {
+        margin-left:8px;
+      }
+    }
+  }
+
+  .createdAt{
+    font-size: 12px;
+  }
+
+  .progress{
+    margin: 16px 0px;
+  }
+
+  .user{
+    display: flex;
+    align-items: center;
+    font-weight: bolder;
+    margin-top: 16px;
+
+    & > img{
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      margin-right: 8px;
+    }
+  }
+
+  .content{
+    padding: 16px 8px;
+  }
+
+  .img-area{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+
+    img {
+      min-height: 300px;
+      border: #ccc 1px solid;
+    }
+
+    & > span{
+      display: inline-block;
+      padding: 8px;
+    }
+  }
+}
+
+.btn-area{
+  margin-top: 32px;
+  display: flex;
+  justify-content: center;
+}
 </style>

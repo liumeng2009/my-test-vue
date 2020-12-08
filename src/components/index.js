@@ -39,10 +39,12 @@ import WbList from '@/components/WBList'
 import WbItem from '@/components/List/item'
 import ReportFermentItem from '@/components/List/ReportFermentItem'
 import ReportActionItem from '@/components/List/ReportActionItem'
+import ItemSec from '@/components/List/ItemSec'
 
 import HotList from '@/components/List'
 import SecList from '@/components/List/ListSec'
 import ThirdList from '@/components/List/ListThird'
+import FourList from '@/components/List/ListFour'
 
 import AccountCard from '@/components/AccountCard'
 import FoundReason from '@/components/FoundReason'
@@ -87,10 +89,12 @@ export {
   WbItem,
   ReportFermentItem,
   ReportActionItem,
+  ItemSec,
 
   HotList,
   SecList,
   ThirdList,
+  FourList,
 
   AccountCard,
   FoundReason

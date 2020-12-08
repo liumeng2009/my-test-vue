@@ -61,9 +61,11 @@ export default {
             console.log(this.$props.height)
             if (this.$props.height) {
                 result.height = this.$props.height + 'px'
+                result.width = '100%'
             }
             if (this.$props.width) {
                 result.width = this.$props.width + 'px'
+                result.height = '100%'
             }
             return result
         }

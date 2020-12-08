@@ -35,7 +35,7 @@ export default {
   },
   methods: {
     goDetail () {
-      this.$router.push({ path: '/infoDiscover/eventReport/detail?type=ferment' })
+      this.$router.push({ name: 'EventFermentDetail' })
     }
   }
 }
