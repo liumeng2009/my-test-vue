@@ -1,11 +1,14 @@
 <template>
   <div class="report-item-wrapper">
-    <div class="avatar">
+    <div class="avatar" v-if="showLeftAvatar">
       <img :src="dataSource.avatar" alt="">
     </div>
-    <div class="detail">
+    <div class="detail" :style="{width: showLeftAvatar ? '90%' : '100%'}">
       <div class="title">
-        <span>{{ dataSource.title }}</span>
+        <span>
+          {{ dataSource.title }}
+          <span class="r-type">行动</span>
+        </span>
         <span v-add-icon>{{ dataSource.source }}</span>
       </div>
       <div class="content">{{ dataSource.content }}</div>
@@ -46,6 +49,16 @@ export default {
     dataSource: {
       type: Object,
       default: null
+    },
+    // 是否展示左边的大头像
+    showLeftAvatar: {
+      type: Boolean,
+      default: true
+    },
+    // 是否展示上报的类型
+    showReportType: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {
@@ -96,6 +109,26 @@ export default {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      height: 50px;
+
+      & > span:nth-of-type(1) {
+        display: flex;
+        align-items: center;
+      }
+
+      & > span > .r-type{
+        display: inline-block;
+        width: 24px;
+        height: 24px;
+        margin-left: 8px;
+        border-radius: 100%;
+        border-bottom-left-radius: 0%;
+        background: red;
+        color: #fff;
+        font-size: 10px;
+        line-height: 24px;
+        text-align: center;
+      }
 
       & > span:nth-of-type(2) {
         font-size: 12px;
@@ -103,6 +136,7 @@ export default {
         font-weight: normal;
         display: flex;
         flex-direction: row-reverse;
+        justify-self: flex-end;
       }
     }
 

@@ -47,6 +47,7 @@ function filterAsyncRouter (routerMap, roles) {
     }
     return false
   })
+  console.log(accessedRouters)
   return accessedRouters
 }
 
@@ -67,7 +68,6 @@ const permission = {
       return new Promise(resolve => {
         const { roles } = data
         const accessedRouters = filterAsyncRouter(asyncRouterMap, roles)
-        console.log(accessedRouters)
         commit('SET_ROUTERS', accessedRouters)
         resolve()
       })

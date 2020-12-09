@@ -1,6 +1,9 @@
 <template>
   <div class="report-item-wrapper">
-    <div class="title">{{ dataSource.title }}</div>
+    <div class="title">
+      {{ dataSource.title }}
+      <span class="r-type">发酵</span>
+    </div>
     <div class="content">{{ dataSource.content }}</div>
     <a-progress :percent="dataSource.progress" status="active" />
     <div class="toolbar">
@@ -31,6 +34,11 @@ export default {
     dataSource: {
       type: Object,
       default: null
+    },
+    // 是否展示上报的类型
+    showReportType: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {
@@ -60,6 +68,22 @@ export default {
     font-size:18px;
     font-weight: bolder;
     margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+
+    & > .r-type{
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      margin-left: 8px;
+      border-radius: 100%;
+      border-bottom-left-radius: 0%;
+      background: blue;
+      color: #fff;
+      font-size: 10px;
+      line-height: 24px;
+      text-align: center;
+    }
   }
 
   .content{
