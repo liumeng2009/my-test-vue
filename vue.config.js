@@ -39,7 +39,8 @@ const assetsCDN = {
 
 // vue.config.js
 const vueConfig = {
-  publicPath: '/tqVue/',
+  publicPath: process.env.PUBLIC_PATH + '/',
+
   configureWebpack: {
     // webpack plugins
     plugins: [

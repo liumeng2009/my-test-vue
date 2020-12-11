@@ -9,7 +9,9 @@ const getters = {
   roles: state => state.user.roles,
   userInfo: state => state.user.info,
   addRouters: state => state.permission.addRouters,
-  multiTab: state => state.app.multiTab
+  multiTab: state => state.app.multiTab,
+  layout: state => state.app.layout,
+  weak: state => state.app.weak
 }
 
 export default getters

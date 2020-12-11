@@ -13,6 +13,7 @@ Vue.use(Router)
 
 export default new Router({
   mode: 'history',
-  base: '/tqVue',
+  /* /tqVue 或者 / */
+  base: process.env.BASE_URL,
   routes: constantRouterMap
 })

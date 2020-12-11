@@ -10,7 +10,7 @@ import {
 } from '@/store/mutation-types'
 import defaultSettings from '@/config/defaultSettings'
 
-export default function Initializer () {
+const Initializer = () => {
   store.commit(TOGGLE_LAYOUT, storage.get(TOGGLE_LAYOUT, defaultSettings.layout))
   store.commit(TOGGLE_FIXED_HEADER, storage.get(TOGGLE_FIXED_HEADER, defaultSettings.fixedHeader))
   store.commit(TOGGLE_FIXED_SIDEBAR, storage.get(TOGGLE_FIXED_SIDEBAR, defaultSettings.fixSiderbar))
@@ -23,3 +23,5 @@ export default function Initializer () {
   store.commit('SET_TOKEN', storage.get(ACCESS_TOKEN))
   // last step
 }
+
+export default Initializer

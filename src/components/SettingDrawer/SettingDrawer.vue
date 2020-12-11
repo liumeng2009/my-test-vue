@@ -6,8 +6,6 @@
       @close="onClose"
       :closable="false"
       :visible="visible"
-      :drawer-style="{ position: 'absolute' }"
-      style="position: absolute"
     >
       <div class="setting-drawer-index-content">
 
@@ -86,45 +84,6 @@
               </div>
             </a-tooltip>
           </div>
-          <div :style="{ marginTop: '24px' }">
-            <a-list :split="false">
-              <a-list-item>
-                <a-tooltip slot="actions">
-                  <template slot="title">
-                    该设定仅 [顶部栏导航] 时有效
-                  </template>
-                  <a-select size="small" style="width: 80px;" :defaultValue="contentWidth" @change="handleContentWidthChange">
-                    <a-select-option value="Fixed">固定</a-select-option>
-                    <a-select-option value="Fluid" v-if="layoutMode !== 'sidemenu'">流式</a-select-option>
-                  </a-select>
-                </a-tooltip>
-                <a-list-item-meta>
-                  <div slot="title">内容区域宽度</div>
-                </a-list-item-meta>
-              </a-list-item>
-              <a-list-item>
-                <a-switch slot="actions" size="small" :defaultChecked="fixedHeader" @change="handleFixedHeader" />
-                <a-list-item-meta>
-                  <div slot="title">固定 Header</div>
-                </a-list-item-meta>
-              </a-list-item>
-              <a-list-item>
-                <a-switch slot="actions" size="small" :disabled="!fixedHeader" :defaultChecked="autoHideHeader" @change="handleFixedHeaderHidden" />
-                <a-list-item-meta>
-                  <a-tooltip slot="title" placement="left">
-                    <template slot="title">固定 Header 时可配置</template>
-                    <div :style="{ opacity: !fixedHeader ? '0.5' : '1' }">下滑时隐藏 Header</div>
-                  </a-tooltip>
-                </a-list-item-meta>
-              </a-list-item>
-              <a-list-item >
-                <a-switch slot="actions" size="small" :disabled="(layoutMode === 'topmenu')" :defaultChecked="fixSiderbar" @change="handleFixSiderbar" />
-                <a-list-item-meta>
-                  <div slot="title" :style="{ textDecoration: layoutMode === 'topmenu' ? 'line-through' : 'unset' }">固定侧边菜单</div>
-                </a-list-item-meta>
-              </a-list-item>
-            </a-list>
-          </div>
         </div>
         <a-divider />
 
@@ -138,29 +97,10 @@
                   <div slot="title">色弱模式</div>
                 </a-list-item-meta>
               </a-list-item>
-              <a-list-item>
-                <a-switch slot="actions" size="small" :defaultChecked="multiTab" @change="onMultiTab" />
-                <a-list-item-meta>
-                  <div slot="title">多页签模式</div>
-                </a-list-item-meta>
-              </a-list-item>
             </a-list>
           </div>
         </div>
         <a-divider />
-        <div :style="{ marginBottom: '24px' }">
-          <a-button
-            @click="doCopy"
-            icon="copy"
-            block
-          >拷贝设置</a-button>
-          <a-alert type="warning" :style="{ marginTop: '24px' }">
-            <span slot="message">
-              配置栏只在开发环境用于预览，生产环境不会展现，请手动修改配置文件。修改配置文件后，需要清空本地缓存和LocalStorage
-              <a href="https://github.com/sendya/ant-design-pro-vue/blob/master/src/config/defaultSettings.js" target="_blank">src/config/defaultSettings.js</a>
-            </span>
-          </a-alert>
-        </div>
       </div>
       <div class="setting-drawer-index-handle" @click="toggle" slot="handle">
         <a-icon type="setting" v-if="!visible"/>
@@ -174,6 +114,14 @@
 import SettingItem from './SettingItem'
 import config from '@/config/defaultSettings'
 import { updateTheme, updateColorWeak, colorList } from './settingConfig'
+import {
+  TOGGLE_COLOR,
+  TOGGLE_NAV_THEME,
+  TOGGLE_LAYOUT,
+  TOGGLE_WEAK,
+  TOGGLE_CONTENT_WIDTH
+} from '@/store/mutation-types'
+import '@ant-design-vue/pro-layout/lib/components/SettingDrawer/LayoutChange.js'
 
 export default {
   components: {
@@ -183,14 +131,45 @@ export default {
   data () {
     return {
       visible: false,
-      colorList
+      colorList,
+      navTheme: '',
+      primaryColor: '',
+      layoutMode: '',
+      contentWidth: '',
+      colorWeak: ''
     }
   },
   watch: {
 
   },
   mounted () {
-    updateTheme(this.primaryColor)
+    // localstorage存储的属性，放入data中
+    this.primaryColor = this.$store.getters.color
+    this.navTheme = this.$store.getters.theme
+    this.layoutMode = this.$store.getters.layout
+    this.colorWeak = this.$store.getters.weak
+    this.contentWidth = this.$store.getters.contentWidth
+    // 初始化dark or light
+    this.$emit('change', {
+      type: 'theme',
+      value: this.navTheme
+    })
+    // 初始化layout，响应事件的方法在pro-layout的lib中，但分离不出具体的方法，只能触发事件了
+    this.$emit('change', {
+      type: 'layout',
+      value: this.layoutMode
+    })
+    // 初始化布局模式
+    this.$emit('change', {
+      type: 'contentWidth',
+      value: this.contentWidth
+    })
+    // 主题色
+    console.log('更新颜色')
+    setTimeout(() => {
+      updateTheme(this.primaryColor)
+    }, 0)
+    // 色弱模式
     if (this.colorWeak !== config.colorWeak) {
       updateColorWeak(this.colorWeak)
     }
@@ -206,63 +185,45 @@ export default {
       this.visible = !this.visible
     },
     onColorWeak (checked) {
-      this.$store.dispatch('ToggleWeak', checked)
+      this.$store.dispatch(TOGGLE_WEAK, checked)
       updateColorWeak(checked)
     },
-    onMultiTab (checked) {
-      this.$store.dispatch('ToggleMultiTab', checked)
-    },
     handleMenuTheme (theme) {
-      this.$store.dispatch('ToggleTheme', theme)
-    },
-    doCopy () {
-      // get current settings from mixin or this.$store.state.app, pay attention to the property name
-      const text = `export default {
-  primaryColor: '${this.primaryColor}', // primary color of ant design
-  navTheme: '${this.navTheme}', // theme for nav menu
-  layout: '${this.layoutMode}', // nav menu position: sidemenu or topmenu
-  contentWidth: '${this.contentWidth}', // layout of content: Fluid or Fixed, only works when layout is topmenu
-  fixedHeader: ${this.fixedHeader}, // sticky header
-  fixSiderbar: ${this.fixSiderbar}, // sticky siderbar
-  autoHideHeader: ${this.autoHideHeader}, //  auto hide header
-  colorWeak: ${this.colorWeak},
-  multiTab: ${this.multiTab},
-  production: process.env.NODE_ENV === 'production' && process.env.VUE_APP_PREVIEW !== 'true'
-}`
-      this.$copyText(text).then(message => {
-        console.log('copy', message)
-        this.$message.success('复制完毕')
-      }).catch(err => {
-        console.log('copy.err', err)
-        this.$message.error('复制失败')
+      this.$store.dispatch(TOGGLE_NAV_THEME, theme)
+      this.navTheme = theme
+      this.$emit('change', {
+        type: 'theme',
+        value: theme
       })
     },
     handleLayout (mode) {
-      this.$store.dispatch('ToggleLayoutMode', mode)
-      // 因为顶部菜单不能固定左侧菜单栏，所以强制关闭
-      this.handleFixSiderbar(false)
+      this.$store.dispatch(TOGGLE_LAYOUT, mode)
+      this.layoutMode = mode
+      this.$emit('change', {
+        type: 'layout',
+        value: mode
+      })
+      if (mode === 'topmenu') {
+        this.$emit('change', {
+          type: 'contentWidth',
+          value: 'Fluid'
+        })
+      }
     },
     handleContentWidthChange (type) {
-      this.$store.dispatch('ToggleContentWidth', type)
+      this.$store.dispatch(TOGGLE_CONTENT_WIDTH, type)
+      this.$emit('change', {
+        type: 'contentWidth',
+        value: type
+      })
     },
     changeColor (color) {
+      console.log('点击切换颜色')
       if (this.primaryColor !== color) {
-        this.$store.dispatch('ToggleColor', color)
+        this.primaryColor = color
+        this.$store.dispatch(TOGGLE_COLOR, color)
         updateTheme(color)
       }
-    },
-    handleFixedHeader (fixed) {
-      this.$store.dispatch('ToggleFixedHeader', fixed)
-    },
-    handleFixedHeaderHidden (autoHidden) {
-      this.$store.dispatch('ToggleFixedHeaderHidden', autoHidden)
-    },
-    handleFixSiderbar (fixed) {
-      if (this.layoutMode === 'topmenu') {
-        this.$store.dispatch('ToggleFixSiderbar', false)
-        return
-      }
-      this.$store.dispatch('ToggleFixSiderbar', fixed)
     }
   }
 }

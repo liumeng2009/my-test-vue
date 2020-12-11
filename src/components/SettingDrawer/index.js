@@ -1,2 +1,6 @@
 import SettingDrawer from './SettingDrawer'
-export default SettingDrawer
+import { updateTheme } from './settingConfig'
+export {
+    SettingDrawer,
+    updateTheme
+}

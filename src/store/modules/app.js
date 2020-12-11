@@ -17,7 +17,7 @@ const app = {
   state: {
     sideCollapsed: false,
     isMobile: false,
-    theme: 'dark',
+    theme: '',
     layout: '',
     contentWidth: '',
     fixedHeader: false,
@@ -61,10 +61,12 @@ const app = {
       storage.set(TOGGLE_HIDE_HEADER, type)
     },
     [TOGGLE_COLOR]: (state, color) => {
+      console.log('mutation 改变颜色' + color)
       state.color = color
       storage.set(TOGGLE_COLOR, color)
     },
     [TOGGLE_WEAK]: (state, mode) => {
+      console.log('修改weak' + mode)
       state.weak = mode
       storage.set(TOGGLE_WEAK, mode)
     },
@@ -74,7 +76,21 @@ const app = {
     }
   },
   actions: {
-
+    [TOGGLE_COLOR]: ({ commit }, color) => {
+      commit(TOGGLE_COLOR, color)
+    },
+    [TOGGLE_NAV_THEME]: ({ commit }, theme) => {
+      commit(TOGGLE_NAV_THEME, theme)
+    },
+    [TOGGLE_LAYOUT]: ({ commit }, layout) => {
+      commit(TOGGLE_LAYOUT, layout)
+    },
+    [TOGGLE_WEAK]: ({ commit }, weak) => {
+      commit(TOGGLE_WEAK, weak)
+    },
+    [TOGGLE_CONTENT_WIDTH]: ({ commit }, contentWidth) => {
+      commit(TOGGLE_CONTENT_WIDTH, contentWidth)
+    }
   }
 }
 

@@ -49,6 +49,8 @@ import FourList from '@/components/List/ListFour'
 import AccountCard from '@/components/AccountCard'
 import FoundReason from '@/components/FoundReason'
 
+import WBTemplate from '@/components/WBTemplate'
+
 export {
   AvatarList,
 
@@ -97,5 +99,7 @@ export {
   FourList,
 
   AccountCard,
-  FoundReason
+  FoundReason,
+
+  WBTemplate
 }

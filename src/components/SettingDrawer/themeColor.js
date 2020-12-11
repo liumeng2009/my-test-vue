@@ -16,7 +16,8 @@ export default {
     var options = {
       newColors: this.getAntdSerials(newColor), // new colors array, one-to-one corresponde with `matchColors`
       changeUrl (cssUrl) {
-        return `/${cssUrl}` // while router is not `hash` mode, it needs absolute path
+        console.log(process.env.BASE_URL)
+        return `${process.env.BASE_URL}${cssUrl}` // while router is not `hash` mode, it needs absolute path
       }
     }
     return client.changer.changeColor(options, Promise)

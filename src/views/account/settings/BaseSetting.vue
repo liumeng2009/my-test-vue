@@ -80,7 +80,7 @@ export default {
       // cropper
       preview: {},
       option: {
-        img: 'avatar2.jpg',
+        img: `${ process.env.BASE_URL }avatar2.jpg`,
         info: true,
         size: 1,
         outputType: 'jpeg',
@@ -95,6 +95,9 @@ export default {
         fixedNumber: [1, 1]
       }
     }
+  },
+  mounted () {
+    console.log(process.env)
   },
   methods: {
     setavatar (url) {
