@@ -2,7 +2,7 @@
   <page-header-wrapper :title="false">
     <div :style="{width: userBarFixedWidth + 'px', height: userBarFixedHeight + 'px'}" class="left-side" ref="wbUserList">
       <div :style="{width: (userBarFixedWidth + 17) + 'px', height: userBarFixedHeight + 'px'}" class="scroll-wrapper">
-        <a-collapse class="wb-user-list" accordion default-active-key="0">
+        <a-collapse ref="collapse" class="wb-user-list" accordion default-active-key="0" @change="collapseChanged">
           <a-collapse-panel v-for="(item, index) in userList" :key="index" :header="item.name" :showArrow="false">
             <a-list :data-source="item.member">
               <a-list-item slot="renderItem" slot-scope="user" @click="showData($event)">
@@ -356,7 +356,9 @@ export default {
       wbList: [],
       wbLoading: false,
       wbBottom: false,
-      wbLoadingBottom: false
+      wbLoadingBottom: false,
+      oldCollapseKey: 0,
+      newCollapseKey: 0
     }
   },
   mounted () {
@@ -374,35 +376,41 @@ export default {
       if (this.wbLoading) {
         return
       }
-      // 到最顶部
-      document.scrollingElement.scrollTop = 0
-      // 设置seleted
-      this.addSeleted(e)
       // 获取数据
       this.wbLoading = true
       setTimeout(() => {
-        // 清空
+        // 加载完成后
+        // 到最顶部
+        document.scrollingElement.scrollTop = 0
+        // 去掉之前的seleted
+        this.clearSelected()
+        // 设置seleted
+        this.addSeleted(e)
+        this.oldCollapseKey = this.newCollapseKey
+        // 清空原数据
         this.wbList.map(item => {
           item.length = 0
         })
+        // 新数据置入column中
         wbList.map((item, index) => {
           const mod = index % this.columnLength
           this.wbList[mod].push(item)
         })
         this.wbLoading = false
-        console.log(this.wbList)
-      }, 2000)
+      }, 500)
     },
     loadMoreData () {
       this.wbLoadingBottom = true
-      console.log(this.wbBottom, this.wbLoadingBottom)
       setTimeout(() => {
         this.wbLoadingBottom = false
         wbList.map((item, index) => {
           const mod = index % this.columnLength
           this.wbList[mod].push(item)
         })
-      }, 5000)
+      }, 500)
+    },
+    collapseChanged (key) {
+      this.newCollapseKey = key
     },
     addSeleted (e) {
       let tar = e.target
@@ -414,6 +422,14 @@ export default {
         dom.className = 'ant-list-item'
       })
       tar.classList.add('selected')
+    },
+    clearSelected () {
+      // 将原来面板内的seleted class都去掉
+      const tar = this.$refs.collapse
+      const items = tar.$el.childNodes[this.oldCollapseKey].querySelectorAll('.ant-list-item')
+      Array.from(items).map(itm => {
+        itm.className = 'ant-list-item'
+      })
     },
     calColumnWidth (cb) {
       this.$nextTick(() => {
@@ -446,7 +462,6 @@ export default {
       const screenHeight = getWindowHeight()
       this.userBarFixedHeight = screenHeight - 60 - 50 - 48
       this.userBarFixedHeightRem = screenHeight - 60 - 50 - 48
-      console.log(this.userBarFixedHeight)
     },
     addScrollEvent () {
       document.addEventListener('scroll', () => {
