@@ -46,7 +46,8 @@ import {
   message,
   notification,
   Pagination,
-  Collapse
+  Collapse,
+  Empty
 } from 'ant-design-vue'
 
 // ext library
@@ -100,6 +101,7 @@ Vue.use(Statistic)
 Vue.use(Descriptions)
 Vue.use(Pagination)
 Vue.use(Collapse)
+Vue.use(Empty)
 
 Vue.prototype.$confirm = Modal.confirm
 Vue.prototype.$message = message

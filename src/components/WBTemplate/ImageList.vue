@@ -1,12 +1,22 @@
 <template>
   <div class="images-wrapper">
-    <img :style="{ width: ( 100 / columnCount ) + '%' }" v-for="(item, index) in dataSource" :key="index" :src="item" alt="">
+    <div class="image" v-fix-height :style="{ width: ( 100 / columnCount ) + '%' }" v-for="(item, index) in dataSource" :key="index">
+      <div class="img">
+        <img :src="item" alt="" v-image-size>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import { ImageSize, FixHeight } from '@/core/directives'
+
 export default {
     name: 'WBImageList',
+    directives: {
+        FixHeight,
+        ImageSize
+    },
     data () {
         return {
             columnCount: 0
@@ -48,9 +58,22 @@ export default {
         // padding-left: 58px;
         padding-bottom: 4px;
 
-        img{
+        .image {
             box-sizing: border-box;
             padding: 4px;
+            display: flex;
+            justify-self: center;
+            align-items: center;
+            overflow: hidden;
+
+            .img {
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
         }
     }
 </style>

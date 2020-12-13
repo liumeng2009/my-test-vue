@@ -59,6 +59,7 @@ export default {
 
     & span {
         height: 50%;
+        overflow: hidden;
     }
 
     & span:nth-of-type(1) {
