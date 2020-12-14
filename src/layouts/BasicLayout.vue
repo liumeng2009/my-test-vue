@@ -22,7 +22,7 @@
     </template> -->
 
     <template v-slot:menuHeaderRender>
-      <div>
+      <div @click="toMain" style="cursor:pointer">
         <logo-svg />
         <h1>{{ title }}</h1>
       </div>
@@ -133,6 +133,9 @@ export default {
     }
   },
   methods: {
+    toMain () {
+      this.$router.push({ name: 'mainPage' })
+    },
     handleMediaQuery (val) {
       this.query = val
       if (this.isMobile && !val['screen-xs']) {
@@ -163,17 +166,6 @@ export default {
             this.settings.contentWidth = CONTENT_WIDTH_TYPE.Fixed
           }
           break
-      }
-    }
-  },
-  watch: {
-    showMenu (val) {
-      const showMenu = val
-      console.log(val)
-      if (showMenu) {
-        this.menus = this.menusCopy
-      } else {
-        this.menus = []
       }
     }
   }

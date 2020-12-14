@@ -9,19 +9,19 @@ const RouteView = {
 
 export const asyncRouterMap = [
   {
+    path: '/main',
+    name: 'mainPage',
+    hidden: true,
+    component: () => import('@/views/dashboard/MainPage'),
+    meta: { title: '请选择功能' }
+  },
+  {
     path: '/',
     name: 'index',
     component: BasicLayout,
     redirect: '/main',
     meta: { title: '首页' },
     children: [
-      {
-        path: '/main',
-        name: 'mainPage',
-        hidden: true,
-        component: () => import('@/views/dashboard/MainPage'),
-        meta: { title: '请选择功能' }
-      },
       {
         path: '/info',
         name: 'info',
