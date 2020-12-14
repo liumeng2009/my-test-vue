@@ -11,6 +11,16 @@
     <!-- 1.0.0+ 版本 pro-layout 提供 API，
           我们推荐使用这种方式进行 LOGO 和 title 自定义
     -->
+    <!--
+    <template v-slot:menuRender>
+      <a-menu mode="horizontal">
+        <a-menu-item>菜单项</a-menu-item>
+        <a-sub-menu title="子菜单">
+          <a-menu-item>子菜单项</a-menu-item>
+        </a-sub-menu>
+      </a-menu>
+    </template> -->
+
     <template v-slot:menuHeaderRender>
       <div>
         <logo-svg />
@@ -55,6 +65,7 @@ export default {
 
       // base
       menus: [],
+      menusCopy: [],
       // 侧栏收起状态
       collapsed: false,
       title: defaultSettings.title,
@@ -84,12 +95,18 @@ export default {
   computed: {
     ...mapState({
       // 动态主路由
-      mainMenu: state => state.permission.addRouters
+      mainMenu: state => state.permission.addRouters,
+      showMenu: state => state.app.showMenu
     })
   },
   created () {
     const routes = this.mainMenu.find(item => item.path === '/')
-    this.menus = (routes && routes.children) || []
+    this.menusCopy = (routes && routes.children) || []
+    if (this.showMenu) {
+      this.menus = this.menusCopy
+    } else {
+      this.menus = []
+    }
     // 处理侧栏收起状态
     this.$watch('collapsed', () => {
       this.$store.commit(SIDEBAR_TYPE, this.collapsed)
@@ -146,6 +163,17 @@ export default {
             this.settings.contentWidth = CONTENT_WIDTH_TYPE.Fixed
           }
           break
+      }
+    }
+  },
+  watch: {
+    showMenu (val) {
+      const showMenu = val
+      console.log(val)
+      if (showMenu) {
+        this.menus = this.menusCopy
+      } else {
+        this.menus = []
       }
     }
   }

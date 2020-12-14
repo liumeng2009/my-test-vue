@@ -11,6 +11,7 @@ export const TOGGLE_HIDE_HEADER = 'auto_hide_header'
 export const TOGGLE_COLOR = 'color'
 export const TOGGLE_WEAK = 'weak'
 export const TOGGLE_MULTI_TAB = 'multi_tab'
+export const SHOW_MENU = 'show_menu'
 
 export const CONTENT_WIDTH_TYPE = {
   Fluid: 'Fluid',

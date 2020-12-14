@@ -60,6 +60,7 @@ export default {
         padding-bottom: 0px;
         border-radius: 3px;
         opacity: 1;
+        animation: slowHoverBack .4s linear;
 
         &:hover{
             box-shadow: 4px 4px 5px #ddd;
@@ -89,6 +90,14 @@ export default {
     }
     to {
         box-shadow: 4px 4px 5px #ddd;
+    }
+}
+@keyframes slowHoverBack {
+    from {
+        box-shadow: 4px 4px 5px #ddd;
+    }
+    to {
+        box-shadow: 2px 2px 2px #eee;
     }
 }
 </style>

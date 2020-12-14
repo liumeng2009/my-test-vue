@@ -22,6 +22,12 @@ router.beforeEach((to, from, next) => {
       next({ path: defaultRoutePath })
       NProgress.done()
     } else {
+      console.log(to.path)
+      if (to.path === '/main') {
+        store.dispatch('show_menu', false)
+      } else {
+        store.dispatch('show_menu', true)
+      }
       // check login user.roles is null
       if (store.getters.roles.length === 0) {
         // request login userInfo

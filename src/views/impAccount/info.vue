@@ -4,6 +4,9 @@
       <div :style="{width: (userBarFixedWidth + 17) + 'px', height: userBarFixedHeight + 'px'}" class="scroll-wrapper">
         <a-collapse ref="collapse" class="wb-user-list" accordion default-active-key="0" @change="collapseChanged">
           <a-collapse-panel v-for="(item, index) in userList" :key="index" :header="item.name" :showArrow="false">
+            <template slot="extra">
+              <a-avatar v-for="(itm, idx) in item.avatarList" :style="{position: 'relative',left: (item.avatarList.length - idx - 1) * 8 + 'px'}" :key="idx" :src="itm" size="small"></a-avatar>
+            </template>
             <a-list :data-source="item.member">
               <a-list-item slot="renderItem" slot-scope="user" @click="showData($event)">
                 <a-list-item-meta>
@@ -44,19 +47,14 @@ const userList = [
   {
     name: 'NAXX一团',
     member: [
-      { name: '沈依依', avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png' },
-      { name: '沈依依2', avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png' },
-      { name: '沈依依3', avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png' },
-      { name: '沈依依4', avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png' }
+      { name: '沈依依', avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png' }
     ]
   },
   {
     name: 'NAXX二团',
     member: [
       { name: '沈依依', avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png' },
-      { name: '沈依依2', avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png' },
-      { name: '沈依依3', avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png' },
-      { name: '沈依依4', avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png' }
+      { name: '沈依依2', avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png' }
     ]
   },
   {
@@ -64,8 +62,7 @@ const userList = [
     member: [
       { name: '沈依依', avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png' },
       { name: '沈依依2', avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png' },
-      { name: '沈依依3', avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png' },
-      { name: '沈依依4', avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png' }
+      { name: '沈依依3', avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png' }
     ]
   },
   {
@@ -348,7 +345,7 @@ export default {
   },
   data () {
     return {
-      userList: userList,
+      userList: [],
       columnLength: 3,
       userBarFixedWidth: 0,
       userBarFixedHeight: 0,
@@ -370,8 +367,25 @@ export default {
       }
     })
     this.addScrollEvent()
+    this.showSideBar()
   },
   methods: {
+    // 获取左边数据
+    showSideBar () {
+      setTimeout(() => {
+        // 增加一个属性，放前3个用户的头像
+        userList.map(item => {
+          item.avatarList = []
+          item.member.map((itm, index) => {
+            if (index < 3) {
+              item.avatarList.push(itm.avatar)
+            }
+          })
+        })
+        this.userList = userList
+        console.log(this.userList)
+      }, 2000)
+    },
     showData (e) {
       if (this.wbLoading) {
         return

@@ -103,7 +103,8 @@ export default {
           { label: 'TouTube', value: 'youtube' },
           { label: '其他网站', value: 'others' }
         ],
-        searchResult: []
+        searchResult: [],
+        currentPage: 0
       }
     },
     mounted () {

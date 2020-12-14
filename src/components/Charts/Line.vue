@@ -1,11 +1,12 @@
 <template>
-  <div class="container">
+  <div class="line-container">
     <div class="line" ref="line" :style="oStyle"></div>
   </div>
 </template>
 
 <script>
 import echarts from 'echarts'
+import ChartMixin from './mixIn'
 
 const option = {
   color: ['#73DDFF', '#73ACFF', '#FDD56A', '#FDB36A', '#FD866A', '#9E87FF', '#58D5FF', '#73DDFF', '#73ACFF', '#FDD56A', '#FDB36A', '#FD866A', '#9E87FF', '#58D5FF'],
@@ -16,6 +17,7 @@ const option = {
   legend: {
     top: 0,
     formatter: (name) => {
+      console.log(name)
       switch (name) {
         case 'xingdong':
           return '行动类事件'
@@ -29,9 +31,9 @@ const option = {
     }
   },
   grid: {
-    top: 20,
-    bottom: 20,
-    left: 10,
+    top: 40,
+    bottom: 40,
+    left: 20,
     right: 0
   },
   xAxis: [
@@ -57,6 +59,7 @@ const option = {
 }
 export default {
     name: 'LineChart',
+    mixins: [ChartMixin],
     props: {
         width: {
             type: Number,
@@ -149,10 +152,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
-    .container{
+    .line-container{
         width: 100%;
         height: 100%;
-        padding: 16px;
         box-sizing: border-box;
         display: flex;
         justify-content: center;

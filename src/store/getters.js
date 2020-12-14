@@ -11,7 +11,8 @@ const getters = {
   addRouters: state => state.permission.addRouters,
   multiTab: state => state.app.multiTab,
   layout: state => state.app.layout,
-  weak: state => state.app.weak
+  weak: state => state.app.weak,
+  showMenu: state => state.app.showMenu
 }
 
 export default getters

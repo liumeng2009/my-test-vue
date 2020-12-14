@@ -62,8 +62,9 @@ export default {
         }
     },
     toDetail () {
-      console.log('detail', this.$props.data)
-      this.$router.push({ path: '/infoDiscover/clueDiscover/detail', query: { id: this.$props.data.id } })
+      console.log('detail1111111111111111', this.$props.data)
+      this.$router.push({ path: '/info/clueSearchDetail', query: { id: this.$props.data.id } })
+      // this.$router.push({ name: 'ClueSearchDetail' })
     }
   }
 }

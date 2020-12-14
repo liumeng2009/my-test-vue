@@ -1,11 +1,12 @@
 <template>
-  <div class="container" >
+  <div class="pie-container" >
     <div ref="pie" :style="oStyle"></div>
   </div>
 </template>
 
 <script>
 import echarts from 'echarts'
+import ChartMixin from './mixIn'
 
 const option = {
     color: ['#73DDFF', '#73ACFF', '#FDD56A', '#FDB36A', '#FD866A', '#9E87FF', '#58D5FF', '#73DDFF', '#73ACFF', '#FDD56A', '#FDB36A', '#FD866A', '#9E87FF', '#58D5FF'],
@@ -32,15 +33,8 @@ const option = {
 }
 export default {
     name: 'Pie',
+    mixins: [ChartMixin],
     props: {
-        width: {
-            type: Number,
-            default: 0
-        },
-        height: {
-            type: Number,
-            default: 0
-        },
         dataSource: {
             type: Array,
             default: () => []
@@ -53,21 +47,6 @@ export default {
     watch: {
         dataSource (newVal, oldVal) {
             this.draw(newVal)
-        }
-    },
-    computed: {
-        oStyle () {
-            const result = {}
-            console.log(this.$props.height)
-            if (this.$props.height) {
-                result.height = this.$props.height + 'px'
-                result.width = '100%'
-            }
-            if (this.$props.width) {
-                result.width = this.$props.width + 'px'
-                result.height = '100%'
-            }
-            return result
         }
     },
     methods: {
@@ -83,7 +62,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-    .container{
+    .pie-container{
         width: 100%;
         height: 100%;
         padding: 16px;

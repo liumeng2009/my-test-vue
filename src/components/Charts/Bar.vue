@@ -1,12 +1,12 @@
 <template>
-  <div class="bar-container" ref="barChart">
+  <div class="bar-container" ref="barChart" :style="oStyle">
 
   </div>
 </template>
 
 <script>
 import echarts from 'echarts'
-// import logoPng from '@/assets/logo.png'
+import ChartMixin from './mixIn'
 import RiseSvg from '@/assets/icons/rise.svg'
 import FallSvg from '@/assets/icons/fall.svg'
 
@@ -56,15 +56,8 @@ const option = {
 }
 export default {
     name: 'Bar',
+    mixins: [ChartMixin],
     props: {
-        width: {
-            type: Number,
-            default: 0
-        },
-        height: {
-            type: Number,
-            default: 0
-        },
         dataSource: {
             type: Array,
             default: () => []
