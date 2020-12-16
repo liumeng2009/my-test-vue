@@ -10,8 +10,8 @@ import ChartMixin from './mixIn'
 import RiseSvg from '@/assets/icons/rise.svg'
 import FallSvg from '@/assets/icons/fall.svg'
 
+const colorList = ['#73DDFF', '#73ACFF', '#FDD56A', '#FDB36A', '#FD866A', '#9E87FF', '#58D5FF']
 const option = {
-  color: '#73DDFF',
   tooltip: {
       trigger: 'item',
       formatter: '{b} : {c}'
@@ -19,12 +19,22 @@ const option = {
   grid: {
     top: 20,
     bottom: 20,
-    left: 20,
-    right: 0
+    left: 50,
+    right: 20
   },
   xAxis: [
     {
       type: 'category',
+      axisLabel: {
+        show: true,
+        interval: 0,
+        formatter: function (value, index) {
+          if (value.length > 5) {
+            return value.substring(0, 5)
+          }
+          return value
+        }
+      },
       axisTick: {
           alignWithLabel: true
       }
@@ -33,8 +43,9 @@ const option = {
   yAxis: [
     {
       type: 'value',
-      axisLabel: {
-        show: false
+      axisTick: {
+        show: false,
+        interval: 0
       },
       splitLine: {
         show: false
@@ -49,6 +60,14 @@ const option = {
             show: true,
             position: 'top',
             formatter: '{c}'
+          },
+          itemStyle: {
+            color: (params) => {
+              while (params.dataIndex > colorList.length - 1) {
+                params.dataIndex = params.dataIndex - colorList.length
+              }
+              return colorList[params.dataIndex]
+            }
           },
           barCategoryGap: '50%'
       }
@@ -71,37 +90,41 @@ export default {
           default: 'rise' // fall
         }
     },
-    mounted () {
+    watch: {
+      dataSource(newVal, oldVal) {
+        console.log(newVal)
+        this.draw(newVal)
+      }
+    },
+    methods: {
+      draw (data) {
         const myChart = echarts.init(this.$refs.barChart)
-        setTimeout(() => {
-          const _data = this.$props.dataSource
-          option.series[0].data = _data
-          const categoryData = []
-          _data.forEach(item => {
-            categoryData.push(item.name)
-          })
-          option.xAxis[0].data = categoryData
+        option.series[0].data = data
+        const categoryData = []
+        data.forEach(item => {
+          categoryData.push(item.name)
+        })
+        option.xAxis[0].data = categoryData
 
-          if (this.$props.trend) {
-            const markImg = this.$props.trendType === 'rise' ? RiseSvg : FallSvg
-            console.log('type', this.$props.trendType)
-            const markPoint = {
-              data: [
-                {
-                    xAxis: 0, // 数组位置
-                    yAxis: 12, // 图片放置 的高度
-                    silent: true,
-                    symbolSize: [50, 20],
-                    symbol: 'image://' + markImg,
-                    symbolOffset: ['50%', 0]
-                }
-              ]
-            }
-            option.series[0].markPoint = markPoint
+        if (this.$props.trend) {
+          const markImg = this.$props.trendType === 'rise' ? RiseSvg : FallSvg
+          const markPoint = {
+            data: [
+              {
+                  xAxis: 0, // 数组位置
+                  yAxis: 12, // 图片放置 的高度
+                  silent: true,
+                  symbolSize: [50, 20],
+                  symbol: 'image://' + markImg,
+                  symbolOffset: ['50%', 0]
+              }
+            ]
           }
+          option.series[0].markPoint = markPoint
+        }
 
-          myChart.setOption(option, true)
-        }, 2000)
+        myChart.setOption(option, true)
+      }
     }
 }
 </script>

@@ -2,46 +2,29 @@
   <div class="container">
     <div class="left">
       <div class="wrapper">
-        <!--
-        <a-card title="平台抓取数据量" :bordered="false">
-          <a slot="extra">单位:万</a>
-          <a-row>
-            <a-col :span="6"><a-statistic title="Twitter" class="center" :value="7190"></a-statistic></a-col>
-            <a-col :span="6"><a-statistic title="Facebook" class="center" :value="7190"></a-statistic></a-col>
-            <a-col :span="6"><a-statistic title="Youtube" class="center" :value="7190"></a-statistic></a-col>
-            <a-col :span="6"><a-statistic title="Website" class="center" :value="7190"></a-statistic></a-col>
-          </a-row>
-        </a-card> -->
         <div class="card-container">
           <a-tabs
             type="card"
             class="tab-panel-wrapper"
             :default-active-key="activeGlobalNumKey"
             @change="handleGlobalNumTabChange($event)"
+            :loading="globalNumLoading"
           >
-            <a-tab-pane :key="'social'">
-              <template slot="tab">
-                <div style="position:relative;padding-right:20px;">
-                  各聚集平台总量
-                  <a-spin style="position:absolute;right: 0px;top:9px;" size="small" v-if="globalNumLoading" />
-                </div>
-              </template>
-              <a-row>
-                <a-col :span="12"><a-statistic title="Twitter" class="center" :value="globalNum[0]"></a-statistic></a-col>
-                <a-col :span="12"><a-statistic title="Facebook" class="center" :value="globalNum[1]"></a-statistic></a-col>
-              </a-row>
+            <a-tab-pane :key="'social'" tab="各聚集平台总量">
+              <a-spin :spinning="globalNumLoading">
+                <a-row>
+                  <a-col :span="12"><a-statistic title="Twitter" class="center" :value="globalNum[0]"></a-statistic></a-col>
+                  <a-col :span="12"><a-statistic title="Facebook" class="center" :value="globalNum[1]"></a-statistic></a-col>
+                </a-row>
+              </a-spin>
             </a-tab-pane>
-            <a-tab-pane :key="'account'">
-              <template slot="tab">
-                <div style="position:relative;padding-right:20px;">
-                  重点账号总量
-                  <a-spin style="position:absolute;right: 0px;top:9px;" size="small" v-if="globalNumLoading" />
-                </div>
-              </template>
-              <a-row>
-                <a-col :span="12"><a-statistic title="Twitter" class="center" :value="globalNum[2]"></a-statistic></a-col>
-                <a-col :span="12"><a-statistic title="Facebook" class="center" :value="globalNum[3]"></a-statistic></a-col>
-              </a-row>
+            <a-tab-pane :key="'account'" tab="重点账号总量">
+              <a-spin :spinning="globalNumLoading">
+                <a-row>
+                  <a-col :span="12"><a-statistic title="Twitter" class="center" :value="globalNum[2]"></a-statistic></a-col>
+                  <a-col :span="12"><a-statistic title="Facebook" class="center" :value="globalNum[3]"></a-statistic></a-col>
+                </a-row>
+              </a-spin>
             </a-tab-pane>
           </a-tabs>
         </div>
@@ -68,22 +51,16 @@
             :default-active-key="'tab'"
           >
             <a-tab-pane :key="'tab'" :tab="'话题统计'">
-              <a-row>
-                <a-col :span="8"><a-statistic title="当日" class="center" :value="32"></a-statistic></a-col>
-                <a-col :span="8"><a-statistic title="本周" class="center" :value="345"></a-statistic></a-col>
-                <a-col :span="8"><a-statistic title="本月" class="center" :value="2981"></a-statistic></a-col>
-              </a-row>
+              <a-spin :spinning="topicNumLoading">
+                <a-row>
+                  <a-col :span="8"><a-statistic title="当日" class="center" :value="32"></a-statistic></a-col>
+                  <a-col :span="8"><a-statistic title="本周" class="center" :value="345"></a-statistic></a-col>
+                  <a-col :span="8"><a-statistic title="本月" class="center" :value="2981"></a-statistic></a-col>
+                </a-row>
+              </a-spin>
             </a-tab-pane>
           </a-tabs>
         </div>
-        <!--
-        <a-card title="话题统计" :bordered="false">
-          <a-row>
-            <a-col :span="8"><a-statistic title="当日" class="center" :value="32"></a-statistic></a-col>
-            <a-col :span="8"><a-statistic title="本周" class="center" :value="345"></a-statistic></a-col>
-            <a-col :span="8"><a-statistic title="本月" class="center" :value="2981"></a-statistic></a-col>
-          </a-row>
-        </a-card> -->
       </div>
     </div>
     <div class="center">
@@ -93,62 +70,78 @@
         </a-card>
       </div>
       <div class="wrapper">
-        <a-card title="线索发现分布" :bodyStyle="{padding: 0}" :bordered="false">
-          <Chart-Container :totalData="totalData" :showTotalBackground="false" :chartHeight="237">
-            <Bar :dataSource="pieData" />
-          </Chart-Container>
-        </a-card>
+        <div class="card-container">
+          <a-tabs
+            type="card"
+            class="tab-panel-wrapper"
+            :default-active-key="'tab'"
+          >
+            <a-tab-pane :key="'tab'" :tab="'预警区域统计'" style="padding: 0px;height: 200px;">
+              <a-spin :spinning="warningRegionLoading">
+                <Bar :dataSource="warningRegion" :height="200" />
+              </a-spin>
+            </a-tab-pane>
+          </a-tabs>
+        </div>
       </div>
     </div>
     <div class="right">
       <div class="wrapper">
         <div class="card-container">
-          <a-tabs type="card" :tab-list="tabList" :default-active-key="activeKey" @change="handleTabChange($event)">
-            <a-tab-pane v-for="item in tabList" :key="item.key" :tab="item.tab">
-              <a-row>
-                <a-col :span="6"><a-statistic title="一年" class="center" :value="12"></a-statistic></a-col>
-                <a-col :span="6"><a-statistic title="三个月" class="center" :value="8"></a-statistic></a-col>
-                <a-col :span="6"><a-statistic title="本月" class="center" :value="7"></a-statistic></a-col>
-                <a-col :span="6"><a-statistic title="当日" class="center" :value="8"></a-statistic></a-col>
-              </a-row>
+          <a-tabs
+            type="card"
+            class="tab-panel-wrapper"
+            :default-active-key="'tab'"
+          >
+            <a-tab-pane :key="'tab'" :tab="'监控账号'">
+              <a-spin :spinning="accountNumLoading">
+                <a-row>
+                  <a-col :span="12"><a-statistic title="Twitter" class="center" :value="accountNum[0]"></a-statistic></a-col>
+                  <a-col :span="12"><a-statistic title="Facebook" class="center" :value="accountNum[1]"></a-statistic></a-col>
+                </a-row>
+              </a-spin>
             </a-tab-pane>
           </a-tabs>
         </div>
       </div>
       <div class="wrapper">
-        <a-card :bordered="false" title="预警量统计" style="height: 235px" :bodyStyle="{padding: 0}">
-          <div class="extra-links" slot="extra">
-            <a>年</a>
-            <a>季</a>
-            <a>月</a>
-            <a>周</a>
-          </div>
-          <LineChart :dataSource="lineData" :height="196" />
-        </a-card>
-      </div>
-      <div class="wrapper">
-        <a-row :gutter="16">
-          <a-col span="12">
-            <a-card title="月度预警变化" :bodyStyle="{padding: 0}" :bordered="false">
-              <Chart-Container :totalData="totalData" :showTotalBackground="false" :size="'small'" :chartHeight="100">
-                <Bar :dataSource="dataSimpleLine" :trend="true" :trendType="'rise'" />
-              </Chart-Container>
-            </a-card>
-          </a-col>
-          <a-col span="12">
-            <a-card title="当日预警变化" :bodyStyle="{padding: 0}" :bordered="false">
-              <Chart-Container :totalData="totalData" :showTotalBackground="false" :size="'small'" :chartHeight="100" >
-                <Bar :dataSource="dataSimpleLineFall" :trend="true" :trendType="'fall'"/>
-              </Chart-Container>
-            </a-card>
-          </a-col>
-        </a-row>
+        <div class="card-container">
+          <a-tabs
+            type="card"
+            class="tab-panel-wrapper"
+            :default-active-key="'tab'"
+          >
+            <a-tab-pane :key="'tab'" :tab="'预警统计'" style="padding: 0px;height: 200px;">
+              <a-spin :spinning="recentWarningLoading">
+                <Bar :dataSource="recentWarning" :height="200" />
+              </a-spin>
+            </a-tab-pane>
+          </a-tabs>
+        </div>
       </div>
       <div class="wrapper">
         <div class="card-container">
-          <a-tabs type="card" :tab-list="tabHotList" :default-active-key="activeHotKey" @change="handleHotTabChange($event)">
-            <a-tab-pane v-for="item in tabHotList" :key="item.key" :tab="item.tab">
-              <HotBar :dataSource="dataHot" :height="203" />
+          <a-tabs
+            type="card"
+            class="tab-panel-wrapper"
+            :default-active-key="'tab'"
+          >
+            <a-tab-pane :key="'tab'" :tab="'全群体热点话题'" style="height: 200px;">
+              <div class="extra">
+                <a href="#" :class="hotTopicType === 'day' ? 'selected' : ''" @click="getHotTopicData('day')">当日</a>
+                <a href="#" :class="hotTopicType === 'week' ? 'selected' : ''" @click="getHotTopicData('week')">本周</a>
+                <a href="#" :class="hotTopicType === 'month' ? 'selected' : ''" @click="getHotTopicData('month')">本月</a>
+              </div>
+              <a-skeleton :loading="hotTopicLoading">
+                <a-list bordered :data-source="hotTopic">
+                  <a-list-item slot="renderItem" slot-scope="item">
+                    <a-row>
+                      <a-col :span="18">{{ item.title }}</a-col>
+                      <a-col :span="6">{{ item.hotValue }}</a-col>
+                    </a-row>
+                  </a-list-item>
+                </a-list>
+              </a-skeleton>
             </a-tab-pane>
           </a-tabs>
         </div>
@@ -161,6 +154,36 @@
 import { MaqueList, ChartContainer, Pie, Bar, LineChart, HotBar } from '@/components'
 
 const globalNumRequest = [98791, 54098, 45, 55]
+const topicNumRequest = [32, 345, 2981]
+const accountNumRequest = [99, 100]
+
+const warningRegionRequest = [
+  { name: '中国', value: 54698 },
+  { name: '美国', value: 44698 },
+  { name: '日本', value: 54698 },
+  { name: '巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉', value: 44698 },
+  { name: '韩国', value: 54698 },
+  { name: '越南', value: 44698 }
+]
+
+const recentWarningRequest = [
+  { name: '九月份', value: 54698 },
+  { name: '十月份', value: 44698 },
+  { name: '十一月份', value: 94698 }
+]
+
+const hotTopicRequest = [
+  { title: '热点话题1', hotValue: 999 },
+  { title: '很长很长很长很长很长很长很长很长很长很长很长很长的热点话题2', hotValue: 999 },
+  { title: '热点话题3', hotValue: 999 },
+  { title: '热点话题4', hotValue: 999 },
+  { title: '热点话题5', hotValue: 999 },
+  { title: '热点话题6', hotValue: 999 },
+  { title: '热点话题7', hotValue: 999 },
+  { title: '热点话题8', hotValue: 999 },
+  { title: '热点话题9', hotValue: 999 },
+  { title: '热点话题10', hotValue: 999 }
+]
 
 const dataMaque = [
   {
@@ -297,6 +320,27 @@ export default {
         }
       ],
 
+      // 左3
+      topicNum: [],
+      topicNumLoading: false,
+
+      // 中2
+      warningRegion: [],
+      warningRegionLoading: false,
+
+      // 右1
+      accountNum: [],
+      accountNumLoading: false,
+
+      // 右2
+      recentWarning: [],
+      recentWarningLoading: false,
+
+      // 右3
+      hotTopic: [],
+      hotTopicLoading: false,
+      hotTopicType: 'day',
+
       maqueListData: dataMaque,
       pieData: pie,
       lineData: line,
@@ -364,14 +408,65 @@ export default {
     }
   },
   created () {
-    this.globalNumLoading = true
-    setTimeout(() => {
-      this.globalNum = [...globalNumRequest]
-      this.globalNumLoading = false
-    }, 1000)
+    this.getGlobalData()
+    this.getTopicNumData()
+    this.getAccountNumData()
+    this.getRecentWarningData()
+    this.getWarningRegionData()
+    this.getHotTopicData(this.hotTopicType)
   },
-  mounted () {},
   methods: {
+    getGlobalData () {
+      this.globalNumLoading = true
+      setTimeout(() => {
+        Math.random() > 0.85 ? (() => {
+          // 成功
+          this.globalNum = [...globalNumRequest]
+          this.globalNumLoading = false
+        })() : (() => {
+          // 失败
+          this.$message.error('请求失败')
+          this.globalNumLoading = false
+        })()
+      }, 1000)
+    },
+    getTopicNumData () {
+      this.topicNumLoading = true
+      setTimeout(() => {
+        this.topicNum = [...topicNumRequest]
+        this.topicNumLoading = false
+      }, 1000)
+    },
+    getAccountNumData () {
+      this.accountNumLoading = true
+      setTimeout(() => {
+        this.accountNum = [...accountNumRequest]
+        this.accountNumLoading = false
+      }, 1000)
+    },
+    getRecentWarningData () {
+      this.recentWarningLoading = true
+      setTimeout(() => {
+        this.recentWarning = [...recentWarningRequest]
+        this.recentWarningLoading = false
+      }, 1000)
+    },
+    getWarningRegionData () {
+      this.warningRegionLoading = true
+      setTimeout(() => {
+        this.warningRegion = [...warningRegionRequest]
+        this.warningRegionLoading = false
+      }, 1000)
+    },
+    getHotTopicData (type) {
+      this.hotTopicType = type
+      this.hotTopicLoading = true
+      setTimeout(() => {
+        this.hotTopic = [...hotTopicRequest]
+        this.hotTopicLoading = false
+      }, 1000)
+    },
+
     handleGlobalNumTabChange (e) {
       this.activeGlobalNumKey = e
     },
@@ -431,8 +526,18 @@ export default {
     padding-left: 4px;
   }
 }
-.extra-links a {
-  margin-right: 8px;
-}
+.extra{
+  position: absolute;;
+  float:right;
+  right: 8px;
+  top: 8px;
 
+  a{
+    margin-right: 8px;
+
+    &.selected{
+      text-decoration: underline;
+    }
+  }
+}
 </style>

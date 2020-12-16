@@ -40,7 +40,7 @@
 
 <script>
 
-import { SettingDrawer, updateTheme } from '@/components/SettingDrawer'
+import { SettingDrawer } from '@/components/SettingDrawer'
 import { mapState } from 'vuex'
 import { CONTENT_WIDTH_TYPE, SIDEBAR_TYPE, TOGGLE_MOBILE_TYPE } from '@/store/mutation-types'
 
@@ -123,7 +123,7 @@ export default {
     // first update color
     // TIPS: THEME COLOR HANDLER!! PLEASE CHECK THAT!!
     if (process.env.NODE_ENV !== 'production' || process.env.VUE_APP_PREVIEW === 'true') {
-      updateTheme(this.settings.primaryColor)
+      // updateTheme(this.settings.primaryColor)
     }
   },
   methods: {

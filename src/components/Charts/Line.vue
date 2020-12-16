@@ -1,6 +1,6 @@
 <template>
-  <div class="line-container">
-    <div class="line" ref="line" :style="oStyle"></div>
+  <div class="line-container" ref="line" :style="oStyle">
+
   </div>
 </template>
 
@@ -17,24 +17,14 @@ const option = {
   legend: {
     top: 0,
     formatter: (name) => {
-      console.log(name)
-      switch (name) {
-        case 'xingdong':
-          return '行动类事件'
-        case 'fajiao':
-          return '发酵类事件'
-        case 'all':
-          return '全部'
-        default:
-          return ''
-      }
+      return '{b}'
     }
   },
   grid: {
     top: 40,
     bottom: 40,
     left: 20,
-    right: 0
+    right: 20
   },
   xAxis: [
     {
@@ -61,41 +51,16 @@ export default {
     name: 'LineChart',
     mixins: [ChartMixin],
     props: {
-        width: {
-            type: Number,
-            default: 0
-        },
-        height: {
-            type: Number,
-            default: 0
-        },
         dataSource: {
             type: Array,
             default: () => []
         }
     },
-    mounted () {
-      const data = this.$props.dataSource
-      this.draw(data)
-    },
     watch: {
       dataSource(newVal, oldVal) {
+        console.log(newVal)
         this.draw(newVal)
       }
-    },
-    computed: {
-        oStyle () {
-            const result = {}
-            if (this.$props.height) {
-                result.height = this.$props.height + 'px'
-                result.width = '100%'
-            }
-            if (this.$props.width) {
-                result.width = this.$props.width + 'px'
-                result.height = '100%'
-            }
-            return result
-        }
     },
     methods: {
       draw (data) {
