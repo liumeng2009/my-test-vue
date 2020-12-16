@@ -1,17 +1,17 @@
 <template>
-  <div>
-    facebook
-    <input type="text" />
-    <button @click="toDetail">查询</button>
-  </div>
+  <page-header-wrapper :title="false">
+    <a-card>
+      <a-input-search placeholder="请输入关键字" size="large" enter-button @search="onSearch" />
+    </a-card>
+  </page-header-wrapper>
 </template>
 
 <script>
 export default {
-  name: 'Twitter',
+  name: 'FacebookSearch',
   methods: {
-    toDetail() {
-      this.$router.push({ name: 'TwitterDetail' })
+    onSearch() {
+      this.$router.push({ path: '/verify/detail', query: { social: 'facebook' } })
     }
   }
 }

@@ -7,6 +7,8 @@ import { asyncRouterMap, constantRouterMap } from '@/config/router.config'
  * @param route
  * @returns {boolean}
  */
+
+ // 当前项目中，meta.permission都为空，即都不进行权限判定
 function hasPermission (permission, route) {
   if (route.meta && route.meta.permission) {
     let flag = false
@@ -63,9 +65,11 @@ const permission = {
     }
   },
   actions: {
+    // 走这里
     GenerateRoutes ({ commit }, data) {
       return new Promise(resolve => {
         const { roles } = data
+        // 本地存的router数组
         const accessedRouters = filterAsyncRouter(asyncRouterMap, roles)
         console.log(accessedRouters)
         commit('SET_ROUTERS', accessedRouters)

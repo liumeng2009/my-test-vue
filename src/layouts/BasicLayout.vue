@@ -65,7 +65,6 @@ export default {
 
       // base
       menus: [],
-      menusCopy: [],
       // 侧栏收起状态
       collapsed: false,
       title: defaultSettings.title,
@@ -95,18 +94,13 @@ export default {
   computed: {
     ...mapState({
       // 动态主路由
-      mainMenu: state => state.permission.addRouters,
-      showMenu: state => state.app.showMenu
+      mainMenu: state => state.permission.addRouters
     })
   },
   created () {
-    const routes = this.mainMenu.find(item => item.path === '/')
-    this.menusCopy = (routes && routes.children) || []
-    if (this.showMenu) {
-      this.menus = this.menusCopy
-    } else {
-      this.menus = []
-    }
+    const routes = this.mainMenu.find(item => item.path === '/account')
+    console.log(routes)
+    this.menus = (routes && routes.children) || []
     // 处理侧栏收起状态
     this.$watch('collapsed', () => {
       this.$store.commit(SIDEBAR_TYPE, this.collapsed)

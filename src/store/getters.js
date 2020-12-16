@@ -1,5 +1,6 @@
 const getters = {
   isMobile: state => state.app.isMobile,
+  sideCollapsed: state => state.app.sideCollapsed,
   theme: state => state.app.theme,
   color: state => state.app.color,
   token: state => state.user.token,
@@ -11,8 +12,7 @@ const getters = {
   addRouters: state => state.permission.addRouters,
   multiTab: state => state.app.multiTab,
   layout: state => state.app.layout,
-  weak: state => state.app.weak,
-  showMenu: state => state.app.showMenu
+  weak: state => state.app.weak
 }
 
 export default getters

@@ -1,6 +1,6 @@
 <template>
   <page-header-wrapper :title="false">
-    <div :style="{width: userBarFixedWidth + 'px', height: userBarFixedHeight + 'px'}" class="left-side" ref="wbUserList">
+    <div :style="{width: userBarFixedWidth + 'px', height: userBarFixedHeight + 'px', top: userBarFixedTop + 'px', left: userBarFixedLeft + 'px'}" class="left-side" ref="wbUserList">
       <div :style="{width: (userBarFixedWidth + 17) + 'px', height: userBarFixedHeight + 'px'}" class="scroll-wrapper">
         <a-collapse ref="collapse" class="wb-user-list" accordion default-active-key="0" @change="collapseChanged">
           <a-collapse-panel v-for="(item, index) in userList" :key="index" :header="item.name" :showArrow="false">
@@ -146,7 +146,7 @@ const userList = [
       { name: '沈依依4', avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png' }
     ]
   },
-    {
+  {
     name: 'NAXX十三团',
     member: [
       { name: '沈依依', avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png' },
@@ -157,6 +157,42 @@ const userList = [
   },
   {
     name: 'NAXX十四团',
+    member: [
+      { name: '沈依依', avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png' },
+      { name: '沈依依2', avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png' },
+      { name: '沈依依3', avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png' },
+      { name: '沈依依4', avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png' }
+    ]
+  },
+  {
+    name: 'NAXX十五团',
+    member: [
+      { name: '沈依依', avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png' },
+      { name: '沈依依2', avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png' },
+      { name: '沈依依3', avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png' },
+      { name: '沈依依4', avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png' }
+    ]
+  },
+  {
+    name: 'NAXX十六团',
+    member: [
+      { name: '沈依依', avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png' },
+      { name: '沈依依2', avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png' },
+      { name: '沈依依3', avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png' },
+      { name: '沈依依4', avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png' }
+    ]
+  },
+  {
+    name: 'NAXX十七团',
+    member: [
+      { name: '沈依依', avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png' },
+      { name: '沈依依2', avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png' },
+      { name: '沈依依3', avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png' },
+      { name: '沈依依4', avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png' }
+    ]
+  },
+  {
+    name: 'NAXX十八团',
     member: [
       { name: '沈依依', avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png' },
       { name: '沈依依2', avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png' },
@@ -350,6 +386,8 @@ export default {
       userBarFixedWidth: 0,
       userBarFixedHeight: 0,
       userBarFixedHeightRem: 0,
+      userBarFixedLeft: 0,
+      userBarFixedTop: 0,
       wbList: [],
       wbLoading: false,
       wbBottom: false,
@@ -359,6 +397,7 @@ export default {
     }
   },
   mounted () {
+    this.calSideBarPosition()
     this.calSideBarWidth()
     this.calSideBarHeight()
     this.calColumnWidth(() => {
@@ -459,8 +498,36 @@ export default {
         cb()
       })
     },
+    calSideBarPosition () {
+      // 和layout的方式有关
+      const layout = this.$store.getters.layout
+      const sidebarCollapse = this.$store.getters.sideCollapsed
+      console.log('计算sidebar的位置')
+      if (layout === 'topmenu') {
+        this.userBarFixedLeft = 16
+        this.userBarFixedTop = 137
+      }
+      if (layout === 'sidemenu') {
+        this.userBarFixedLeft = 256 + 16
+        this.userBarFixedTop = 137
+
+        if (sidebarCollapse) {
+          this.userBarFixedLeft = this.userBarFixedLeft - (256 - 80)
+        }
+      }
+    },
     calSideBarWidth () {
-      const screenWidth = getWindowWidth()
+      let screenWidth = getWindowWidth()
+      const layout = this.$store.getters.layout
+      const sidebarCollapse = this.$store.getters.sideCollapsed
+      if (layout === 'sidemenu') {
+        screenWidth = screenWidth - 256
+
+        if (sidebarCollapse) {
+          screenWidth = screenWidth + (256 - 80)
+        }
+      }
+
       if (screenWidth >= 1200) {
         // 20 : 4
         this.userBarFixedWidth = (screenWidth - 48) * (4 / 24)
@@ -502,9 +569,30 @@ export default {
       }, false)
 
       window.addEventListener('resize', () => {
+        this.calSideBarPosition()
         this.calSideBarWidth()
         this.calSideBarHeight()
       }, false)
+    }
+  },
+  computed: {
+    layout () {
+      return this.$store.getters.layout
+    },
+    sidebarCollapse () {
+      return this.$store.getters.sideCollapsed
+    }
+  },
+  watch: {
+    layout (val) {
+      this.calSideBarPosition()
+      this.calSideBarWidth()
+      this.calSideBarHeight()
+    },
+    sidebarCollapse (val) {
+      this.calSideBarPosition()
+      this.calSideBarWidth()
+      this.calSideBarHeight()
     }
   }
 }

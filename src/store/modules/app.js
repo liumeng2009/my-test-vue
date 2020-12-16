@@ -10,8 +10,7 @@ import {
   TOGGLE_HIDE_HEADER,
   TOGGLE_COLOR,
   TOGGLE_WEAK,
-  TOGGLE_MULTI_TAB,
-  SHOW_MENU
+  TOGGLE_MULTI_TAB
 } from '@/store/mutation-types'
 
 const app = {
@@ -27,8 +26,7 @@ const app = {
     color: '',
     weak: false,
     multiTab: true,
-    _antLocale: {},
-    showMenu: true
+    _antLocale: {}
   },
   mutations: {
     [SIDEBAR_TYPE]: (state, type) => {
@@ -75,10 +73,6 @@ const app = {
     [TOGGLE_MULTI_TAB]: (state, bool) => {
       storage.set(TOGGLE_MULTI_TAB, bool)
       state.multiTab = bool
-    },
-    [SHOW_MENU]: (state, bool) => {
-      console.log(bool)
-      state.showMenu = bool
     }
   },
   actions: {
@@ -96,9 +90,6 @@ const app = {
     },
     [TOGGLE_CONTENT_WIDTH]: ({ commit }, contentWidth) => {
       commit(TOGGLE_CONTENT_WIDTH, contentWidth)
-    },
-    [SHOW_MENU]: ({ commit }, showMenu) => {
-      commit(SHOW_MENU, showMenu)
     }
   }
 }

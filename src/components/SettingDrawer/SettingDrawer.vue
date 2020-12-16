@@ -209,6 +209,13 @@ export default {
           value: 'Fluid'
         })
       }
+      if (mode === 'sidemenu') {
+        console.log('fixsidebar')
+        this.$emit('change', {
+          type: 'fixSiderbar',
+          value: true
+        })
+      }
     },
     handleContentWidthChange (type) {
       this.$store.dispatch(TOGGLE_CONTENT_WIDTH, type)

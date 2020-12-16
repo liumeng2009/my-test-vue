@@ -8,6 +8,7 @@
 </template>
 
 <script>
+// 情报查询详情 账号简介
 export default {
   name: 'AccountCard',
   props: {
