@@ -45,6 +45,8 @@ import WBUser from '@/components/WBTemplate/User'
 
 import TopicAdd from '@/components/TopicAdd'
 
+import UserPanel from '@/components/UserPane'
+
 export {
   Pie,
   PieCircle,
@@ -88,5 +90,6 @@ export {
   WBComment,
   WBUser,
 
-  TopicAdd
+  TopicAdd,
+  UserPanel
 }

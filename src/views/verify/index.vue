@@ -2,10 +2,10 @@
   <div class="main-container">
     <div class="verify-total">
       <span style="font-size: 20px"><a-icon type="clock" />上次更新时间：<span class="blue">{{ total.update }}</span></span>
-      <span style="font-size: 20px">更新数量：<span class="red">{{ total.twitterNum + total.facebookNum + total.telegramNum }}</span></span>
-      <span style="font-size: 16px">(Twitter:<span class="red">{{ total.twitterNum }}</span></span>
-      <span style="font-size: 16px">Facebook:<span class="red">{{ total.facebookNum }}</span></span>
-      <span style="font-size: 16px">Telegram:<span class="red">{{ total.telegramNum }}</span>)</span>
+      <span style="font-size: 20px">更新数量：<span class="red">{{ total.twitterNum + total.facebookNum + total.telegramNum | NumberFormat }}</span></span>
+      <span style="font-size: 16px">(Twitter:<span class="red">{{ total.twitterNum | NumberFormat }}</span></span>
+      <span style="font-size: 16px">Facebook:<span class="red">{{ total.facebookNum | NumberFormat }}</span></span>
+      <span style="font-size: 16px">Telegram:<span class="red">{{ total.telegramNum | NumberFormat }}</span>)</span>
     </div>
     <div class="fun-selector">
       <div class="fun-wrapper">
@@ -156,8 +156,6 @@ export default {
       .fun {
         width: 100%;
         box-sizing: border-box;
-        border: #ccc 1px solid;
-        border-radius: 2px;
         cursor: pointer;
 
         svg {

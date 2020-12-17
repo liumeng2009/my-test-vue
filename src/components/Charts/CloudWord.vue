@@ -4,53 +4,57 @@
 
 <script>
 import echarts from 'echarts'
+import MixIn from './mixIn'
 require('echarts-wordcloud')
 
 const option = {
     tooltip: {},
     series: [{
         type: 'wordCloud',
-        gridSize: 20,
-        sizeRange: [12, 50],
-        rotationRange: [0, 0],
+        // 网格大小，各项之间间距
+        gridSize: 30,
+        // 形状 circle 圆，cardioid  心， diamond 菱形，
+        // triangle-forward 、triangle 三角，star五角星
         shape: 'circle',
+        // 字体大小范围
+        sizeRange: [20, 50],
+        // 文字旋转角度范围
+        rotationRange: [0, 90],
+        // 旋转步值
+        rotationStep: 90,
+        // 自定义图形
+        // maskImage: maskImage,
+        left: 'center',
+        top: 'center',
+        right: null,
+        bottom: null,
+        // 画布宽
+        width: '90%',
+        // 画布高
+        height: '80%',
+        // 是否渲染超出画布的文字
+        drawOutOfBound: false,
         textStyle: {
             normal: {
                 color: function() {
                     return 'rgb(' + [
-                        Math.round(Math.random() * 160),
-                        Math.round(Math.random() * 160),
-                        Math.round(Math.random() * 160)
+                        Math.round(Math.random() * 200 + 55),
+                        Math.round(Math.random() * 200 + 55),
+                        Math.round(Math.random() * 200 + 55)
                     ].join(',') + ')'
                 }
             },
             emphasis: {
                 shadowBlur: 10,
-                shadowColor: '#333'
+                shadowColor: '#2ac'
             }
         }
     }]
 }
 export default {
     name: 'CloudWord',
-    mounted () {
-        const myChart = echarts.init(this.$refs.cloudContainer)
-        setTimeout(() => {
-          const _data = this.$props.dataSource
-          console.log(_data)
-          option.series[0].data = _data
-          myChart.setOption(option, true)
-        }, 2000)
-    },
+    mixins: [MixIn],
     props: {
-        width: {
-            type: Number,
-            default: 0
-        },
-        height: {
-            type: Number,
-            default: 0
-        },
         dataSource: {
             type: Array,
             default: () => []
@@ -61,15 +65,6 @@ export default {
             const myChart = echarts.init(this.$refs.cloudContainer)
             option.series[0].data = newVal
             myChart.setOption(option, true)
-        }
-    },
-    computed: {
-        oStyle () {
-            const result = {}
-            if (this.$props.height) {
-                result.height = this.$props.height + 'px'
-            }
-            return result
         }
     }
 }
