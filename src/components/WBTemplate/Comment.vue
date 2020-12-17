@@ -5,7 +5,9 @@
       {{ dataSource.content }}
     </div>
     <WBVideo v-if="dataSource.video" :dataSource="dataSource.video" />
-    <WBImageList v-if="dataSource.images" :dataSource="dataSource.images" />
+    <div style="width: 100%;display:flex;justify-content:center">
+      <WBImageList v-if="dataSource.images" :dataSource="dataSource.images" />
+    </div>
     <WBToolbar v-if="showToolbar" :support="dataSource.support" :comment="dataSource.comment" :share="dataSource.share" />
   </div>
 </template>

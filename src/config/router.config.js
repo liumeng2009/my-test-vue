@@ -19,13 +19,13 @@ export const asyncRouterMap = [
     path: '/info',
     name: 'info',
     component: InfoBaiscLayout,
-    redirect: '/info/screen',
+    redirect: '/info/index',
     meta: { title: '情报发现', icon: discovery },
     children: [
       {
-        path: '/info/screen',
-        name: 'screen',
-        component: () => import('@/views/infoDiscover/Screen'),
+        path: '/info/index',
+        name: 'infoIndex',
+        component: () => import('@/views/infoDiscover/Index'),
         meta: { title: '监控大厅' }
       },
       {

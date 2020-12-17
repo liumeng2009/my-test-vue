@@ -3,10 +3,19 @@
     <a-spin :spinning="listLoading">
       <a-row :gutter="[32, 32]">
         <a-col :span="8" v-for="(item, index) in list" :key="index">
-          <a-card :title="item.title" class="topic-card">
-            <a-button slot="extra" v-if="item.editable" icon="delete" type="link" @click="deleteTopic"></a-button>
+          <a-card class="topic-card" :bodyStyle="{height: 382 + 'px', padding: '16px'}">
+            <template slot="title">
+              <a-button v-if="item.editable" icon="delete" type="link" @click="deleteTopic"></a-button>
+              {{ item.title }}
+            </template>
+            <template slot="extra">
+              <div class="extra">
+                <a :class="item.search === 'day' ? 'selected' : ''" @click="search(index, 'day')">当日</a>
+                <a :class="item.search === 'week' ? 'selected' : ''" @click="search(index, 'week')">本周</a>
+                <a :class="item.search === 'month' ? 'selected' : ''" @click="search(index, 'month')">本月</a>
+              </div>
+            </template>
             <TopicItem v-for="(itm, idx) in item.wbList" :key="idx" :dataSource="itm" />
-            <a-pagination size="small" style="float:right" :total="50" show-less-items />
           </a-card>
         </a-col>
         <a-col :span="8">
@@ -25,22 +34,26 @@
 import { TopicItem, TopicAdd } from '@/components'
 
 const blocks = [
-    { title: '话题1', editable: false },
-    { title: '话题2', editable: false },
-    { title: '话题3', editable: false },
-    { title: '话题4', editable: false },
-    { title: '话题5', editable: false },
-    { title: '话题6', editable: false },
-    { title: '话题7', editable: true },
-    { title: '话题8', editable: true }
+  { title: '话题1', editable: false, search: 'day' },
+  { title: '话题2', editable: false, search: 'day' },
+  { title: '话题3', editable: false, search: 'day' },
+  { title: '话题4', editable: false, search: 'day' },
+  { title: '话题5', editable: false, search: 'day' },
+  { title: '话题6', editable: false, search: 'day' },
+  { title: '话题7', editable: true, search: 'day' },
+  { title: '话题8', editable: true, search: 'day' }
 ]
 const data = [
-    { title: '热点话题' },
-    { title: '热点话题' },
-    { title: '热点话题' },
-    { title: '热点话题' },
-    { title: '热点话题' },
-    { title: '热点话题' }
+  { title: '热点话题' },
+  { title: '热点话题' },
+  { title: '热点话题' },
+  { title: '热点话题' },
+  { title: '热点话题' },
+  { title: '热点话题' },
+  { title: '热点话题' },
+  { title: '热点话题' },
+  { title: '热点话题' },
+  { title: '热点话题' }
 ]
 
 blocks.map(item => {
@@ -68,6 +81,9 @@ export default {
       }, 2000)
   },
   methods: {
+    search (topicIndex, search) {
+      this.list[topicIndex].search = search
+    },
     addTopic () {
         this.visible = true
     },
@@ -120,5 +136,19 @@ export default {
     background: #fff;
     outline: none;
     cursor: pointer;
+}
+
+.extra {
+  a {
+    margin-right: 8px;
+
+    &.selected{
+      text-decoration: underline;
+    }
+
+    &:last-child{
+      margin-right: 0px;
+    }
+  }
 }
 </style>

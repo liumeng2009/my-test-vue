@@ -2,30 +2,26 @@
   <page-header-wrapper :title="false">
     <a-row :gutter="16">
       <a-col :span="18">
-        <a-card title="发酵事件详情">
+        <a-card :loading="detailLoading">
           <div class="detail-wrapper">
             <div class="top">
-              <span><a-icon type="heat-map" />美国</span>
-              <span><a-icon type="profile" />境内群体事件</span>
+              <span><a-icon type="heat-map" />{{ detail.region }}</span>
+              <span><a-icon type="profile" />{{ detail.type }}</span>
             </div>
             <div class="title">
               <div class="left">
                 <span>发酵主题：</span>
-                平度老兵，上街抗议，声称维权
-              </div>
-              <div class="right">
-                阶段报告：
-                <a>平度劳宾</a>
-                <a-icon type="download" />
+                {{ detail.topic }}
               </div>
             </div>
-            <div class="createdAt">2020-4-10 15:54:41</div>
-            <div class="progress">
-              <a-progress :percent="55" status="active" />
-            </div>
-            <div class="list-head"><span>20</span>条相关言论</div>
+            <div class="createdAt">{{ detail.createdAt }}</div>
+            <div class="list-head"><span>{{ list.length }}</span>条相关言论</div>
             <div class="list-container">
-              <ItemSec v-for="(item, index) in listData" :key="index" :dataSource="item" />
+              <a-list :loading="listLoading" :data-source="list" :pagination="true">
+                <a-list-item slot="renderItem" :key="index" slot-scope="item, index">
+                  <ItemSec :dataSource="item" />
+                </a-list-item>
+              </a-list>
             </div>
           </div>
         </a-card>
@@ -39,19 +35,15 @@
             模型
           </div>
         </a-card>
-        <a-card title="话题当日讨论次数" style="margin-bottom: 16px">
+        <a-card :loading="detailLoading" title="话题当日讨论次数" style="margin-bottom: 16px">
           <div class="center-card">
-            <span style="line-height: 30px">话题当日讨论次数:<span style="font-size:16px;color:red">27896</span></span>
+            <span style="line-height: 30px">话题当日讨论次数:<span style="font-size:16px;color:red">{{ detail.count }}</span></span>
           </div>
         </a-card>
-        <a-card title="当日主题占比" :bodyStyle="{padding: 0}" style="margin-bottom: 16px">
-          <Pie :dataSource="pieData" :height="200" />
-        </a-card>
-        <a-card title="重点核查人物" style="margin-bottom: 16px">
-          <FourList :dataSource="listManData" />
-        </a-card>
-        <a-card title="重点核查组织">
-          <FourList :dataSource="listManData" />
+        <a-card title="当日主题占比" :bodyStyle="{padding: 0}">
+          <a-spin :spinning="pieLoading">
+            <Pie :dataSource="pie" :height="200" />
+          </a-spin>
         </a-card>
       </a-col>
     </a-row>
@@ -59,9 +51,9 @@
 </template>
 
 <script>
-import { Pie, FourList, ItemSec } from '@/components'
+import { Pie, ItemSec } from '@/components'
 
-const list = [
+const listRequest = [
   {
     avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
     nickname: '吴文行',
@@ -82,70 +74,68 @@ const list = [
     avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
     nickname: '吴文行',
     username: 'wenxingwu',
-    source: 'YouTube',
+    source: 'Telegram',
     content: '大家一定要小心',
     createdAt: '2020-10-11'
   }
 ]
-const pie = [
-  // eslint-disable-line
+const pieRequest = [
   { name: '老兵上街维权', value: 15 },
   { name: '其他话题', value: 23 }
 ]
-
-const listMan = [
-  {
-    avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
-    nickname: '山东',
-    username: 'admin',
-    gongxian: 40,
-    progress: 1
-  },
-  {
-    avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
-    nickname: '山东',
-    username: 'admin',
-    gongxian: 40,
-    progress: 1
-  },
-  {
-    avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
-    nickname: '山东',
-    username: 'admin',
-    gongxian: 40,
-    progress: 1
-  },
-  {
-    avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
-    nickname: '山东',
-    username: 'admin',
-    gongxian: 40,
-    progress: 1
-  }
-]
+const detailRequest = {
+  region: '美国',
+  type: '境内群体事件',
+  topic: '平度老兵，上街抗议，声称维权',
+  createdAt: '2020-4-10 15:54:41',
+  count: 27998
+}
 
 export default {
   name: 'EventFermentDetail',
   components: {
     Pie,
-    FourList,
     ItemSec
   },
   data() {
     return {
-      pieData: [],
+      pie: [],
+      pieLoading: false,
       // 左边大列表
-      listData: [],
-      // 右边俩小列表
-      listManData: []
+      list: [],
+      listLoading: false,
+      // 详情
+      detail: {},
+      detailLoading: false
     }
   },
-  mounted() {
-    setTimeout(() => {
-      this.pieData = pie
-      this.listData = list
-      this.listManData = listMan
-    }, 500)
+  created() {
+    this.getDetail()
+    this.getList()
+    this.getPie()
+  },
+  methods: {
+    getDetail () {
+      this.detailLoading = true
+      setTimeout(() => {
+        this.detail = detailRequest
+        this.detailLoading = false
+      }, 1000)
+    },
+    getList () {
+      this.listLoading = true
+      setTimeout(() => {
+        this.list = listRequest
+        this.listLoading = false
+      }, 1000)
+    },
+    getPie () {
+      this.pieLoading = true
+      setTimeout(() => {
+        this.pie = pieRequest
+        this.pieLoading = false
+      }, 1000)
+    }
   }
 }
 </script>
@@ -192,12 +182,9 @@ export default {
     font-size: 12px;
   }
 
-  .progress{
-    margin: 16px 0px;
-  }
-
   .list-head{
     width: 100%;
+    margin-top: 32px;
     box-sizing: border-box;
     padding: 8px;
     background: #eee;

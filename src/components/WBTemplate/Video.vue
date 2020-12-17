@@ -26,7 +26,8 @@ export default {
   flex-direction: column;
   align-items: center;
   img {
-    width: 100%;
+    width: auto;
+    max-height: 300px;
   }
 
   .title {

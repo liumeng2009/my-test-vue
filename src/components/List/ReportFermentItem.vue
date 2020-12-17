@@ -1,11 +1,12 @@
 <template>
-  <div class="report-item-wrapper">
+  <div class="report-item-wrapper" @click="goDetail($event)">
     <div class="title">
       {{ dataSource.title }}
-      <span class="r-type">发酵</span>
+      <a-tag color="pink">
+        发酵
+      </a-tag>
     </div>
     <div class="content">{{ dataSource.content }}</div>
-    <a-progress :percent="dataSource.progress" status="active" />
     <div class="toolbar">
       <div class="left">
         <span><a-icon type="profile" />{{ dataSource.type }}</span>
@@ -14,8 +15,7 @@
         <span><a-icon type="profile" />{{ dataSource.tags }}</span>
       </div>
       <div class="right">
-        <a-button type="warnning">快速核查</a-button>
-        <a-button type="primary" @click="goDetail">详情</a-button>
+        <a-button type="primary" @click="goDetail($event)">详情</a-button>
       </div>
     </div>
   </div>
@@ -25,24 +25,15 @@
 // 事件上报 发酵的item
 export default {
   name: 'ReportFermentItem',
-  data() {
-      return {
-          btnColor: null
-      }
-  },
   props: {
     dataSource: {
       type: Object,
       default: null
-    },
-    // 是否展示上报的类型
-    showReportType: {
-      type: Boolean,
-      default: false
     }
   },
   methods: {
-    goDetail () {
+    goDetail (e) {
+      e.stopPropagation()
       this.$router.push({ name: 'EventFermentDetail' })
     }
   }

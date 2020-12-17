@@ -1,5 +1,5 @@
 export default {
-    bind (el, binding) {
+    bind (el) {
         const val = el.innerHTML
         const _val = val.trim().toLowerCase()
         const oImg = document.createElement('img')
@@ -10,15 +10,15 @@ export default {
 
         switch (_val) {
             case 'twitter':
-                oImg.src = require('@/assets/icons/Twitter.svg')
+                oImg.src = require('@/assets/icons/twitter.svg')
                 el.append(oImg)
                 break
             case 'facebook':
                 oImg.src = require('@/assets/icons/facebook.svg')
                 el.append(oImg)
                 break
-            case 'youtube':
-                oImg.src = require('@/assets/icons/youtube.svg')
+            case 'telegram':
+                oImg.src = require('@/assets/icons/telegram.svg')
                 el.append(oImg)
                 break
             default:
@@ -39,15 +39,15 @@ export default {
 
         switch (_val) {
             case 'twitter':
-                oImg.src = require('@/assets/icons/Twitter.svg')
+                oImg.src = require('@/assets/icons/twitter.svg')
                 el.append(oImg)
                 break
             case 'facebook':
                 oImg.src = require('@/assets/icons/facebook.svg')
                 el.append(oImg)
                 break
-            case 'youtube':
-                oImg.src = require('@/assets/icons/youtube.svg')
+            case 'telegram':
+                oImg.src = require('@/assets/icons/telegram.svg')
                 el.append(oImg)
                 break
             default:

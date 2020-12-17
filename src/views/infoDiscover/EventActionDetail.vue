@@ -2,32 +2,23 @@
   <page-header-wrapper :title="false">
     <a-row :gutter="16">
       <a-col :span="18">
-        <a-card title="发酵事件详情">
+        <a-card :loading="detailLoading">
           <div class="detail-wrapper">
             <div class="top">
-              <span v-add-icon>Twitter</span>
-              <span><a-icon type="heat-map" />美国</span>
+              <a-icon :style="{color: primaryColor}" type="twitter" v-if="detail.source && detail.source.toLowerCase() === 'twitter'"></a-icon>
+              <a-icon :style="{color: primaryColor}" type="facebook" v-if="detail.source && detail.source.toLowerCase() === 'facebook'"></a-icon>
+              <a-icon :style="{color: primaryColor}" type="wechat" v-if="detail.source && detail.source.toLowerCase() === 'telegram'"></a-icon>
+              <span>{{ detail.source }}</span>
+              <span><a-icon type="heat-map" />{{ detail.region }}</span>
             </div>
             <div class="title">
               <div class="left">
                 <span>发酵主题：</span>
-                平度老兵，上街抗议，声称维权
-              </div>
-              <div class="right">
-                阶段报告：
-                <a>平度劳宾</a>
-                <a-icon type="download" />
+                {{ detail.topic }}
               </div>
             </div>
-            <div class="createdAt">2020-4-10 15:54:41</div>
-            <div class="progress">
-              <a-progress :percent="55" status="active" />
-            </div>
-            <div class="user">
-              <img src="https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png" alt="">
-              <span>邹承凤</span>
-              <span>(cyrano7700)</span>
-            </div>
+            <div class="createdAt">{{ detail.createdAt }}</div>
+            <WBUser :nickname="detail.author" :username="detail.username" :avatar="detail.avatar" :createdAt="detail.createdAt" />
             <div class="content">
               全民共振
             </div>
@@ -37,7 +28,7 @@
             </div>
           </div>
           <div class="btn-area">
-            <a-button>返回</a-button>
+            <a-button type="primary">返回</a-button>
           </div>
         </a-card>
       </a-col>
@@ -50,67 +41,46 @@
             模型
           </div>
         </a-card>
-        <a-card title="重点人物研判" style="margin-bottom: 16px">
-          <FourList :dataSource="listManData" />
-        </a-card>
       </a-col>
     </a-row>
   </page-header-wrapper>
 </template>
 
 <script>
-import { FourList } from '@/components'
-import { AddIcon } from '@/core/directives'
-
-const listMan = [
-  {
-    avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
-    nickname: '山东',
-    username: 'admin',
-    gongxian: 40,
-    progress: 1
-  },
-  {
-    avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
-    nickname: '山东',
-    username: 'admin',
-    gongxian: 40,
-    progress: 1
-  },
-  {
-    avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
-    nickname: '山东',
-    username: 'admin',
-    gongxian: 40,
-    progress: 1
-  },
-  {
-    avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
-    nickname: '山东',
-    username: 'admin',
-    gongxian: 40,
-    progress: 1
-  }
-]
-
+import { WBUser } from '@/components'
+const detailRequest = {
+  region: '美国',
+  source: 'Twitter',
+  type: '境内群体事件',
+  topic: '平度老兵，上街抗议，声称维权',
+  createdAt: '2020-4-10 15:54:41',
+  count: 27998,
+  author: '阿浪',
+  username: '@alang',
+  avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png'
+}
 export default {
   name: 'EventActionDetail',
-  directives: {
-    AddIcon
-  },
   components: {
-    FourList
+    WBUser
   },
-  data() {
+  data () {
     return {
-      // 右边俩小列表
-      listManData: []
+      detail: {},
+      detailLoading: false
     }
   },
-  mounted() {
-    setTimeout(() => {
-      this.listManData = listMan
-    }, 500)
+  created () {
+    this.getDetail()
+  },
+  methods: {
+    getDetail () {
+      this.detailLoading = true
+      setTimeout(() => {
+        this.detail = detailRequest
+        this.detailLoading = false
+      }, 1000)
+    }
   }
 }
 </script>

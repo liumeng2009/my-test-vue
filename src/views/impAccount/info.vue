@@ -1,23 +1,25 @@
 <template>
   <page-header-wrapper :title="false">
     <div :style="{width: userBarFixedWidth + 'px', height: userBarFixedHeight + 'px', top: userBarFixedTop + 'px', left: userBarFixedLeft + 'px'}" class="left-side" ref="wbUserList">
-      <div :style="{width: (userBarFixedWidth + 17) + 'px', height: userBarFixedHeight + 'px'}" class="scroll-wrapper">
-        <a-collapse ref="collapse" class="wb-user-list" accordion default-active-key="0" @change="collapseChanged">
-          <a-collapse-panel v-for="(item, index) in userList" :key="index" :header="item.name" :showArrow="false">
-            <template slot="extra">
-              <a-avatar v-for="(itm, idx) in item.avatarList" :style="{position: 'relative',left: (item.avatarList.length - idx - 1) * 8 + 'px'}" :key="idx" :src="itm" size="small"></a-avatar>
-            </template>
-            <a-list :data-source="item.member">
-              <a-list-item slot="renderItem" slot-scope="user" @click="showData($event)">
-                <a-list-item-meta>
-                  <span slot="title" href="">{{ user.name }}</span>
-                  <a-avatar slot="avatar" :src="user.avatar"/>
-                </a-list-item-meta>
-              </a-list-item>
-            </a-list>
-          </a-collapse-panel>
-        </a-collapse>
-      </div>
+      <a-spin :spinning="userListLoading">
+        <div :style="{width: (userBarFixedWidth + 17) + 'px', height: userBarFixedHeight + 'px'}" class="scroll-wrapper">
+          <a-collapse ref="collapse" class="wb-user-list" accordion default-active-key="0" @change="collapseChanged">
+            <a-collapse-panel v-for="(item, index) in userList" :key="index" :header="item.name" :showArrow="false">
+              <template slot="extra">
+                <a-avatar v-for="(itm, idx) in item.avatarList" :style="{position: 'relative',left: (item.avatarList.length - idx - 1) * 8 + 'px'}" :key="idx" :src="itm" size="small"></a-avatar>
+              </template>
+              <a-list :data-source="item.member">
+                <a-list-item slot="renderItem" slot-scope="user" @click="showData($event)">
+                  <a-list-item-meta>
+                    <span slot="title" href="">{{ user.name }}</span>
+                    <a-avatar slot="avatar" :src="user.avatar"/>
+                  </a-list-item-meta>
+                </a-list-item>
+              </a-list>
+            </a-collapse-panel>
+          </a-collapse>
+        </div>
+      </a-spin>
     </div>
     <a-row :gutter="16">
       <a-col :xs="{span: 12, offset: 12}" :sm="{span: 12, offset: 12}" :md="{span: 18, offset: 6}" :lg="{span: 18, offset: 6}" :xl="{span: 20, offset: 4}">
@@ -382,6 +384,7 @@ export default {
   data () {
     return {
       userList: [],
+      userListLoading: false,
       columnLength: 3,
       userBarFixedWidth: 0,
       userBarFixedHeight: 0,
@@ -411,6 +414,7 @@ export default {
   methods: {
     // 获取左边数据
     showSideBar () {
+      this.userListLoading = true
       setTimeout(() => {
         // 增加一个属性，放前3个用户的头像
         userList.map(item => {
@@ -422,8 +426,11 @@ export default {
           })
         })
         this.userList = userList
-        console.log(this.userList)
-      }, 2000)
+        this.userListLoading = false
+
+        // 默认展开第一位
+        this.showData(null)
+      }, 1000)
     },
     showData (e) {
       if (this.wbLoading) {
@@ -466,15 +473,22 @@ export default {
       this.newCollapseKey = key
     },
     addSeleted (e) {
-      let tar = e.target
-      while (Array.from(tar.classList).indexOf('ant-list-item') < 0) {
-        tar = tar.parentNode
+      if (e) {
+        let tar = e.target
+        while (Array.from(tar.classList).indexOf('ant-list-item') < 0) {
+          tar = tar.parentNode
+        }
+        const items = tar.parentNode
+        Array.from(items.childNodes).map(dom => {
+          dom.className = 'ant-list-item'
+        })
+        tar.classList.add('selected')
+      } else {
+        const tar = this.$refs.collapse.$el.querySelector('.ant-list-item')
+        if (tar) {
+          tar.classList.add('selected')
+        }
       }
-      const items = tar.parentNode
-      Array.from(items.childNodes).map(dom => {
-        dom.className = 'ant-list-item'
-      })
-      tar.classList.add('selected')
     },
     clearSelected () {
       // 将原来面板内的seleted class都去掉
@@ -605,6 +619,7 @@ export default {
   left: 16px;
   overflow: hidden;
   z-index:2;
+  background: #fff;
 
   .scroll-wrapper{
     overflow-y: scroll;

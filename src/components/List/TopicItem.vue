@@ -19,8 +19,8 @@ export default {
 <style lang="less" scoped>
 .item {
   width: 100%;
-  height: 50px;
-  line-height: 50px;
+  height: 35px;
+  line-height: 35px;
   font-size: 14px;
 }
 </style>

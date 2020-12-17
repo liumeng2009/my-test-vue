@@ -11,30 +11,29 @@
             </a-col>
             <a-col :span="12" :offset="6">
               <a-form-item label="社交平台">
-                <a-checkbox-group :options="socialOption" :default-value="['twitter']" @change="socialChange" />
+                <a-checkbox-group :options="socialOption" :value="queryParam.socials" @change="socialChange" />
               </a-form-item>
             </a-col>
             <a-col :span="12" :offset="6">
               <a-form-item label="发帖时间">
-                <a-range-picker @change="handleRangePickerChange" />
+                <a-range-picker v-model="queryParam.dateRange" />
               </a-form-item>
             </a-col>
             <a-col :span="12" :offset="6">
               <span class="table-page-search-submitButtons">
-                <a-button type="primary">查询</a-button>
-                <a-button style="margin-left: 8px" @click="() => queryParam = {}">重置</a-button>
+                <a-button type="primary" @click="search">查询</a-button>
+                <a-button style="margin-left: 8px" @click="reset()">重置</a-button>
               </span>
             </a-col>
           </a-row>
         </a-form>
       </a-card>
       <a-card>
-        <div class="wb-list-container">
-          <WbItem v-for="(item, index) in searchResult" :key="index" :data="item" />
-        </div>
-        <div class="pagination-wrapper" v-if="searchResult.length > 0">
-          <a-pagination v-model="currentPage" :total="50" show-less-items />
-        </div>
+        <a-list :loading="searchLoading" :data-source="searchResult" :pagination="true">
+          <a-list-item slot="renderItem" :key="index" slot-scope="item, index">
+            <WbItem :data="item" />
+          </a-list-item>
+        </a-list>
       </a-card>
     </div>
   </page-header-wrapper>
@@ -42,29 +41,26 @@
 
 <script>
 import { WbItem } from '@/components'
-const wbList = [// eslint-disable-line no-unused-vars
+const wbList = [
   {
     id: '0',
     avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
     nickname: '邹承峰',
     username: 'cyrano7700',
     source: 'Twitter',
-    policy: '策略一',
     important: '0',
     createdAt: '2020-4-20 13:54:41',
-    content: '全名共振'
+    content: '查询内容'
   },
   {
     id: '1',
     avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
     nickname: '邹承峰',
     username: 'cyrano7700',
-    source: 'Youtube',
-    policy: '策略一',
+    source: 'Telegram',
     important: '1',
     createdAt: '2020-4-20 13:54:41',
-    content:
-      '全名共振全名共振全名共振全名共振全名共振全名共振全名共振全名共振全名共振全名共振全名共振全名共振全名共振全名共振全名共振全名共振全名共振全名共振全名共振全名共振全名共振名共振全名共振全名共振全名共振全名共振全名共振全名共振全名共振全名共振全名共振名共振全名共振全名共振全名共振全名共振全名共振全名共振全名共振全名共振全名共振'
+    content: '查询内容查询内容查询内容查询内容查询内容查询内容查询内容查询内容查询内容查询内容查询内容查询内容查询内容'
   },
   {
     id: '2',
@@ -75,7 +71,7 @@ const wbList = [// eslint-disable-line no-unused-vars
     policy: '策略一',
     important: '2',
     createdAt: '2020-4-20 13:54:41',
-    content: '全名共振'
+    content: '查询内容'
   },
   {
     id: '3',
@@ -86,7 +82,7 @@ const wbList = [// eslint-disable-line no-unused-vars
     policy: '策略一',
     important: '3',
     createdAt: '2020-4-20 13:54:41',
-    content: '全名共振'
+    content: '查询内容'
   }
 ]
 export default {
@@ -96,28 +92,41 @@ export default {
     },
     data () {
       return {
-        queryParam: {},
         socialOption: [
           { label: 'Twitter', value: 'twitter' },
           { label: 'Facebook', value: 'facebook' },
-          { label: 'TouTube', value: 'youtube' },
-          { label: '其他网站', value: 'others' }
+          { label: 'Telegram', value: 'telegram' }
         ],
+        queryParam: {
+          pageIndex: 0,
+          pageSize: 10,
+          searchKey: '',
+          socials: ['twitter'],
+          dateRange: []
+        },
         searchResult: [],
-        currentPage: 0
+        searchLoading: false
       }
-    },
-    mounted () {
-      setTimeout(() => {
-        this.searchResult = wbList
-      }, 2000)
     },
     methods: {
       socialChange (e) {
-        console.log(e)
+        this.queryParam.socials = e
       },
-      handleRangePickerChange (e) {
-        console.log(e)
+      search () {
+        console.log(this.queryParam)
+        this.searchLoading = true
+        setTimeout(() => {
+          this.searchResult = wbList
+          this.searchLoading = false
+        }, 1000)
+      },
+      reset () {
+        this.queryParam = {
+          pageIndex: 0,
+          searchKey: '',
+          socials: ['twitter'],
+          dateRange: []
+        }
       }
     }
 }

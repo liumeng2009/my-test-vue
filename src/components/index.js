@@ -20,14 +20,14 @@ import StandardFormRow from '@/components/StandardFormRow'
 
 import Dialog from '@/components/Dialog'
 
-import MaqueList from '@/components/ProjectComponent/MaqueList'
+import MaqueList from '@/components/MaqueList'
 
-import WbList from '@/components/WBList'
 import WbItem from '@/components/List/item'
 import ReportFermentItem from '@/components/List/ReportFermentItem'
 import ReportActionItem from '@/components/List/ReportActionItem'
 import ItemSec from '@/components/List/ItemSec'
 import TopicItem from '@/components/List/TopicItem'
+import TopicItemSec from '@/components/List/TopicItemSec'
 
 import HotList from '@/components/List'
 import SecList from '@/components/List/ListSec'
@@ -38,6 +38,11 @@ import AccountCard from '@/components/AccountCard'
 import FoundReason from '@/components/FoundReason'
 
 import WBTemplate from '@/components/WBTemplate'
+import WBVideo from '@/components/WBTemplate/Video'
+import WBImageList from '@/components/WBTemplate/ImageList'
+import WBComment from '@/components/WBTemplate/Comment'
+import WBUser from '@/components/WBTemplate/User'
+
 import TopicAdd from '@/components/TopicAdd'
 
 export {
@@ -62,12 +67,12 @@ export {
   Dialog,
 
   MaqueList,
-  WbList,
   WbItem,
   ReportFermentItem,
   ReportActionItem,
   ItemSec,
   TopicItem,
+  TopicItemSec,
 
   HotList,
   SecList,
@@ -78,5 +83,10 @@ export {
   FoundReason,
 
   WBTemplate,
+  WBVideo,
+  WBImageList,
+  WBComment,
+  WBUser,
+
   TopicAdd
 }

@@ -7,7 +7,10 @@
         <span class="createdAt">{{ dataSource.createdAt }}</span>
       </div>
       <div class="right">
-        <span v-add-icon>{{ dataSource.source }}</span>
+        <a-icon :style="{color: primaryColor}" type="twitter" v-if="dataSource.source.toLowerCase() === 'twitter'"></a-icon>
+        <a-icon :style="{color: primaryColor}" type="facebook" v-if="dataSource.source.toLowerCase() === 'facebook'"></a-icon>
+        <a-icon :style="{color: primaryColor}" type="wechat" v-if="dataSource.source.toLowerCase() === 'telegram'"></a-icon>
+        <span>{{ dataSource.source }}</span>
       </div>
     </div>
     <div class="content">{{ dataSource.content }}</div>
@@ -26,6 +29,11 @@ export default {
     dataSource: {
       type: Object,
       default: () => {}
+    }
+  },
+  computed: {
+    primaryColor () {
+      return this.$store.getters.color
     }
   }
 }
@@ -76,11 +84,19 @@ export default {
     }
 
     .right {
-        span{
-            display: flex;
-            flex-direction: row-reverse;
-            align-items: center;
-        }
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+
+      i.anticon{
+        font-size: 20px;
+      }
+
+      & > span{
+        padding-left: 8px;
+        margin-right: 8px;
+      }
     }
   }
 

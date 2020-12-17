@@ -1,5 +1,5 @@
 <template>
-  <div class="wb-item-wrapper">
+  <div class="wb-item-wrapper" @click="toDetail($event)">
     <div class="item-avatar">
       <img :src="data.avatar" alt="data.username" />
     </div>
@@ -7,8 +7,10 @@
       <div class="top">
         <div class="name">{{ data.nickname }}({{ data.username }})</div>
         <div class="source">
-          <span v-add-icon>{{ data.source }}</span>
-          <a-button :size="'small'" :style="{color: btnColor}">{{ data.policy }}</a-button>
+          <a-icon :style="{color: primaryColor}" type="twitter" v-if="data.source.toLowerCase() === 'twitter'"></a-icon>
+          <a-icon :style="{color: primaryColor}" type="facebook" v-if="data.source.toLowerCase() === 'facebook'"></a-icon>
+          <a-icon :style="{color: primaryColor}" type="wechat" v-if="data.source.toLowerCase() === 'telegram'"></a-icon>
+          <span>{{ data.source }}</span>
         </div>
       </div>
       <div class="createdAt">
@@ -18,53 +20,31 @@
         {{ data.content }}
       </div>
       <div class="bottom">
-        <a-button type="primary" size="small" @click="toDetail()">详情</a-button>
+        <a-button type="primary" size="small" @click="toDetail($event)">详情</a-button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-// 线索发现 等复杂列表的item
-import { AddIcon } from '@/core/directives'
-
+// 线索查询列表的item
 export default {
   name: 'WbItem',
-  directives: {
-    AddIcon
-  },
-  data() {
-      return {
-          btnColor: null
-      }
-  },
   props: {
     data: {
       type: Object,
-      default: null
+      default: () => {}
     }
   },
-  mounted () {
-    this.btnColor = this.getBtnColor()
+  computed: {
+    primaryColor () {
+      return this.$store.getters.color
+    }
   },
   methods: {
-    getBtnColor () {
-        const { important } = this.$props.data
-        switch (important) {
-            case '0':
-                return 'blue'
-            case '1':
-                return 'orange'
-            case '2':
-                return 'red'
-            default:
-                return ''
-        }
-    },
-    toDetail () {
-      console.log('detail1111111111111111', this.$props.data)
+    toDetail (e) {
+      e.stopPropagation()
       this.$router.push({ path: '/info/clueSearchDetail', query: { id: this.$props.data.id } })
-      // this.$router.push({ name: 'ClueSearchDetail' })
     }
   }
 }
@@ -96,8 +76,8 @@ export default {
     justify-content: center;
     align-items: center;
     img {
-      width: 48px;
-      height: 48px;
+      width: 56px;
+      height: 56px;
       border-radius: 50%;
     }
   }
@@ -117,15 +97,18 @@ export default {
       }
 
       .source {
-        font-size: 12px;
+        font-size: 14px;
         display: flex;
         align-items: center;
+        cursor: pointer;
+
+        i.anticon{
+          font-size: 20px;
+        }
 
         & > span{
-            display: flex;
-            flex-direction: row-reverse;
-            padding-left: 24px;
-            margin-right: 8px;
+          padding-left: 8px;
+          margin-right: 8px;
         }
       }
     }

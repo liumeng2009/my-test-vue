@@ -1,6 +1,5 @@
 <template>
-  <div class="pie-container" >
-    <div ref="pie" :style="oStyle"></div>
+  <div class="pie-container" ref="pie" :style="oStyle">
   </div>
 </template>
 
@@ -65,7 +64,6 @@ export default {
     .pie-container{
         width: 100%;
         height: 100%;
-        padding: 16px;
         box-sizing: border-box;
         display: flex;
         justify-content: center;

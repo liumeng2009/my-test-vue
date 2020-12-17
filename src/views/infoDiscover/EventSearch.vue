@@ -30,10 +30,12 @@
       </a-card>
       <a-card>
         <div class="list-container">
-          <div class="item-wrapper" v-for="(item, index) in searchResult" :key="index">
-            <ReportFermentItem :dataSource="item" v-if="item.reportType === 'ferment'" />
-            <ReportActionItem :dataSource="item" :showLeftAvatar="false" v-if="item.reportType === 'action'" />
-          </div>
+          <a-list :loading="searchLoading" :data-source="searchResult" :pagination="true">
+            <a-list-item slot="renderItem" :key="index" slot-scope="item, index">
+              <ReportFermentItem :dataSource="item" v-if="item.reportType === 'ferment'" />
+              <ReportActionItem :dataSource="item" :showLeftAvatar="false" v-if="item.reportType === 'action'" />
+            </a-list-item>
+          </a-list>
         </div>
         <div class="pagination-wrapper" v-if="searchResult.length > 0">
           <a-pagination v-model="currentPage" :total="50" show-less-items />
@@ -50,7 +52,6 @@ const search = [
   {
     title: '平度老兵',
     content: '大家一定要小心',
-    progress: 82,
     type: '境内群体事件 社会福利漏洞',
     createdAt: '2020-10-11',
     location: '平度',
@@ -64,7 +65,6 @@ const search = [
     title: '平度老兵action',
     source: 'Twitter',
     content: '大家一定要小心',
-    progress: 82,
     type: '境内群体事件 社会福利漏洞',
     createdAt: '2020-10-11',
     location: '平度',
@@ -74,7 +74,6 @@ const search = [
   {
     title: '平度老兵',
     content: '大家一定要小心',
-    progress: 82,
     type: '境内群体事件 社会福利漏洞',
     createdAt: '2020-10-11',
     location: '平度',
@@ -88,7 +87,6 @@ const search = [
     title: '平度老兵action',
     source: 'Twitter',
     content: '大家一定要小心',
-    progress: 82,
     type: '境内群体事件 社会福利漏洞',
     createdAt: '2020-10-11',
     location: '平度',
@@ -102,7 +100,6 @@ const search = [
     title: '平度老兵',
     source: 'Twitter',
     content: '大家一定要小心',
-    progress: 82,
     type: '境内群体事件 社会福利漏洞',
     createdAt: '2020-10-11',
     location: '平度',
@@ -126,7 +123,8 @@ export default {
           { label: '发酵', value: 'ferment' },
           { label: '行动', value: 'action' }
         ],
-        searchResult: []
+        searchResult: [],
+        searchLoading: false
       }
     },
     methods: {
@@ -134,7 +132,11 @@ export default {
         console.log(e)
       },
       search () {
-        this.searchResult = search
+        this.searchLoading = true
+        setTimeout(() => {
+          this.searchResult = search
+          this.searchLoading = false
+        }, 1000)
       },
       handleRangePickerChange (e) {
         console.log(e)

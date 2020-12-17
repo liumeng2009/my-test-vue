@@ -17,7 +17,21 @@ const option = {
   legend: {
     top: 0,
     formatter: (name) => {
-      return '{b}'
+      let result = ''
+      switch (name) {
+        case 'xingdong':
+          result = '行动'
+          break
+        case 'fajiao':
+          result = '发酵'
+          break
+        case 'all':
+          result = '全部'
+          break
+        default:
+          result = name
+      }
+      return result
     }
   },
   grid: {

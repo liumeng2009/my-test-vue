@@ -1,13 +1,17 @@
 export default {
-    bind (el, binding) {
-        const { speed, count, containerHeight } = binding.value
+    inserted (el, binding) {
+        console.log('meichufa')
+        const containerHeight = el.clientHeight
+        const { speed, count } = binding.value
         let moveY = 0
         let timer = null
         const oMaqueArea = el.querySelector('.maque-move-area')
         if (containerHeight >= count * 30) {
             // 说明容器足够放得下内容，不需要滚动
+            console.log('no maque')
             return
         }
+        console.log('开始滚动')
         oMaqueArea.style.transition = `top .5s linear`
         const oMaqueAreaClone = oMaqueArea.innerHTML
         oMaqueArea.innerHTML += oMaqueAreaClone
@@ -46,8 +50,5 @@ export default {
                 }
             }, speed * 1000)
         }, false)
-    },
-    inserted (el) {
-
     }
 }

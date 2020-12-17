@@ -1,5 +1,5 @@
 <template>
-  <div class="report-item-wrapper">
+  <div class="report-item-wrapper" @click="goDetail($event)">
     <div class="avatar" v-if="showLeftAvatar">
       <img :src="dataSource.avatar" alt="">
     </div>
@@ -7,12 +7,18 @@
       <div class="title">
         <span>
           {{ dataSource.title }}
-          <span class="r-type">行动</span>
+          <a-tag color="red">
+            行动
+          </a-tag>
         </span>
-        <span v-add-icon>{{ dataSource.source }}</span>
+        <div class="source">
+          <a-icon :style="{color: primaryColor}" type="twitter" v-if="dataSource.source.toLowerCase() === 'twitter'"></a-icon>
+          <a-icon :style="{color: primaryColor}" type="facebook" v-if="dataSource.source.toLowerCase() === 'facebook'"></a-icon>
+          <a-icon :style="{color: primaryColor}" type="wechat" v-if="dataSource.source.toLowerCase() === 'telegram'"></a-icon>
+          <span>{{ dataSource.source }}</span>
+        </div>
       </div>
       <div class="content">{{ dataSource.content }}</div>
-      <a-progress :percent="dataSource.progress" status="active" />
       <div class="toolbar">
         <div class="left">
           <span>
@@ -25,8 +31,7 @@
           <span><a-icon type="profile" />{{ dataSource.tags }}</span>
         </div>
         <div class="right">
-          <a-button type="warnning">快速核查</a-button>
-          <a-button type="primary" @click="goDetail">详情</a-button>
+          <a-button type="primary" @click="goDetail($event)">详情</a-button>
         </div>
       </div>
     </div>
@@ -62,8 +67,14 @@ export default {
     }
   },
   methods: {
-    goDetail () {
+    goDetail (e) {
+      e.stopPropagation()
       this.$router.push({ name: 'EventActionDetail' })
+    }
+  },
+  computed: {
+    primaryColor () {
+      return this.$store.getters.color
     }
   }
 }
@@ -130,13 +141,20 @@ export default {
         text-align: center;
       }
 
-      & > span:nth-of-type(2) {
-        font-size: 12px;
-        color: #aaa;
-        font-weight: normal;
+      .source {
+        font-size: 14px;
         display: flex;
-        flex-direction: row-reverse;
-        justify-self: flex-end;
+        align-items: center;
+        cursor: pointer;
+
+        i.anticon{
+          font-size: 20px;
+        }
+
+        & > span{
+          padding-left: 8px;
+          margin-right: 8px;
+        }
       }
     }
 
