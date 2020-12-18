@@ -57,7 +57,7 @@ const wbList = [
     avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
     nickname: '邹承峰',
     username: 'cyrano7700',
-    source: 'Telegram',
+    source: 'Twitter',
     important: '1',
     createdAt: '2020-4-20 13:54:41',
     content: '查询内容查询内容查询内容查询内容查询内容查询内容查询内容查询内容查询内容查询内容查询内容查询内容查询内容'
@@ -94,8 +94,7 @@ export default {
       return {
         socialOption: [
           { label: 'Twitter', value: 'twitter' },
-          { label: 'Facebook', value: 'facebook' },
-          { label: 'Telegram', value: 'telegram' }
+          { label: 'Facebook', value: 'facebook' }
         ],
         queryParam: {
           pageIndex: 0,

@@ -1,20 +1,15 @@
 <template>
   <page-header-wrapper :title="false">
-    <div class="card-container">
-      <a-tabs
-        type="card"
-        class="tab-panel-wrapper"
-        :default-active-key="activeSearchType"
-        @change="handlSearchTypeChange($event)"
-      >
-        <a-tab-pane :key="'account'" tab="账号分析查询">
-          <a-input-search placeholder="请输入关键字" v-model="searchKey" size="large" enter-button @search="onSearch" />
-        </a-tab-pane>
-        <a-tab-pane :key="'content'" tab="虚词分析">
-          <a-input-search placeholder="请输入关键字" v-model="searchKey" size="large" enter-button @search="onSearch" />
-        </a-tab-pane>
-      </a-tabs>
-    </div>
+    <a-card style="margin-top: 0px">
+      <div style="padding: 16px 0px">
+        <a-radio-group :options="searchTypeOption" v-model="searchType"></a-radio-group>
+      </div>
+      <a-input-search placeholder="请输入ID或手机号" v-model="searchKey" size="large" @search="onSearch" >
+        <a-button slot="enterButton" type="primary">
+          开始分析
+        </a-button>
+      </a-input-search>
+    </a-card>
   </page-header-wrapper>
 </template>
 
@@ -23,7 +18,10 @@ export default {
   name: 'TelegramSearch',
   data () {
     return {
-      activeSearchType: 'account',
+      searchTypeOption: [
+        { label: '虚实转换', value: 'toReal' }
+      ],
+      searchType: 'toReal',
       searchKey: ''
     }
   },
@@ -33,7 +31,7 @@ export default {
         this.$message.info('请输入关键字')
         return
       }
-      this.$router.push({ path: '/verify/detail', query: { social: 'telegram', searchType: this.activeSearchType, searchKey: this.searchKey } })
+      this.$router.push({ path: '/verify/detail', query: { social: 'Telegram', searchType: this.searchType, searchKey: this.searchKey } })
     },
     handlSearchTypeChange(e) {
       this.activeSearchType = e

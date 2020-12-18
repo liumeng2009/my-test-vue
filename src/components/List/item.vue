@@ -9,7 +9,6 @@
         <div class="source">
           <a-icon :style="{color: primaryColor}" type="twitter" v-if="data.source.toLowerCase() === 'twitter'"></a-icon>
           <a-icon :style="{color: primaryColor}" type="facebook" v-if="data.source.toLowerCase() === 'facebook'"></a-icon>
-          <a-icon :style="{color: primaryColor}" type="wechat" v-if="data.source.toLowerCase() === 'telegram'"></a-icon>
           <span>{{ data.source }}</span>
         </div>
       </div>

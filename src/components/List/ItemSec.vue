@@ -1,5 +1,5 @@
 <template>
-  <div class="item-wrapper">
+  <div class="item-wrapper" @click="goDetail($event)">
     <div class="user">
       <div class="left">
         <img :src="dataSource.avatar" alt="" />
@@ -9,7 +9,6 @@
       <div class="right">
         <a-icon :style="{color: primaryColor}" type="twitter" v-if="dataSource.source.toLowerCase() === 'twitter'"></a-icon>
         <a-icon :style="{color: primaryColor}" type="facebook" v-if="dataSource.source.toLowerCase() === 'facebook'"></a-icon>
-        <a-icon :style="{color: primaryColor}" type="wechat" v-if="dataSource.source.toLowerCase() === 'telegram'"></a-icon>
         <span>{{ dataSource.source }}</span>
       </div>
     </div>
@@ -24,6 +23,12 @@ export default {
   name: 'ItemSec',
   directives: {
     AddIcon
+  },
+  methods: {
+    goDetail (e) {
+      e.stopPropagation()
+      this.$router.push({ path: '/info/clueSearchDetail', query: { id: this.$props.dataSource.id } })
+    }
   },
   props: {
     dataSource: {
@@ -44,6 +49,7 @@ export default {
   width: 100%;
   padding: 16px;
   border-bottom: #ccc 1px solid;
+  cursor: pointer;
 
   &:last-child {
     border-bottom: none;

@@ -288,11 +288,11 @@ export default {
 
   .setting-drawer-index-handle {
     position: absolute;
-    top: 240px;
+    bottom: 16px;
     background: #1890ff;
     width: 48px;
     height: 48px;
-    right: 300px;
+    right: 316px;
     display: flex;
     justify-content: center;
     align-items: center;

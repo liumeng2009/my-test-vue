@@ -15,7 +15,7 @@
               </div>
             </div>
             <div class="createdAt">{{ detail.createdAt }}</div>
-            <div class="list-head"><span>{{ list.length }}</span>条相关言论</div>
+            <div class="list-head">贡献度最高的相关线索：<span>{{ list.length }}</span>条</div>
             <div class="list-container">
               <a-list :loading="listLoading" :data-source="list" :pagination="true">
                 <a-list-item slot="renderItem" :key="index" slot-scope="item, index">
@@ -55,6 +55,7 @@ import { Pie, ItemSec } from '@/components'
 
 const listRequest = [
   {
+    id: 0,
     avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
     nickname: '吴文行',
     username: 'wenxingwu',
@@ -63,6 +64,7 @@ const listRequest = [
     createdAt: '2020-10-11'
   },
   {
+    id: 1,
     avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
     nickname: '吴文行',
     username: 'wenxingwu',
@@ -71,10 +73,11 @@ const listRequest = [
     createdAt: '2020-10-11'
   },
   {
+    id: 2,
     avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
     nickname: '吴文行',
     username: 'wenxingwu',
-    source: 'Telegram',
+    source: 'Facebook',
     content: '大家一定要小心',
     createdAt: '2020-10-11'
   }

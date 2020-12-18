@@ -10,7 +10,7 @@ export default {
 
         switch (_val) {
             case 'twitter':
-                oImg.src = require('@/assets/icons/twitter.svg')
+                oImg.src = require('@/assets/icons/Twitter.svg')
                 el.append(oImg)
                 break
             case 'facebook':
@@ -39,7 +39,7 @@ export default {
 
         switch (_val) {
             case 'twitter':
-                oImg.src = require('@/assets/icons/twitter.svg')
+                oImg.src = require('@/assets/icons/Twitter.svg')
                 el.append(oImg)
                 break
             case 'facebook':

@@ -34,26 +34,26 @@
 import { TopicItem, TopicAdd } from '@/components'
 
 const blocks = [
-  { title: '话题1', editable: false, search: 'day' },
-  { title: '话题2', editable: false, search: 'day' },
-  { title: '话题3', editable: false, search: 'day' },
-  { title: '话题4', editable: false, search: 'day' },
-  { title: '话题5', editable: false, search: 'day' },
-  { title: '话题6', editable: false, search: 'day' },
-  { title: '话题7', editable: true, search: 'day' },
-  { title: '话题8', editable: true, search: 'day' }
+  { title: '涉港', editable: false, search: 'day' },
+  { title: '涉美', editable: false, search: 'day' },
+  { title: '涉台', editable: false, search: 'day' },
+  { title: '藏独', editable: false, search: 'day' },
+  { title: '法轮功', editable: false, search: 'day' },
+  { title: '一带一路', editable: false, search: 'day' },
+  { title: '赛博朋克2077', editable: true, search: 'day' },
+  { title: '带鱼屏', editable: true, search: 'day' }
 ]
 const data = [
-  { title: '热点话题' },
-  { title: '热点话题' },
-  { title: '热点话题' },
-  { title: '热点话题' },
-  { title: '热点话题' },
-  { title: '热点话题' },
-  { title: '热点话题' },
-  { title: '热点话题' },
-  { title: '热点话题' },
-  { title: '热点话题' }
+  { title: '1' },
+  { title: '2' },
+  { title: '3' },
+  { title: '4' },
+  { title: '5' },
+  { title: '6' },
+  { title: '7' },
+  { title: '8' },
+  { title: '9' },
+  { title: '10' }
 ]
 
 blocks.map(item => {
@@ -125,17 +125,21 @@ export default {
 <style lang="less" scoped>
 .add-btn{
     width: 100%;
-    height: 100px;
+    height: 432px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 20px;
+    font-size: 14px;
     line-height: 100px;
     border: 1px solid #e8e8e8;
     border-radius: 3px;
     background: #fff;
     outline: none;
     cursor: pointer;
+}
+
+.add-btn:hover{
+  box-shadow: 0px 3px 3px 3px #eee;
 }
 
 .extra {

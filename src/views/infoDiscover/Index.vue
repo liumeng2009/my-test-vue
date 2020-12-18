@@ -10,7 +10,7 @@
             @change="handleGlobalNumTabChange($event)"
             :loading="globalNumLoading"
           >
-            <a-tab-pane :key="'social'" tab="各聚集平台总量">
+            <a-tab-pane :key="'social'" tab="平台采集总量">
               <a-spin :spinning="globalNumLoading">
                 <a-row>
                   <a-col :span="12"><a-statistic title="Twitter" class="center" :value="globalNum[0]"></a-statistic></a-col>
@@ -105,8 +105,8 @@
             <a-tab-pane :key="'tab'" :tab="'监控账号'">
               <a-spin :spinning="accountNumLoading">
                 <a-row>
-                  <a-col :span="12"><a-statistic title="Twitter" class="center" :value="accountNum[0]"></a-statistic></a-col>
-                  <a-col :span="12"><a-statistic title="Facebook" class="center" :value="accountNum[1]"></a-statistic></a-col>
+                  <a-col :span="12"><a-statistic title="已控账号数量" class="center" :value="accountNum[0]"></a-statistic></a-col>
+                  <a-col :span="12"><a-statistic title="剩余账号数量" class="center" :value="accountNum[1]"></a-statistic></a-col>
                 </a-row>
               </a-spin>
             </a-tab-pane>
@@ -157,9 +157,9 @@
 <script>
 import { MaqueList, Pie, Bar, LineChart, TopicItemSec } from '@/components'
 
-const globalNumRequest = [98791, 54098, 45, 55]
+const globalNumRequest = [5498791, 4123098, 109641, 21789]
 const topicNumRequest = [32, 345, 2981]
-const accountNumRequest = [99, 100]
+const accountNumRequest = [71, 29]
 
 const warningRegionRequest = [
   { name: '中国', value: 54698 },
@@ -327,7 +327,7 @@ export default {
     getGlobalData () {
       this.globalNumLoading = true
       setTimeout(() => {
-        Math.random() > 0.85 ? (() => {
+        Math.random() > 0.05 ? (() => {
           // 成功
           this.globalNum = [...globalNumRequest]
           this.globalNumLoading = false

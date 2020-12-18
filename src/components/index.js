@@ -46,6 +46,7 @@ import WBUser from '@/components/WBTemplate/User'
 import TopicAdd from '@/components/TopicAdd'
 
 import UserPanel from '@/components/UserPane'
+import SimpleUserPanel from '@/components/UserPane/simple'
 
 export {
   Pie,
@@ -91,5 +92,7 @@ export {
   WBUser,
 
   TopicAdd,
-  UserPanel
+
+  UserPanel,
+  SimpleUserPanel
 }

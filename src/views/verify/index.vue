@@ -9,61 +9,52 @@
     </div>
     <div class="fun-selector">
       <div class="fun-wrapper">
-        <div class="fun" @click="toSearchPage('twitter')">
+        <div class="fun-card" @click="toSearchPage('twitter')">
           <a-card hoverable>
             <div style="display:flex;">
               <Twitter />
               <div style="height: 100px;display:flex;flex-direction:column;justify-content:space-around">
-                <span style="padding-bottom: 30px">Twitter</span>
-                <span style="font-size:14px;">
-                  总量：{{ total.twitterTotalNum | NumberFormat }} &nbsp;&nbsp;条
+                <span style="padding-bottom: 30px; font-size: 22px;">Twitter</span>
+                <span style="font-size:16px;">
+                  总量：{{ total.twitterTotalNum | NumberFormat }}
                 </span>
-                <span style="font-size:14px;">
-                  重点账号：{{ total.twitterAccountNum | NumberFormat }} &nbsp;&nbsp;个
+                <span style="font-size:16px;">
+                  重点账号：{{ total.twitterAccountNum | NumberFormat }}
                 </span>
               </div>
             </div>
-            <template slot="actions">
-              <a-button type="primary">查询</a-button>
-            </template>
           </a-card>
         </div>
       </div>
       <div class="fun-wrapper">
-        <div class="fun" @click="toSearchPage('facebook')">
+        <div class="fun-card" @click="toSearchPage('facebook')">
           <a-card hoverable>
             <div style="display:flex;">
               <Facebook />
               <div style="height: 100px;display:flex;flex-direction:column;justify-content:space-around">
-                <span style="padding-bottom: 30px">Twitter</span>
-                <span style="font-size:14px;">总量：{{ total.facebookTotalNum | NumberFormat }} &nbsp;&nbsp;条</span>
-                <span style="font-size:14px;">
-                  国内：{{ total.facebookInnerNum | NumberFormat }} &nbsp;&nbsp;个
+                <span style="padding-bottom: 30px; font-size: 22px;">Facebook</span>
+                <span style="font-size:16px;">总量：{{ total.facebookTotalNum | NumberFormat }}</span>
+                <span style="font-size:16px;">
+                  国内：{{ total.facebookInnerNum | NumberFormat }}
                 </span>
               </div>
             </div>
-            <template slot="actions">
-              <a-button type="primary">查询</a-button>
-            </template>
           </a-card>
         </div>
       </div>
       <div class="fun-wrapper">
-        <div class="fun" @click="toSearchPage('telegram')">
+        <div class="fun-card" @click="toSearchPage('telegram')">
           <a-card hoverable>
             <div style="display:flex;">
               <Telegram />
               <div style="height: 100px;display:flex;flex-direction:column;justify-content:space-around">
-                <span style="padding-bottom: 30px">Telegram</span>
-                <span style="font-size:14px;">总量：{{ total.telegramTotalNum | NumberFormat }} &nbsp;&nbsp;条</span>
-                <span style="font-size:14px;">
-                  国内：{{ total.telegramInnerNum | NumberFormat }} &nbsp;&nbsp;个
+                <span style="padding-bottom: 30px; font-size: 22px;">Telegram</span>
+                <span style="font-size:16px;">总量：{{ total.telegramTotalNum | NumberFormat }}</span>
+                <span style="font-size:16px;">
+                  国内：{{ total.telegramInnerNum | NumberFormat }}
                 </span>
               </div>
             </div>
-            <template slot="actions">
-              <a-button type="primary">查询</a-button>
-            </template>
           </a-card>
         </div>
       </div>
@@ -79,12 +70,12 @@ const detailRequest = {
   twitterNum: 98782,
   facebookNum: 23112,
   telegramNum: 9762,
-  twitterTotalNum: 55533232123,
-  facebookTotalNum: 23213232,
-  telegramTotalNum: 232321232323,
-  twitterAccountNum: 55533232123,
-  facebookInnerNum: 23213232,
-  telegramInnerNum: 232321232323
+  twitterTotalNum: 53232123,
+  facebookTotalNum: 723213981,
+  telegramTotalNum: 80232781,
+  twitterAccountNum: 107016,
+  facebookInnerNum: 6091209,
+  telegramInnerNum: 5593218
 }
 export default {
   name: 'FunSelector',
@@ -153,7 +144,7 @@ export default {
       justify-content: center;
       align-items: center;
 
-      .fun {
+      .fun-card {
         width: 100%;
         box-sizing: border-box;
         cursor: pointer;

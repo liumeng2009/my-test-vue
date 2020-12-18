@@ -1,15 +1,15 @@
 <template>
   <a-card class="user-pane" hoverable :bodyStyle="{padding: 0}">
     <div class="avatar">
-      <img :src="dataSource.avatar" alt="" />
-      <span>{{ dataSource.username }}</span>
+      <img :src="dataSource && dataSource.avatar" alt="" />
+      <span>{{ dataSource && dataSource.username }}</span>
     </div>
     <div class="info">
-      <span><a-icon type="clock-circle"></a-icon>{{ dataSource.birthday }}</span>
-      <span><a-icon type="phone"></a-icon>{{ dataSource.phone }}</span>
-      <span><a-icon type="idcard"></a-icon>{{ dataSource.idcard }}</span>
-      <span><a-icon type="mail"></a-icon>{{ dataSource.email }}</span>
-      <span><a-icon type="twitter"></a-icon>{{ dataSource.twitter }}</span>
+      <span><a-icon type="clock-circle"></a-icon>{{ dataSource && dataSource.birthday }}</span>
+      <span><a-icon type="phone"></a-icon>{{ dataSource && dataSource.phone }}</span>
+      <span><a-icon type="idcard"></a-icon>{{ dataSource && dataSource.idcard }}</span>
+      <span><a-icon type="mail"></a-icon>{{ dataSource && dataSource.email }}</span>
+      <span><a-icon type="twitter"></a-icon>{{ dataSource && dataSource.twitter }}</span>
     </div>
   </a-card>
 </template>

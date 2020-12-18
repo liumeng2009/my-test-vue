@@ -8,7 +8,7 @@
  */
 import bxAnaalyse from '@/assets/icons/bx-analyse.svg?inline' // path to your '*.svg?inline' file.
 import discovery from '@/assets/icons/discovery.svg?inline'
-import Twitter from '@/assets/icons/twitter.svg?inline'
+import Twitter from '@/assets/icons/Twitter.svg?inline'
 import Facebook from '@/assets/icons/facebook.svg?inline'
 import Telegram from '@/assets/icons/telegram.svg?inline'
 import RiseFilling from '@/assets/icons/rise-filling.svg?inline'
